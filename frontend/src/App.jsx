@@ -135,18 +135,20 @@ const navigationItems = [
 function NavigationItem({ item, currentPath, navigate, depth = 0 }) {
   const hasChildren = Boolean(item.children?.length)
   const isActive = currentPath === item.path && (item.path === '/' || depth === 0)
+  const [expanded, setExpanded] = useState(false)
 
   return (
-    <div className={`nav-item nav-depth-${depth} ${hasChildren ? 'has-children' : ''}`}>
-      <a
-        className={`nav-link ${isActive ? 'active' : ''}`}
-        href={item.path}
-        onClick={(event) => navigate(event, item.path)}
-        aria-haspopup={hasChildren ? 'true' : undefined}
-      >
-        <span>{item.label}</span>
-        {hasChildren && <Icon name="chevron" size={14} />}
-      </a>
+    <div className={`nav-item nav-depth-${depth} ${hasChildren ? 'has-children' : ''} ${expanded ? 'expanded' : ''}`}>
+      <div className="nav-row">
+        <a
+          className={`nav-link ${isActive ? 'active' : ''}`}
+          href={item.path}
+          onClick={(event) => navigate(event, item.path)}
+        >
+          <span>{item.label}</span>
+        </a>
+        {hasChildren && <button className="submenu-toggle" type="button" aria-label={`نمایش زیرمنوی ${item.label}`} aria-expanded={expanded} onClick={() => setExpanded((value) => !value)}><Icon name="chevron" size={14} /></button>}
+      </div>
       {hasChildren && (
         <div className="submenu" role="menu">
           {item.children.map((child) => (
@@ -784,6 +786,11 @@ export default function App() {
         <section className="hero-poster" aria-label="معرفی محصولات حال نیکو سلامت">
           <img src="/images/hns-home-banner.png" alt="حال نیکو سلامت؛ از علم تا مزرعه، با حال نیک" />
           <a href="/products" onClick={(event) => navigate(event, '/products')} className="hero-poster-link" aria-label="مشاهده محصولات" title="مشاهده محصولات" />
+          <div className="hero-mobile-copy">
+            <span>حال نیکو سلامت</span>
+            <h1>از علم تا مزرعه، با حال نیک</h1>
+            <a href="/products" onClick={(event) => navigate(event, '/products')} className="button primary">مشاهده محصولات <Icon name="arrow" size={17} /></a>
+          </div>
         </section>
 
         <section className="benefits" aria-label="مزایای خرید از نیکو سلامت">
