@@ -41,13 +41,13 @@ jobs:
           cp .deploy/cpanel-php/api.php release/api.php
           cp .deploy/cpanel-php/.htaccess release/.htaccess
 
-      - name: Upload to cPanel over FTPS
+      - name: Upload to cPanel over FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ftp.nikoosalamat.ir
           username: deploy@nikoosalamat.ir
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
+          protocol: ftp
           port: 21
           local-dir: release/
           server-dir: /
