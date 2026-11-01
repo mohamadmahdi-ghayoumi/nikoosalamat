@@ -1,0 +1,13 @@
+{
+  "name": "sovara-fullstack",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": ".venv\\Scripts\\python.exe dev.py",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": ".venv\\Scripts\\python.exe -m uvicorn app.main:app --app-dir backend --reload --port 8010",
+    "build": "npm --prefix frontend run build",
+    "serve": ".venv\\Scripts\\python.exe -m uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port 8011",
+    "test": ".venv\\Scripts\\python.exe -m pytest backend/tests -q"
+  }
+}

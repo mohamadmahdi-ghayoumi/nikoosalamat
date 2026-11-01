@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+backend/data/*.db
+frontend/node_modules/
+frontend/dist/
+.env
+*.log
+
+# Local tooling and generated deployment bundles
+.tools/
+.deploy/
+sites/
+*.zip
+*.tar.gz
