@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: production-deploy
@@ -41,13 +41,27 @@ jobs:
           cp .deploy/cpanel-php/api.php release/api.php
           cp .deploy/cpanel-php/.htaccess release/.htaccess
 
-      - name: Upload to cPanel over FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
-        with:
-          server: ftp.nikoosalamat.ir
-          username: deploy@nikoosalamat.ir
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          port: 21
-          local-dir: release/
-          server-dir: /
+      - name: Package release
+        run: |
+          printf '%s\n' "$GITHUB_SHA" > deploy-version.txt
+          cd release
+          zip -qr ../nikoosalamat-release.zip .
+
+      - name: Publish production package
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view production >/dev/null 2>&1; then
+            gh release upload production \
+              nikoosalamat-release.zip \
+              deploy-version.txt \
+              --clobber
+          else
+            gh release create production \
+              nikoosalamat-release.zip \
+              deploy-version.txt \
+              --target "$GITHUB_SHA" \
+              --title "Production deployment" \
+              --notes "Automatically generated deployment files." \
+              --latest=false
+          fi
