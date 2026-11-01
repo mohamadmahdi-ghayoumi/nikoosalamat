@@ -686,6 +686,7 @@ export default function App() {
       {currentPath === '/' && <main id="top">
         <section className="hero-poster" aria-label="معرفی محصولات حال نیکو سلامت">
           <img src="/images/hns-home-banner.png" alt="حال نیکو سلامت؛ از علم تا مزرعه، با حال نیک" />
+          <a href="/products" onClick={(event) => navigate(event, '/products')} className="hero-poster-link" aria-label="مشاهده محصولات" title="مشاهده محصولات" />
         </section>
 
         <section className="benefits" aria-label="مزایای خرید از نیکو سلامت">
