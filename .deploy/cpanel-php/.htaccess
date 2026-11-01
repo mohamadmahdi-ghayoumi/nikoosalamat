@@ -1,6 +1,11 @@
 Options -Indexes
 RewriteEngine On
 
+# Temporary: prevent search engines from indexing the site before launch.
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag "noindex, nofollow, noarchive, nosnippet, noimageindex"
+</IfModule>
+
 # Never expose application data or configuration files.
 RewriteRule ^app(?:/|$) - [F,L,NC]
 RewriteRule ^config\.php$ - [F,L,NC]
