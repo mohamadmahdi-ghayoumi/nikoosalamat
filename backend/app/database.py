@@ -35,19 +35,19 @@ def verify_password(password: str, encoded: str) -> bool:
 
 
 CATEGORIES = [
-    ("coat-care", "مراقبت از پوست و مو", "درخشش طبیعی و سلامت ماندگار", "sparkle", "rose", 1),
-    ("hoof-care", "مراقبت از سُم", "استحکام و انعطاف در هر قدم", "hoof", "gold", 2),
-    ("protection", "محافظت و آرامش", "برای تمرین و استراحت بهتر", "shield", "green", 3),
-    ("grooming", "لوازم نظافت", "همراه همیشگی اصطبل", "spray", "blue", 4),
+    ("hoof-care", "مراقبت از سُم", "پیشگیری و مراقبت برای حرکت سالم دام", "hoof", "gold", 1),
+    ("udder-health", "سلامت پستان", "مراقبت روزانه و حمایت از سلامت گله", "heart", "rose", 2),
+    ("farm-disinfection", "ضدعفونی دامداری", "بهداشت محیط، تجهیزات و جایگاه دام", "shield", "green", 3),
+    ("animal-hygiene", "بهداشت دام و اسب", "محصولات کاربردی برای مراقبت حرفه‌ای", "spray", "blue", 4),
 ]
 
 PRODUCTS = [
-    ("arnica-hoof-oil", "روغن تقویت سُم آرنیکا", "مراقبت از سُم", 385_000, "amber", "tin", "پرفروش", 1),
-    ("mane-shine-spray", "اسپری درخشان‌کننده یال", "پوست و مو", 460_000, "wine", "spray", "جدید", 1),
-    ("herbal-shampoo", "شامپو گیاهی ملایم", "شست‌وشو", 325_000, "olive", "bottle", None, 1),
-    ("muscle-relief-balm", "بالم آرامش عضلات", "ریکاوری", 515_000, "cream", "jar", None, 1),
-    ("daily-coat-brush", "برس روزانه پوشش", "لوازم نظافت", 275_000, "olive", "tin", None, 0),
-    ("hoof-cleaner", "پاک‌کننده تخصصی سُم", "مراقبت از سُم", 410_000, "amber", "bottle", None, 0),
+    ("arnica-hoof-oil", "هوف ژل فارمیکو", "مراقبت از سُم", 385_000, "amber", "tin", "پرفروش", 1, "/images/hoof-gel.png"),
+    ("mane-shine-spray", "پماد پستان فارمیکو", "سلامت پستان", 460_000, "wine", "jar", "پیشنهادی", 1, "/images/udder-ointment.png"),
+    ("herbal-shampoo", "محلول ویروگاردیا", "ضدعفونی دامداری", 325_000, "olive", "bottle", None, 1, "/images/virucardia-solution.png"),
+    ("muscle-relief-balm", "اسپری سُم فارمیکو", "مراقبت از سُم", 515_000, "cream", "spray", None, 1, "/images/hoof-spray.png"),
+    ("daily-coat-brush", "محلول بهداشت جایگاه دام", "بهداشت دامداری", 275_000, "olive", "bottle", None, 0, "/images/barn-hygiene.png"),
+    ("hoof-cleaner", "پاک‌کننده سُم فارمیکو", "مراقبت از سُم", 410_000, "amber", "bottle", None, 0, "/images/hoof-cleaner.png"),
 ]
 
 
@@ -134,8 +134,8 @@ def init_database() -> None:
         if product_count == 0:
             connection.executemany(
                 """
-                INSERT INTO products (slug, name, category, price, tone, shape, badge, featured)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO products (slug, name, category, price, tone, shape, badge, featured, image_url)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 PRODUCTS,
             )

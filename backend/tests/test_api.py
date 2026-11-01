@@ -13,7 +13,7 @@ def test_home_returns_seeded_content():
     payload = response.json()
     assert len(payload["categories"]) == 4
     assert len(payload["featured_products"]) == 4
-    assert payload["hero"]["title"] == "حال خوب اسب،"
+    assert payload["hero"]["title"] == "سلامت دام،"
 
 
 def test_cart_quote_calculates_shipping():

@@ -30,39 +30,39 @@ const Icon = ({ name, size = 22 }) => {
 }
 
 const fallbackCategories = [
-  { name: 'مراقبت از پوست و مو', text: 'درخشش طبیعی و سلامت ماندگار', icon: 'sparkle', color: 'rose' },
-  { name: 'مراقبت از سُم', text: 'استحکام و انعطاف در هر قدم', icon: 'hoof', color: 'gold' },
-  { name: 'محافظت و آرامش', text: 'برای تمرین و استراحت بهتر', icon: 'shield', color: 'green' },
-  { name: 'لوازم نظافت', text: 'همراه همیشگی اصطبل', icon: 'spray', color: 'blue' },
+  { name: 'مراقبت از سُم', text: 'پیشگیری و مراقبت برای حرکت سالم دام', icon: 'hoof', color: 'gold' },
+  { name: 'سلامت پستان', text: 'مراقبت روزانه و حمایت از سلامت گله', icon: 'heart', color: 'rose' },
+  { name: 'ضدعفونی دامداری', text: 'بهداشت محیط، تجهیزات و جایگاه دام', icon: 'shield', color: 'green' },
+  { name: 'بهداشت دام و اسب', text: 'محصولات کاربردی برای مراقبت حرفه‌ای', icon: 'spray', color: 'blue' },
 ]
 
 const fallbackProducts = [
-  { id: 1, name: 'روغن تقویت سُم آرنیکا', category: 'مراقبت از سُم', price: 385000, tone: 'amber', shape: 'tin', badge: 'پرفروش' },
-  { id: 2, name: 'اسپری درخشان‌کننده یال', category: 'پوست و مو', price: 460000, tone: 'wine', shape: 'spray', badge: 'جدید' },
-  { id: 3, name: 'شامپو گیاهی ملایم', category: 'شست‌وشو', price: 325000, tone: 'olive', shape: 'bottle' },
-  { id: 4, name: 'بالم آرامش عضلات', category: 'ریکاوری', price: 515000, tone: 'cream', shape: 'jar' },
+  { id: 1, name: 'هوف ژل فارمیکو', category: 'مراقبت از سُم', price: 385000, tone: 'amber', shape: 'tin', badge: 'پرفروش', image_url: '/images/hoof-gel.png' },
+  { id: 2, name: 'پماد پستان فارمیکو', category: 'سلامت پستان', price: 460000, tone: 'wine', shape: 'jar', badge: 'پیشنهادی', image_url: '/images/udder-ointment.png' },
+  { id: 3, name: 'محلول ویروگاردیا', category: 'ضدعفونی دامداری', price: 325000, tone: 'olive', shape: 'bottle', image_url: '/images/virucardia-solution.png' },
+  { id: 4, name: 'اسپری سُم فارمیکو', category: 'مراقبت از سُم', price: 515000, tone: 'cream', shape: 'spray', image_url: '/images/hoof-spray.png' },
 ]
 
 const fallbackHero = {
-  eyebrow: 'مراقبت سالم، رفاقت عمیق‌تر',
-  title: 'حال خوب اسب،',
-  highlighted_title: 'قصه‌ی هر روز ماست.',
-  description: 'محصولات تخصصی مراقبت از اسب با ترکیبات گیاهی و فرمولاسیون سازگار؛ طراحی و تولیدشده برای اقلیم ایران.',
+  eyebrow: 'دانش دامپزشکی، مراقبت مطمئن',
+  title: 'سلامت دام،',
+  highlighted_title: 'سرمایه‌ی هر روز شماست.',
+  description: 'نیکو سلامت؛ همراه دامداران، اسب‌داران و فعالان کشاورزی با محصولات تخصصی مراقبت، بهداشت و پیشگیری متناسب با نیازهای دامداری ایران.',
   primary_action: 'مشاهده محصولات',
   secondary_action: 'بیشتر درباره ما',
 }
 
 const fallbackBenefits = [
-  { title: 'ترکیبات گیاهی', description: 'ملایم و سازگار با پوست', icon: 'leaf' },
-  { title: 'تضمین اصالت', description: 'تولید با مواد اولیه مرغوب', icon: 'shield' },
+  { title: 'کیفیت قابل اعتماد', description: 'انتخاب محصولات تخصصی و کاربردی', icon: 'leaf' },
+  { title: 'راهکارهای دامپزشکی', description: 'برای دام سنگین، اسب و جایگاه', icon: 'shield' },
   { title: 'ارسال به سراسر ایران', description: 'تحویل سریع و بسته‌بندی امن', icon: 'truck' },
   { title: 'مشاوره تخصصی', description: 'همراه شما در انتخاب بهتر', icon: 'heart' },
 ]
 
 const fallbackStory = {
-  eyebrow: 'قصه‌ی سُوارا',
-  title: 'از دل طبیعت ایران، برای سلامت همراه نجیب شما',
-  description: 'ما سُوارا را با یک باور ساده آغاز کردیم: مراقبت خوب باید هم علمی باشد، هم مهربان. فرمول‌های ما با شناخت نیازهای اسب و شرایط آب‌وهوایی ایران توسعه پیدا می‌کنند.',
+  eyebrow: 'درباره نیکو سلامت',
+  title: 'سلامت پایدار دام، از انتخاب درست آغاز می‌شود',
+  description: 'نیکو سلامت با تمرکز بر نیاز واقعی دامداری‌ها و مراکز پرورش اسب، محصولات تخصصی مراقبت از سُم، سلامت پستان، ضدعفونی و بهداشت جایگاه را با رویکردی علمی و مسئولانه عرضه می‌کند.',
 }
 
 const navigationItems = [
@@ -174,7 +174,7 @@ function ProductVisual({ product }) {
       <span className="botanical botanical-two">⌁</span>
       <div className={`product-pack ${product.shape}`}>
         {product.shape === 'spray' && <span className="sprayer" />}
-        <div className="mini-mark">سُوارا</div>
+        <div className="mini-mark">نیکو سلامت</div>
         <div className="mini-horse">♞</div>
         <small>مراقبت طبیعی</small>
       </div>
@@ -228,9 +228,9 @@ function ProductsPage({ products, onAddToCart }) {
   return (
     <main className="inner-page" id="top">
       <PageHero
-        eyebrow="فروشگاه سُوارا"
-        title="مراقبت حرفه‌ای، برای هر روز کنار هم بودن"
-        description="مجموعه محصولات تخصصی مراقبت از پوست، مو، سُم و ریکاوری اسب؛ متناسب با شرایط آب‌وهوایی ایران."
+        eyebrow="محصولات نیکو سلامت"
+        title="راهکارهای تخصصی برای سلامت دام و اسب"
+        description="مجموعه محصولات مراقبت از سُم، سلامت پستان، ضدعفونی و بهداشت جایگاه؛ برای انتخابی مطمئن و کاربردی."
       />
       <section className="section catalog-section">
         <div className="catalog-toolbar">
@@ -256,25 +256,25 @@ function ProductsPage({ products, onAddToCart }) {
 
 function AboutPage({ navigate }) {
   const values = [
-    { icon: 'leaf', title: 'فرمول‌های مسئولانه', text: 'انتخاب ترکیبات ملایم و مؤثر با کمترین فشار بر طبیعت.' },
-    { icon: 'shield', title: 'شفافیت و کیفیت', text: 'کنترل کیفیت مرحله‌به‌مرحله و ارائه اطلاعات روشن برای هر محصول.' },
-    { icon: 'heart', title: 'رفاقت، نه فقط مراقبت', text: 'هر محصول باید تجربه حضور کنار اسب را آرام‌تر و لذت‌بخش‌تر کند.' },
+    { icon: 'leaf', title: 'انتخاب علمی', text: 'معرفی راهکارهایی متناسب با نیاز واقعی دام، اسب و محیط پرورش.' },
+    { icon: 'shield', title: 'کیفیت و اصالت', text: 'ارائه محصولات تخصصی با اطلاعات روشن و قابل پیگیری.' },
+    { icon: 'heart', title: 'پشتیبانی مسئولانه', text: 'همراهی با دامدار برای انتخاب درست و استفاده بهتر از محصول.' },
   ]
 
   return (
     <main className="inner-page" id="top">
-      <PageHero eyebrow="درباره سُوارا" title="یک برند ایرانی، برای رفاقتی که هر روز عمیق‌تر می‌شود" description="سُوارا با ترکیب دانش مراقبت، شناخت اقلیم ایران و احترام به رابطه انسان و اسب شکل گرفته است." />
+      <PageHero eyebrow="درباره نیکو سلامت" title="همراه حرفه‌ای دامداران و فعالان سلامت دام" description="نیکو سلامت با تمرکز بر محصولات تخصصی دام، اسب و بهداشت جایگاه شکل گرفته است." />
       <section className="section about-intro">
         <div className="about-copy">
           <span className="eyebrow">داستان ما</span>
-          <h2>مراقبت خوب، از شناخت درست شروع می‌شود</h2>
-          <p>ما کارمان را با گفت‌وگو با سوارکارها، مربی‌ها و صاحبان باشگاه‌ها آغاز کردیم. هدفمان ساخت محصولاتی بود که در برنامه روزانه اصطبل کاربردی باشند؛ محصولاتی قابل اعتماد، ساده و سازگار با نیاز واقعی اسب.</p>
-          <p>از انتخاب ماده اولیه تا بسته‌بندی، تلاش می‌کنیم کیفیت قابل لمس باشد و مصرف‌کننده دقیقاً بداند چه چیزی برای همراهش انتخاب می‌کند.</p>
-          <button className="button primary" onClick={(event) => navigate(event, '/contact')}>گفت‌وگو با تیم سُوارا <Icon name="arrow" size={18} /></button>
+          <h2>سلامت بهتر، از شناخت درست شروع می‌شود</h2>
+          <p>ما نیازهای روزمره دامداران، دامپزشکان و مراکز پرورش اسب را نقطه شروع انتخاب محصولاتمان قرار داده‌ایم؛ از مراقبت از سُم و سلامت پستان تا ضدعفونی و بهداشت جایگاه.</p>
+          <p>هدف نیکو سلامت ارائه راهکارهای قابل اعتماد، کاربردی و روشن است تا انتخاب محصول برای هر گله و مجموعه ساده‌تر و مطمئن‌تر شود.</p>
+          <button className="button primary" onClick={(event) => navigate(event, '/contact')}>گفت‌وگو با تیم نیکو سلامت <Icon name="arrow" size={18} /></button>
         </div>
         <div className="about-visual">
-          <div className="about-image" role="img" aria-label="مراقبت از اسب در اصطبل" />
-          <div className="about-quote">«حال خوب اسب، معیار تمام تصمیم‌های ماست.»</div>
+          <div className="about-image" role="img" aria-label="دامپزشک در دامداری" />
+          <div className="about-quote">«سلامت دام، پایه‌ی تولید پایدار است.»</div>
         </div>
       </section>
       <section className="values-section">
@@ -286,10 +286,10 @@ function AboutPage({ navigate }) {
         </div>
       </section>
       <section className="section about-stats">
-        <div><strong>+۱۲</strong><span>محصول تخصصی</span></div><i />
-        <div><strong>+۳۵۰</strong><span>مشتری همراه</span></div><i />
-        <div><strong>۲۴</strong><span>شهر تحت پوشش</span></div><i />
-        <div><strong>۴٫۹</strong><span>امتیاز رضایت</span></div>
+        <div><strong>۶</strong><span>گروه محصول</span></div><i />
+        <div><strong>۳</strong><span>حوزه تخصصی</span></div><i />
+        <div><strong>۱</strong><span>هدف؛ سلامت دام</span></div><i />
+        <div><strong>ایران</strong><span>محدوده خدمت‌رسانی</span></div>
       </section>
     </main>
   )
@@ -317,7 +317,7 @@ function ContactPage({ showNotice }) {
 
   return (
     <main className="inner-page" id="top">
-      <PageHero eyebrow="ارتباط با ما" title="سؤالی دارید؟ کنار شما هستیم" description="برای انتخاب محصول، دریافت مشاوره یا پیگیری سفارش با تیم سُوارا در ارتباط باشید." />
+      <PageHero eyebrow="ارتباط با ما" title="سؤالی دارید؟ کنار شما هستیم" description="برای انتخاب محصول، دریافت مشاوره یا پیگیری سفارش با تیم نیکو سلامت در ارتباط باشید." />
       <section className="section contact-layout">
         <div className="contact-details">
           <span className="eyebrow">راه‌های ارتباطی</span>
@@ -325,10 +325,10 @@ function ContactPage({ showNotice }) {
           <p>کارشناسان ما در ساعات کاری پاسخ‌گوی پرسش‌های شما درباره مراقبت، انتخاب محصول و سفارش‌ها هستند.</p>
           <div className="contact-cards">
             <a href="tel:+982188771420"><span><Icon name="user" /></span><div><small>تلفن پشتیبانی</small><strong>۰۲۱-۸۸۷۷ ۱۴۲۰</strong></div></a>
-            <a href="mailto:hello@sovara.ir"><span><Icon name="heart" /></span><div><small>ایمیل</small><strong>hello@sovara.ir</strong></div></a>
+            <a href="mailto:info@nikoosalamat.ir"><span><Icon name="heart" /></span><div><small>ایمیل</small><strong>info@nikoosalamat.ir</strong></div></a>
             <div><span><Icon name="shield" /></span><div><small>ساعات پاسخ‌گویی</small><strong>شنبه تا چهارشنبه، ۹ تا ۱۷</strong></div></div>
           </div>
-          <div className="contact-note"><Icon name="leaf" /><p>برای مشاوره دقیق‌تر، سن اسب و موضوع موردنظرتان را در پیام بنویسید.</p></div>
+          <div className="contact-note"><Icon name="leaf" /><p>برای مشاوره دقیق‌تر، نوع دام، سن و موضوع موردنظرتان را در پیام بنویسید.</p></div>
         </div>
         <form className="contact-form" onSubmit={submitContact}>
           <div className="form-heading"><span>فرم تماس</span><h2>پیامتان را برای ما بنویسید</h2></div>
@@ -454,7 +454,7 @@ function AdminPage({ showNotice }) {
         <section className="admin-login-card">
           <div className="admin-lock"><Icon name="shield" size={30} /></div>
           <span className="eyebrow">ورود امن</span>
-          <h1>داشبورد مدیریت سُوارا</h1>
+          <h1>داشبورد مدیریت نیکو سلامت</h1>
           <p>این بخش فقط برای مدیر سایت قابل دسترسی است.</p>
           <form onSubmit={login}>
             <label>نام کاربری<input name="username" type="text" dir="ltr" autoComplete="username" placeholder="admin" minLength="3" required /></label>
@@ -547,11 +547,11 @@ export default function App() {
 
   useEffect(() => {
     const titles = {
-      '/': 'سُوارا | مراقبت حرفه‌ای از اسب',
-      '/products': 'محصولات | سُوارا',
-      '/about': 'درباره ما | سُوارا',
-      '/contact': 'تماس با ما | سُوارا',
-      '/admin': 'داشبورد مدیریت | سُوارا',
+      '/': 'نیکو سلامت | محصولات تخصصی سلامت دام و اسب',
+      '/products': 'محصولات | نیکو سلامت',
+      '/about': 'درباره ما | نیکو سلامت',
+      '/contact': 'تماس با ما | نیکو سلامت',
+      '/admin': 'داشبورد مدیریت | نیکو سلامت',
     }
     document.title = titles[currentPath] || titles['/']
   }, [currentPath])
@@ -619,11 +619,11 @@ export default function App() {
             <Icon name={menuOpen ? 'close' : 'menu'} />
           </button>
 
-          <a href="/" onClick={(event) => navigate(event, '/')} className="brand" aria-label="صفحه اصلی سوارا">
-            <span className="brand-mark">س</span>
+          <a href="/" onClick={(event) => navigate(event, '/')} className="brand" aria-label="صفحه اصلی نیکو سلامت">
+            <span className="brand-mark">ن</span>
             <span className="brand-copy">
-              <strong>سُوارا</strong>
-              <small>SOVARA</small>
+              <strong>نیکو سلامت</strong>
+              <small>NIKOO SALAMAT</small>
             </span>
           </a>
 
@@ -658,12 +658,12 @@ export default function App() {
 
       {currentPath === '/' && <main id="top">
         <section className="hero">
-          <div className="hero-image" role="img" aria-label="مراقبت صمیمانه از اسب در اصطبل">
+          <div className="hero-image" role="img" aria-label="دامپزشک در کنار گاو و اسب در مزرعه">
             <div className="hero-stamp">
               <span>ساخت ایران</span>
               <b>با عشق</b>
             </div>
-            <div className="photo-credit">تصویر: Unsplash</div>
+            <div className="photo-credit">تصویر اختصاصی نیکو سلامت</div>
           </div>
           <div className="hero-copy">
             <span className="eyebrow"><Icon name="leaf" size={18} /> {hero.eyebrow}</span>
@@ -674,16 +674,16 @@ export default function App() {
               <a className="text-link" href="/about" onClick={(event) => navigate(event, '/about')}>{hero.secondary_action}</a>
             </div>
             <div className="hero-trust">
-              <div><strong>+۱۲</strong><span>محصول تخصصی</span></div>
+              <div><strong>۶</strong><span>گروه محصول</span></div>
               <i />
-              <div><strong>۱۰۰٪</strong><span>تست‌شده و ایمن</span></div>
+              <div><strong>۳</strong><span>حوزه تخصصی</span></div>
               <i />
-              <div><strong>۴٫۹</strong><span>رضایت مشتریان</span></div>
+              <div><strong>ایران</strong><span>محدوده خدمت</span></div>
             </div>
           </div>
         </section>
 
-        <section className="benefits" aria-label="مزایای خرید از سوارا">
+        <section className="benefits" aria-label="مزایای خرید از نیکو سلامت">
           {benefits.map((benefit) => (
             <div key={benefit.title}><span className="benefit-icon"><Icon name={benefit.icon} /></span><p><strong>{benefit.title}</strong><small>{benefit.description}</small></p></div>
           ))}
@@ -691,7 +691,7 @@ export default function App() {
 
         <section className="section categories-section" id="categories">
           <div className="section-heading">
-            <div><span className="eyebrow">مراقبت کامل</span><h2>هر آنچه برای <em>رفیقتان</em> لازم است</h2></div>
+            <div><span className="eyebrow">مراقبت کامل</span><h2>هر آنچه برای <em>سلامت دام</em> لازم است</h2></div>
             <a className="view-all" href="/products" onClick={(event) => navigate(event, '/products')}>همه دسته‌بندی‌ها <Icon name="arrow" size={18} /></a>
           </div>
           <div className="category-grid">
@@ -709,7 +709,7 @@ export default function App() {
 
         <section className="section products-section" id="products">
           <div className="section-heading center-heading">
-            <div><span className="eyebrow">انتخاب محبوب سوارکارها</span><h2>محصولات <em>پیشنهادی</em></h2></div>
+            <div><span className="eyebrow">انتخاب تخصصی دامداران</span><h2>محصولات <em>پیشنهادی</em></h2></div>
           </div>
           <div className="product-grid">
             {products.map((product) => (
@@ -746,7 +746,7 @@ export default function App() {
 
         <section className="newsletter" id="contact">
           <div>
-            <span className="eyebrow">باشگاه سُوارا</span>
+            <span className="eyebrow">باشگاه نیکو سلامت</span>
             <h2>نکته‌های مراقبتی و خبرهای تازه</h2>
             <p>ماهی دو بار؛ کوتاه، کاربردی و بدون پیام‌های اضافه.</p>
           </div>
@@ -768,15 +768,15 @@ export default function App() {
       {currentPath !== '/admin' && <footer className="footer">
         <div className="footer-main">
           <div className="footer-brand">
-            <a href="/" onClick={(event) => navigate(event, '/')} className="brand brand-light"><span className="brand-mark">س</span><span className="brand-copy"><strong>سُوارا</strong><small>SOVARA</small></span></a>
-            <p>مراقبت آگاهانه برای یک رفاقت ماندگار.</p>
-            <div className="socials"><a href="#instagram" aria-label="اینستاگرام"><Icon name="instagram" /></a><span>@sovara.care</span></div>
+            <a href="/" onClick={(event) => navigate(event, '/')} className="brand brand-light"><span className="brand-mark">ن</span><span className="brand-copy"><strong>نیکو سلامت</strong><small>NIKOO SALAMAT</small></span></a>
+            <p>راهکارهای تخصصی برای سلامت پایدار دام.</p>
+            <div className="socials"><a href="#instagram" aria-label="اینستاگرام"><Icon name="instagram" /></a><span>@nikoosalamat</span></div>
           </div>
-          <div><h3>محصولات</h3><a href="/products" onClick={(event) => navigate(event, '/products')}>پوست و مو</a><a href="/products" onClick={(event) => navigate(event, '/products')}>مراقبت از سُم</a><a href="/products" onClick={(event) => navigate(event, '/products')}>شست‌وشو</a><a href="/products" onClick={(event) => navigate(event, '/products')}>آرامش و ریکاوری</a></div>
-          <div><h3>راهنما</h3><a href="/about" onClick={(event) => navigate(event, '/about')}>درباره سُوارا</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>پرسش‌های متداول</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>روش ارسال</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>شرایط بازگشت</a></div>
-          <div><h3>ارتباط با ما</h3><a href="tel:+982188771420">۰۲۱-۸۸۷۷ ۱۴۲۰</a><a href="mailto:hello@sovara.ir">hello@sovara.ir</a><span>شنبه تا چهارشنبه، ۹ تا ۱۷</span></div>
+          <div><h3>محصولات</h3><a href="/products" onClick={(event) => navigate(event, '/products')}>مراقبت از سُم</a><a href="/products" onClick={(event) => navigate(event, '/products')}>سلامت پستان</a><a href="/products" onClick={(event) => navigate(event, '/products')}>ضدعفونی دامداری</a><a href="/products" onClick={(event) => navigate(event, '/products')}>بهداشت جایگاه</a></div>
+          <div><h3>راهنما</h3><a href="/about" onClick={(event) => navigate(event, '/about')}>درباره نیکو سلامت</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>پرسش‌های متداول</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>روش ارسال</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>شرایط بازگشت</a></div>
+          <div><h3>ارتباط با ما</h3><a href="tel:+982188771420">۰۲۱-۸۸۷۷ ۱۴۲۰</a><a href="mailto:info@nikoosalamat.ir">info@nikoosalamat.ir</a><span>شنبه تا چهارشنبه، ۹ تا ۱۷</span></div>
         </div>
-        <div className="footer-bottom"><span>© ۱۴۰۵ سُوارا؛ همه حقوق محفوظ است.</span><span>ساخته‌شده با احترام به اسب و طبیعت</span></div>
+        <div className="footer-bottom"><span>© ۱۴۰۵ نیکو سلامت؛ همه حقوق محفوظ است.</span><span>با احترام به دام، دامدار و طبیعت</span></div>
       </footer>}
 
       {notice && <div className="toast" role="status"><span>✓</span>{notice}</div>}

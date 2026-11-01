@@ -73,7 +73,7 @@ a { color: inherit; text-decoration: none; }
 .search-panel button { width: 38px; height: 38px; display: grid; place-items: center; border: 0; border-radius: 50%; background: #f5f0e8; }
 
 .hero { min-height: 670px; display: grid; grid-template-columns: 54% 46%; direction: ltr; background: #eee3d5; }
-.hero-image { position: relative; min-height: 670px; background: linear-gradient(90deg, transparent 68%, #eee3d5 100%), url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=1600&q=82') 53% center / cover no-repeat; }
+.hero-image { position: relative; min-height: 670px; background: linear-gradient(90deg, transparent 68%, #eee3d5 100%), url('/images/nikoosalamat-hero.png') 53% center / cover no-repeat; }
 .hero-image::after { content: ''; position: absolute; inset: auto 0 0; height: 28%; background: linear-gradient(transparent, rgba(44, 29, 22, .2)); }
 .hero-copy { width: 100%; min-width: 0; padding: 110px clamp(38px, 5vw, 92px) 78px 36px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; direction: rtl; }
 .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--wine); font-size: 13px; font-weight: 700; letter-spacing: .1px; }
@@ -232,7 +232,7 @@ h1 em, h2 em { color: var(--wine); font-style: normal; }
 .about-copy p { margin: 0 0 15px; color: #6d645d; font-size: 14px; line-height: 2.15; }
 .about-copy .button { margin-top: 18px; }
 .about-visual { position: relative; padding: 0 0 50px 48px; }
-.about-image { min-height: 530px; background: linear-gradient(0deg, rgba(46,30,23,.12), transparent), url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=1600&q=82') 48% center / cover; border-radius: 120px 8px 8px 8px; }
+.about-image { min-height: 530px; background: linear-gradient(0deg, rgba(46,30,23,.12), transparent), url('/images/nikoosalamat-about.png') 48% center / cover; border-radius: 120px 8px 8px 8px; }
 .about-quote { position: absolute; left: 0; bottom: 0; width: 260px; padding: 28px; color: white; background: var(--wine); border-radius: 5px; font-size: 17px; font-weight: 650; line-height: 1.9; box-shadow: 0 18px 35px rgba(74,38,40,.2); }
 .values-section { color: white; background: #343c31; }
 .values-inner { padding-top: 92px; padding-bottom: 100px; }
@@ -358,7 +358,7 @@ h1 em, h2 em { color: var(--wine); font-style: normal; }
   .submenu .submenu { padding-right: 15px; }
   .submenu .submenu .nav-link { color: #756b63; font-size: 11px; }
   .hero { min-height: auto; grid-template-columns: minmax(0, 1fr); }
-  .hero-image { min-height: 500px; background-image: linear-gradient(0deg, #eee3d5 0%, transparent 28%), url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=1600&q=82'); background-position: center; }
+  .hero-image { min-height: 500px; background-image: linear-gradient(0deg, #eee3d5 0%, transparent 28%), url('/images/nikoosalamat-hero.png'); background-position: center; }
   .hero-copy { padding: 56px 28px 60px; }
   .hero-copy > p { font-size: 15px; }
   .hero-trust { margin-top: 48px; }

@@ -136,6 +136,44 @@ if ($adminPasswordReady) {
     }
 }
 
+// Apply this content refresh once, preserving future edits made from the admin panel.
+$db->exec('CREATE TABLE IF NOT EXISTS app_meta (meta_key TEXT PRIMARY KEY, meta_value TEXT NOT NULL)');
+$contentVersion = $db->query("SELECT meta_value FROM app_meta WHERE meta_key = 'content_version'")->fetchColumn();
+if ($contentVersion !== 'nikoosalamat-2026-01') {
+    $productUpdates = [
+        ['هوف ژل فارمیکو', 'مراقبت از سُم', 'tin', 'پرفروش', '/images/hoof-gel.png', 'arnica-hoof-oil'],
+        ['پماد پستان فارمیکو', 'سلامت پستان', 'jar', 'پیشنهادی', '/images/udder-ointment.png', 'mane-shine-spray'],
+        ['محلول ویروگاردیا', 'ضدعفونی دامداری', 'bottle', null, '/images/virucardia-solution.png', 'herbal-shampoo'],
+        ['اسپری سُم فارمیکو', 'مراقبت از سُم', 'spray', null, '/images/hoof-spray.png', 'muscle-relief-balm'],
+        ['محلول بهداشت جایگاه دام', 'بهداشت دامداری', 'bottle', null, '/images/barn-hygiene.png', 'daily-coat-brush'],
+        ['پاک‌کننده سُم فارمیکو', 'مراقبت از سُم', 'bottle', null, '/images/hoof-cleaner.png', 'hoof-cleaner'],
+    ];
+    $db->beginTransaction();
+    $statement = $db->prepare(
+        'UPDATE products SET name = ?, category = ?, shape = ?, badge = ?, image_url = ? WHERE slug = ?'
+    );
+    foreach ($productUpdates as $productUpdate) {
+        $statement->execute($productUpdate);
+    }
+    $categoryUpdates = [
+        ['مراقبت از سُم', 'پیشگیری و مراقبت برای حرکت سالم دام', 'hoof', 'gold', 1, 'coat-care'],
+        ['سلامت پستان', 'مراقبت روزانه و حمایت از سلامت گله', 'heart', 'rose', 2, 'hoof-care'],
+        ['ضدعفونی دامداری', 'بهداشت محیط، تجهیزات و جایگاه دام', 'shield', 'green', 3, 'protection'],
+        ['بهداشت دام و اسب', 'محصولات کاربردی برای مراقبت حرفه‌ای', 'spray', 'blue', 4, 'grooming'],
+    ];
+    $statement = $db->prepare(
+        'UPDATE categories SET name = ?, description = ?, icon = ?, color = ?, sort_order = ? WHERE slug = ?'
+    );
+    foreach ($categoryUpdates as $categoryUpdate) {
+        $statement->execute($categoryUpdate);
+    }
+    $statement = $db->prepare(
+        "INSERT OR REPLACE INTO app_meta (meta_key, meta_value) VALUES ('content_version', ?)"
+    );
+    $statement->execute(['nikoosalamat-2026-01']);
+    $db->commit();
+}
+
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
 
@@ -186,25 +224,25 @@ if ($method === 'GET' && $path === '/api/home') {
     );
     respond([
         'hero' => [
-            'eyebrow' => 'مراقبت سالم، رفاقت عمیق‌تر',
-            'title' => 'حال خوب اسب،',
-            'highlighted_title' => 'قصه‌ی هر روز ماست.',
-            'description' => 'محصولات تخصصی مراقبت از اسب با ترکیبات گیاهی و فرمولاسیون سازگار؛ طراحی و تولیدشده برای اقلیم ایران.',
+            'eyebrow' => 'دانش دامپزشکی، مراقبت مطمئن',
+            'title' => 'سلامت دام،',
+            'highlighted_title' => 'سرمایه‌ی هر روز شماست.',
+            'description' => 'نیکو سلامت؛ همراه دامداران، اسب‌داران و فعالان کشاورزی با محصولات تخصصی مراقبت، بهداشت و پیشگیری متناسب با نیازهای دامداری ایران.',
             'primary_action' => 'مشاهده محصولات',
             'secondary_action' => 'بیشتر درباره ما',
         ],
         'benefits' => [
-            ['title' => 'ترکیبات گیاهی', 'description' => 'ملایم و سازگار با پوست', 'icon' => 'leaf'],
-            ['title' => 'تضمین اصالت', 'description' => 'تولید با مواد اولیه مرغوب', 'icon' => 'shield'],
+            ['title' => 'کیفیت قابل اعتماد', 'description' => 'انتخاب محصولات تخصصی و کاربردی', 'icon' => 'leaf'],
+            ['title' => 'راهکارهای دامپزشکی', 'description' => 'برای دام سنگین، اسب و جایگاه', 'icon' => 'shield'],
             ['title' => 'ارسال به سراسر ایران', 'description' => 'تحویل سریع و بسته‌بندی امن', 'icon' => 'truck'],
             ['title' => 'مشاوره تخصصی', 'description' => 'همراه شما در انتخاب بهتر', 'icon' => 'heart'],
         ],
         'categories' => $categories,
         'featured_products' => $products,
         'story' => [
-            'eyebrow' => 'قصه‌ی سُوارا',
-            'title' => 'از دل طبیعت ایران، برای سلامت همراه نجیب شما',
-            'description' => 'ما سُوارا را با یک باور ساده آغاز کردیم: مراقبت خوب باید هم علمی باشد، هم مهربان.',
+            'eyebrow' => 'درباره نیکو سلامت',
+            'title' => 'سلامت پایدار دام، از انتخاب درست آغاز می‌شود',
+            'description' => 'نیکو سلامت با تمرکز بر نیاز واقعی دامداری‌ها و مراکز پرورش اسب، محصولات تخصصی مراقبت از سُم، سلامت پستان، ضدعفونی و بهداشت جایگاه را با رویکردی علمی و مسئولانه عرضه می‌کند.',
         ],
     ]);
 }
