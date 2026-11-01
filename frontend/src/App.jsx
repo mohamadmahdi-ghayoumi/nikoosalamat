@@ -256,44 +256,62 @@ function ProductsPage({ products, onAddToCart }) {
 
 function AboutPage({ navigate }) {
   const values = [
-    { icon: 'leaf', title: 'انتخاب علمی', text: 'معرفی راهکارهایی متناسب با نیاز واقعی دام، اسب و محیط پرورش.' },
-    { icon: 'shield', title: 'کیفیت و اصالت', text: 'ارائه محصولات تخصصی با اطلاعات روشن و قابل پیگیری.' },
-    { icon: 'heart', title: 'پشتیبانی مسئولانه', text: 'همراهی با دامدار برای انتخاب درست و استفاده بهتر از محصول.' },
+    { icon: 'heart', title: 'دامپروری', text: 'راهکارهای تخصصی برای ارتقای سلامت و بهداشت دام و افزایش بهره‌وری پایدار دامداری.' },
+    { icon: 'shield', title: 'پرورش اسب', text: 'محصولات و راهکارهای مراقبتی متناسب با نیازهای سلامت و بهداشت اسب.' },
+    { icon: 'leaf', title: 'کشاورزی', text: 'راهکارهای نوین برای رشد مطلوب گیاهان و کمک به توسعه پایدار کشاورزی.' },
   ]
 
   return (
     <main className="inner-page" id="top">
-      <PageHero eyebrow="درباره نیکو سلامت" title="همراه حرفه‌ای دامداران و فعالان سلامت دام" description="نیکو سلامت با تمرکز بر محصولات تخصصی دام، اسب و بهداشت جایگاه شکل گرفته است." />
+      <PageHero eyebrow="درباره شرکت حال نیکو سلامت" title="همراه سلامت و بهره‌وری، از علم تا مزرعه" description="توسعه راهکارهای تخصصی برای دامپروری، پرورش اسب و کشاورزی با تکیه بر دانش، تجربه و تعهد." />
       <section className="section about-intro">
         <div className="about-copy">
-          <span className="eyebrow">داستان ما</span>
-          <h2>سلامت بهتر، از شناخت درست شروع می‌شود</h2>
-          <p>ما نیازهای روزمره دامداران، دامپزشکان و مراکز پرورش اسب را نقطه شروع انتخاب محصولاتمان قرار داده‌ایم؛ از مراقبت از سُم و سلامت پستان تا ضدعفونی و بهداشت جایگاه.</p>
-          <p>هدف نیکو سلامت ارائه راهکارهای قابل اعتماد، کاربردی و روشن است تا انتخاب محصول برای هر گله و مجموعه ساده‌تر و مطمئن‌تر شود.</p>
-          <button className="button primary" onClick={(event) => navigate(event, '/contact')}>گفت‌وگو با تیم نیکو سلامت <Icon name="arrow" size={18} /></button>
+          <span className="eyebrow">معرفی شرکت</span>
+          <h2>سلامت و بهداشت، پایه‌ی بهره‌وری پایدار</h2>
+          <p>در شرکت حال نیکو سلامت، هدف ما روشن است: ارتقای بهداشت و سلامت در سه حوزه دامپروری، پرورش اسب و کشاورزی. با بیش از سه سال تلاش پیوسته و بهره‌گیری از دانش و تجربه متخصصان این حوزه، موفق به توسعه فرمولاسیون‌های نوین و منطبق با استانداردهای جهانی شده‌ایم.</p>
+          <p>ما همواره در کنار شما هستیم تا بهترین راهکارها و محصولات تخصصی را برای تضمین سلامت دام، اسب و رشد مطلوب گیاهان در اختیارتان قرار دهیم.</p>
+          <p>ما به‌عنوان یک تولیدکننده ایرانی و توزیع‌کننده رسمی محصولات شرکت فارمیوکر (PharmuCare)، مجموعه‌ای متنوع و پیشرفته از محصولات را ارائه می‌کنیم؛ از مراقبت‌های تخصصی سلامت اندام‌های حرکتی دام تا راه‌حل‌های مقابله با تب برفکی و کنترل مگس، با هدف افزایش بهره‌وری و حفظ بهداشت محیط زیست.</p>
+          <button className="button primary" onClick={(event) => navigate(event, '/contact')}>ارتباط با حال نیکو سلامت <Icon name="arrow" size={18} /></button>
         </div>
         <div className="about-visual">
-          <div className="about-image" role="img" aria-label="دامپزشک در دامداری" />
-          <div className="about-quote">«سلامت دام، پایه‌ی تولید پایدار است.»</div>
+          <div className="about-image" role="img" aria-label="دام سالم در محیط دامداری" />
+          <div className="about-quote">«همراه دامداران در مسیر سلامت و بهره‌وری»</div>
         </div>
       </section>
       <section className="values-section">
         <div className="section values-inner">
-          <div className="section-heading center-heading"><div><span className="eyebrow light">ارزش‌های ما</span><h2>چیزی که به آن <em>متعهدیم</em></h2></div></div>
+          <div className="section-heading center-heading"><div><span className="eyebrow light">حوزه‌های فعالیت</span><h2>سه مسیر، یک <em>تعهد</em></h2></div></div>
           <div className="values-grid">
             {values.map((value) => <article key={value.title}><span><Icon name={value.icon} size={29} /></span><h3>{value.title}</h3><p>{value.text}</p></article>)}
           </div>
         </div>
       </section>
       <section className="section about-stats">
-        <div><strong>۶</strong><span>گروه محصول</span></div><i />
+        <div><strong>+۳ سال</strong><span>تلاش و توسعه</span></div><i />
         <div><strong>۳</strong><span>حوزه تخصصی</span></div><i />
-        <div><strong>۱</strong><span>هدف؛ سلامت دام</span></div><i />
-        <div><strong>ایران</strong><span>محدوده خدمت‌رسانی</span></div>
+        <div><strong>ایران</strong><span>تولیدکننده ایرانی</span></div><i />
+        <div><strong>PharmuCare</strong><span>توزیع‌کننده رسمی</span></div>
       </section>
     </main>
   )
 }
+
+const faqItems = [
+  ['محصولات حال نیکو سلامت برای چه کسانی مناسب هستند؟', 'در حال حاضر محصولات این مجموعه در حوزه سلامت و مراقبت دام معرفی می‌شوند و مخاطبان اصلی آن‌ها دامداران، مدیران دامداری‌ها، دامپزشکان و مسئولان بهداشت دام هستند. تمرکز فعلی بر نیازهای دامداری‌های گاو شیری است.'],
+  ['چه محصولاتی در سبد فعلی مجموعه قرار دارند؟', 'محصولات فعلی شامل ژل سم Hoof Gel در قوطی ۴۸۰ گرمی، پماد پستان Udder Balm در قوطی ۴۰۰ گرمی و ویروگاردیا ViroGuardia در بسته‌بندی ۱۰۰۰ میلی‌لیتری هستند.'],
+  ['ژل سم چه کاربردی دارد؟', 'ژل سم فرآورده‌ای موضعی برای مراقبت از سُم دام است که با تمرکز بر مشکلات مرتبط با درماتیت دیجیتال توسعه یافته است. اطلاعات کاربرد و دستورالعمل مصرف در صفحه محصول ارائه می‌شود.'],
+  ['پماد پستان برای کدام ناحیه استفاده می‌شود؟', 'پماد پستان برای مراقبت از پوست خارجی پستان و کمک به حفظ نرمی و رطوبت آن در نظر گرفته شده است. این محصول برای مصرف داخل پستان یا دهان معرفی نشده است.'],
+  ['ویروگاردیا چیست؟', 'ویروگاردیا فرآورده‌ای تخصصی برای مراقبت موضعی و حمایتی از ضایعات دهانی دام، با تمرکز بر ضایعات مرتبط با تب برفکی است. مصرف آن باید مطابق دستورالعمل محصول و زیر نظر دامپزشک انجام شود.'],
+  ['چگونه محصول مناسب را انتخاب کنیم؟', 'انتخاب محصول به محل درگیری، وضعیت دام و نوع مراقبت موردنیاز بستگی دارد. توضیحات صفحه هر محصول را مطالعه کنید و اطلاعات وضعیت دام را با دامپزشک در میان بگذارید.'],
+  ['مقدار و دفعات مصرف محصولات چقدر است؟', 'مقدار، دفعات و مدت مصرف هر محصول باید بر اساس دستورالعمل همان محصول و نظر دامپزشک تعیین شود. دستور مصرف یک محصول را برای محصولات دیگر به کار نبرید.'],
+  ['آیا می‌توان چند محصول را هم‌زمان استفاده کرد؟', 'امکان استفاده هم‌زمان به نوع محصولات، محل مصرف و وضعیت دام بستگی دارد. پیش از ترکیب فرآورده‌ها یا استفاده از چند محصول روی یک ناحیه، با دامپزشک مشورت کنید.'],
+  ['شرایط نگهداری و مدت ماندگاری محصولات چیست؟', 'شرایط نگهداری، تاریخ انقضا و هرگونه محدودیت مصرف پس از بازشدن بسته‌بندی را از روی برچسب همان محصول بررسی کنید.'],
+  ['آیا محصولات در شرایط واقعی دامداری ارزیابی شده‌اند؟', 'تمامی محصولات تولید برند PharmuCare در دامداری‌های صنعتی، تحت نظارت دامپزشکان مجرب ارزیابی میدانی شده‌اند. نتایج عملکرد آن‌ها در محدوده کاربردها و شرایط آزموده‌شده، مورد تأیید دامپزشکان ارزیاب قرار گرفته است.'],
+  ['برای دریافت اطلاعات تکمیلی محصولات چه کنیم؟', 'از راه‌های ارتباطی همین صفحه، نام محصول و پرسش خود را برای ما ارسال کنید.'],
+  ['چگونه از قیمت و موجودی محصولات مطلع شویم؟', 'برای دریافت قیمت و موجودی روز، نوع محصول، تعداد موردنیاز و آدرس خود را از طریق بخش تماس با ما اعلام کنید.'],
+  ['برای خرید عمده یا همکاری در توزیع چگونه اقدام کنیم؟', 'دامداری‌ها، شرکت‌های پخش و فروشندگان محصولات دامپزشکی می‌توانند درخواست خود را همراه با نام مجموعه، محدوده فعالیت، محصولات موردنظر و اطلاعات تماس ارسال کنند تا شرایط همکاری بررسی شود.'],
+  ['هزینه و زمان ارسال سفارش چگونه مشخص می‌شود؟', 'برای اطلاع از روش ارسال، هزینه و زمان تحویل، مشخصات سفارش و آدرس را اعلام کنید و شرایط نهایی را پیش از ثبت سفارش با مجموعه هماهنگ کنید.'],
+]
 
 function ContactPage({ showNotice }) {
   const [sending, setSending] = useState(false)
@@ -317,18 +335,20 @@ function ContactPage({ showNotice }) {
 
   return (
     <main className="inner-page" id="top">
-      <PageHero eyebrow="ارتباط با ما" title="سؤالی دارید؟ کنار شما هستیم" description="برای انتخاب محصول، دریافت مشاوره یا پیگیری سفارش با تیم نیکو سلامت در ارتباط باشید." />
+      <PageHero eyebrow="ارتباط با ما" title="با حال نیکو سلامت در تماس باشید" description="برای دریافت اطلاعات محصولات، استعلام قیمت، ثبت سفارش یا همکاری در توزیع با ما ارتباط بگیرید." />
       <section className="section contact-layout">
         <div className="contact-details">
           <span className="eyebrow">راه‌های ارتباطی</span>
-          <h2>بیایید گفت‌وگو کنیم</h2>
-          <p>کارشناسان ما در ساعات کاری پاسخ‌گوی پرسش‌های شما درباره مراقبت، انتخاب محصول و سفارش‌ها هستند.</p>
+          <h2>پاسخ‌گوی شما هستیم</h2>
+          <p>برای مشاوره محصولات، استعلام موجودی یا بررسی شرایط همکاری می‌توانید از راه‌های زیر با مجموعه در تماس باشید.</p>
           <div className="contact-cards">
-            <a href="tel:+982188771420"><span><Icon name="user" /></span><div><small>تلفن پشتیبانی</small><strong>۰۲۱-۸۸۷۷ ۱۴۲۰</strong></div></a>
+            <a href="tel:+989124283834"><span><Icon name="user" /></span><div><small>مدیر فروش</small><strong>۰۹۱۲۴۲۸۳۸۳۴</strong></div></a>
             <a href="mailto:info@nikoosalamat.ir"><span><Icon name="heart" /></span><div><small>ایمیل</small><strong>info@nikoosalamat.ir</strong></div></a>
-            <div><span><Icon name="shield" /></span><div><small>ساعات پاسخ‌گویی</small><strong>شنبه تا چهارشنبه، ۹ تا ۱۷</strong></div></div>
+            <a href="https://t.me/nikoosalamat" target="_blank" rel="noreferrer"><span><Icon name="leaf" /></span><div><small>تلگرام</small><strong dir="ltr">@nikoosalamat</strong></div></a>
+            <div><span><Icon name="shield" /></span><div><small>آدرس</small><strong>شهر قدس، بلوار ۴۵ متری انقلاب، کوی صنعت، پلاک ۵</strong></div></div>
+            <div><span><Icon name="bag" /></span><div><small>کد پستی</small><strong>۳۱۱۴۸۱۵۹۵۵</strong></div></div>
           </div>
-          <div className="contact-note"><Icon name="leaf" /><p>برای مشاوره دقیق‌تر، نوع دام، سن و موضوع موردنظرتان را در پیام بنویسید.</p></div>
+          <div className="contact-note"><Icon name="leaf" /><p>برای پاسخ‌گویی دقیق‌تر، نام محصول، تعداد موردنیاز و موضوع درخواست خود را در پیام بنویسید.</p></div>
         </div>
         <form className="contact-form" onSubmit={submitContact}>
           <div className="form-heading"><span>فرم تماس</span><h2>پیامتان را برای ما بنویسید</h2></div>
@@ -341,6 +361,19 @@ function ContactPage({ showNotice }) {
           <button className="button primary" type="submit" disabled={sending}>{sending ? 'در حال ارسال...' : 'ارسال پیام'} <Icon name="arrow" size={18} /></button>
           <p className="form-privacy">اطلاعات شما فقط برای پاسخ‌گویی به همین پیام استفاده می‌شود.</p>
         </form>
+      </section>
+      <section className="faq-section" id="faq">
+        <div className="section faq-inner">
+          <div className="section-heading center-heading"><div><span className="eyebrow">راهنمای محصولات و سفارش</span><h2>سؤالات <em>متداول</em></h2><p>پاسخ پرسش‌های رایج درباره محصولات، نحوه مصرف، سفارش و همکاری</p></div></div>
+          <div className="faq-list">
+            {faqItems.map(([question, answer], index) => (
+              <details key={question} open={index === 0}>
+                <summary>{question}<span aria-hidden="true">+</span></summary>
+                <p>{answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
       </section>
     </main>
   )
@@ -610,7 +643,7 @@ export default function App() {
       <div className="announcement">
         <span>ارسال رایگان سفارش‌های بالای ۱٬۵۰۰٬۰۰۰ تومان</span>
         <span className="announcement-dot" />
-        <span>مشاوره رایگان انتخاب محصول: ۰۲۱-۸۸۷۷ ۱۴۲۰</span>
+        <span>ارتباط با مدیر فروش: ۰۹۱۲۴۲۸۳۸۳۴</span>
       </div>
 
       <header className="header">
@@ -748,7 +781,7 @@ export default function App() {
           </div>
           <div><h3>محصولات</h3><a href="/products" onClick={(event) => navigate(event, '/products')}>مراقبت از سُم</a><a href="/products" onClick={(event) => navigate(event, '/products')}>سلامت پستان</a><a href="/products" onClick={(event) => navigate(event, '/products')}>ضدعفونی دامداری</a><a href="/products" onClick={(event) => navigate(event, '/products')}>بهداشت جایگاه</a></div>
           <div><h3>راهنما</h3><a href="/about" onClick={(event) => navigate(event, '/about')}>درباره نیکو سلامت</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>پرسش‌های متداول</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>روش ارسال</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>شرایط بازگشت</a></div>
-          <div><h3>ارتباط با ما</h3><a href="tel:+982188771420">۰۲۱-۸۸۷۷ ۱۴۲۰</a><a href="mailto:info@nikoosalamat.ir">info@nikoosalamat.ir</a><span>شنبه تا چهارشنبه، ۹ تا ۱۷</span></div>
+          <div><h3>ارتباط با ما</h3><a href="tel:+989124283834">۰۹۱۲۴۲۸۳۸۳۴</a><a href="mailto:info@nikoosalamat.ir">info@nikoosalamat.ir</a><a href="https://t.me/nikoosalamat" target="_blank" rel="noreferrer">@nikoosalamat</a><span>شهر قدس، کوی صنعت، پلاک ۵</span></div>
         </div>
         <div className="footer-bottom"><span>© ۱۴۰۵ نیکو سلامت؛ همه حقوق محفوظ است.</span><span>با احترام به دام، دامدار و طبیعت</span></div>
       </footer>}
