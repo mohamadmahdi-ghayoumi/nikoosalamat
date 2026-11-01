@@ -593,8 +593,6 @@ export default function App() {
   const products = homeData?.featured_products ?? fallbackProducts
   const hero = homeData?.hero ?? fallbackHero
   const benefits = homeData?.benefits ?? fallbackBenefits
-  const story = homeData?.story ?? fallbackStory
-
   const navigate = (event, path) => {
     event?.preventDefault()
     if (window.location.pathname !== path) window.history.pushState({}, '', path)
@@ -740,15 +738,10 @@ export default function App() {
           <button className="button outline products-cta" onClick={(event) => navigate(event, '/products')}>دیدن همه محصولات <Icon name="arrow" size={18} /></button>
         </section>
 
-        <section className="story-section" id="story">
-          <div className="story-pattern" aria-hidden="true">♞</div>
-          <div className="story-copy">
-            <span className="eyebrow light">{story.eyebrow}</span>
-            <h2>{story.title}</h2>
-            <p>{story.description}</p>
-            <a href="/about" onClick={(event) => navigate(event, '/about')} className="button light-button">داستان ما را بخوانید <Icon name="arrow" size={18} /></a>
-          </div>
-          <div className="story-seal"><Icon name="leaf" size={28} /><span>طبیعی و مسئولانه</span></div>
+        <section className="story-video-section" id="story" aria-label="معرفی تصویری حال نیکو سلامت">
+          <video autoPlay muted loop playsInline preload="metadata" aria-label="ویدیوی معرفی حال نیکو سلامت">
+            <source src="/videos/hns-site-cover.mp4" type="video/mp4" />
+          </video>
         </section>
 
         <section className="newsletter" id="contact">
