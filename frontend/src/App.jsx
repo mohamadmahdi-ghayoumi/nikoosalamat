@@ -685,7 +685,7 @@ export default function App() {
 
       {currentPath === '/' && <main id="top">
         <section className="hero-poster" aria-label="معرفی محصولات حال نیکو سلامت">
-          <img src="/images/hns-home-poster.jpg" alt="پوستر حال نیکو سلامت؛ همراه دامداران در مسیر سلامت و بهره‌وری" />
+          <img src="/images/hns-home-banner.png" alt="حال نیکو سلامت؛ از علم تا مزرعه، با حال نیک" />
         </section>
 
         <section className="benefits" aria-label="مزایای خرید از نیکو سلامت">
