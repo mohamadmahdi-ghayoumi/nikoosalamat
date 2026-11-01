@@ -1,0 +1,17 @@
+Options -Indexes
+RewriteEngine On
+
+# Never expose application data or configuration files.
+RewriteRule ^app(?:/|$) - [F,L,NC]
+RewriteRule ^config\.php$ - [F,L,NC]
+
+# Serve real assets and uploaded images directly.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Route every API endpoint to the PHP front controller.
+RewriteRule ^api(?:/.*)?$ api.php [QSA,L,NC]
+
+# React client-side routes such as /admin and /products.
+RewriteRule ^ index.html [L]
