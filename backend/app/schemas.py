@@ -55,6 +55,54 @@ class ProductCreateIn(BaseModel):
     image_data: str | None = None
 
 
+class ContentPage(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    slug: str
+    eyebrow: str
+    title: str
+    summary: str
+    body: str
+    image_url: str | None = None
+    published: bool
+    updated_at: str
+
+
+class ContentPageUpdateIn(BaseModel):
+    eyebrow: str = Field(min_length=2, max_length=80)
+    title: str = Field(min_length=2, max_length=160)
+    summary: str = Field(min_length=2, max_length=500)
+    body: str = Field(min_length=2, max_length=20_000)
+    published: bool = True
+    image_data: str | None = None
+    remove_image: bool = False
+
+
+class Article(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    slug: str
+    title: str
+    excerpt: str
+    body: str
+    image_url: str | None = None
+    published: bool
+    created_at: str
+    updated_at: str
+
+
+class ArticleWriteIn(BaseModel):
+    slug: str = Field(min_length=2, max_length=100, pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+    title: str = Field(min_length=2, max_length=180)
+    excerpt: str = Field(min_length=2, max_length=500)
+    body: str = Field(min_length=2, max_length=30_000)
+    published: bool = True
+    image_data: str | None = None
+    remove_image: bool = False
+
+
 class Benefit(BaseModel):
     title: str
     description: str

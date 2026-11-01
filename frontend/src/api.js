@@ -2,7 +2,7 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '' 
 
 async function request(path, options = {}) {
   const controller = new AbortController()
-  const timeout = window.setTimeout(() => controller.abort(), 7000)
+  const timeout = window.setTimeout(() => controller.abort(), 30000)
 
   try {
     const response = await fetch(`${API_BASE_URL}${path}`, {
@@ -28,6 +28,12 @@ async function request(path, options = {}) {
 export const getHomeData = () => request('/api/home')
 
 export const getProducts = () => request('/api/products')
+
+export const getContentPage = (slug) => request(`/api/pages/${slug}`)
+
+export const getArticles = () => request('/api/articles')
+
+export const getArticle = (slug) => request(`/api/articles/${slug}`)
 
 export const subscribeNewsletter = (mobile) => request('/api/newsletter', {
   method: 'POST',
@@ -67,6 +73,37 @@ export const createAdminProduct = (token, product) => request('/api/admin/produc
 })
 
 export const deleteAdminProduct = (token, productId) => request(`/api/admin/products/${productId}`, {
+  method: 'DELETE',
+  headers: adminHeaders(token),
+})
+
+export const getAdminPages = (token) => request('/api/admin/pages', {
+  headers: adminHeaders(token),
+})
+
+export const updateAdminPage = (token, pageId, page) => request(`/api/admin/pages/${pageId}`, {
+  method: 'PUT',
+  headers: adminHeaders(token),
+  body: JSON.stringify(page),
+})
+
+export const getAdminArticles = (token) => request('/api/admin/articles', {
+  headers: adminHeaders(token),
+})
+
+export const createAdminArticle = (token, article) => request('/api/admin/articles', {
+  method: 'POST',
+  headers: adminHeaders(token),
+  body: JSON.stringify(article),
+})
+
+export const updateAdminArticle = (token, articleId, article) => request(`/api/admin/articles/${articleId}`, {
+  method: 'PUT',
+  headers: adminHeaders(token),
+  body: JSON.stringify(article),
+})
+
+export const deleteAdminArticle = (token, articleId) => request(`/api/admin/articles/${articleId}`, {
   method: 'DELETE',
   headers: adminHeaders(token),
 })

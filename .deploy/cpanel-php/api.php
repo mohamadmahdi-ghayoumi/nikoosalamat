@@ -103,6 +103,40 @@ function productRow(array $row): array
     return $row;
 }
 
+function contentRow(array $row): array
+{
+    $row['id'] = (int) $row['id'];
+    $row['published'] = (bool) $row['published'];
+    return $row;
+}
+
+function saveImage(?string $imageData, string $uploadDir): ?string
+{
+    if (!$imageData) {
+        return null;
+    }
+    if (!preg_match('#^data:image/(jpeg|png|webp);base64,(.+)$#s', $imageData, $matches)) {
+        fail('فرمت تصویر باید JPG، PNG یا WebP باشد', 422);
+    }
+    $binary = base64_decode($matches[2], true);
+    if ($binary === false || strlen($binary) > 3 * 1024 * 1024) {
+        fail('تصویر نامعتبر یا بزرگ‌تر از ۳ مگابایت است', 422);
+    }
+    $extension = $matches[1] === 'jpeg' ? 'jpg' : $matches[1];
+    $filename = bin2hex(random_bytes(16)) . '.' . $extension;
+    if (file_put_contents($uploadDir . '/' . $filename, $binary, LOCK_EX) === false) {
+        fail('ذخیره تصویر انجام نشد', 500);
+    }
+    return '/uploads/' . $filename;
+}
+
+function removeUploadedImage(?string $imageUrl, string $uploadDir): void
+{
+    if ($imageUrl && str_starts_with($imageUrl, '/uploads/')) {
+        @unlink($uploadDir . '/' . basename($imageUrl));
+    }
+}
+
 try {
     $db = new PDO('sqlite:' . $dataDir . '/sovara.db', null, null, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -112,6 +146,46 @@ try {
     $db->exec('PRAGMA busy_timeout = 5000');
 } catch (Throwable $error) {
     fail('دیتابیس در دسترس نیست؛ افزونه PDO_SQLite هاست را فعال کنید', 503);
+}
+
+$db->exec(
+    'CREATE TABLE IF NOT EXISTS content_pages (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        slug TEXT NOT NULL UNIQUE,
+        eyebrow TEXT NOT NULL,
+        title TEXT NOT NULL,
+        summary TEXT NOT NULL,
+        body TEXT NOT NULL,
+        image_url TEXT,
+        published INTEGER NOT NULL DEFAULT 1,
+        updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    )'
+);
+$db->exec(
+    'CREATE TABLE IF NOT EXISTS articles (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        slug TEXT NOT NULL UNIQUE,
+        title TEXT NOT NULL,
+        excerpt TEXT NOT NULL,
+        body TEXT NOT NULL,
+        image_url TEXT,
+        published INTEGER NOT NULL DEFAULT 1,
+        created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    )'
+);
+
+$seedPages = [
+    ['hoof-care', 'مراقبت تخصصی', 'مراقبت از سُم', 'راهکارهای پیشگیری و مراقبت برای حرکت سالم دام', 'در این صفحه می‌توانید معرفی محصولات، نکات مراقبتی و محتوای مرتبط با سلامت سُم را منتشر کنید.'],
+    ['udder-health', 'سلامت گله', 'سلامت پستان', 'مراقبت روزانه و حمایت از سلامت پستان دام', 'این صفحه برای معرفی راهکارها، محصولات و مطالب آموزشی مرتبط با سلامت پستان در نظر گرفته شده است.'],
+    ['farm-disinfection', 'بهداشت دامداری', 'ضدعفونی دامداری', 'بهداشت محیط، تجهیزات و جایگاه دام', 'در این بخش می‌توانید روش‌ها و محصولات مرتبط با ضدعفونی و مدیریت بهداشت جایگاه را معرفی کنید.'],
+    ['animal-hygiene', 'مراقبت حرفه‌ای', 'بهداشت دام و اسب', 'محصولات و مطالب کاربردی برای مراقبت حرفه‌ای', 'این صفحه محل انتشار راهکارهای بهداشتی و مراقبتی ویژه دام و اسب است.'],
+];
+$seedStatement = $db->prepare(
+    'INSERT OR IGNORE INTO content_pages (slug, eyebrow, title, summary, body, published) VALUES (?, ?, ?, ?, ?, 1)'
+);
+foreach ($seedPages as $seedPage) {
+    $seedStatement->execute($seedPage);
 }
 
 $adminPasswordReady = ($config['admin_password'] ?? '') !== 'CHANGE_ME_BEFORE_UPLOAD'
@@ -212,6 +286,31 @@ if ($method === 'GET' && preg_match('#^/api/products/(\d+)$#', $path, $matches))
     respond(productRow($product));
 }
 
+if ($method === 'GET' && preg_match('#^/api/pages/([a-z0-9-]+)$#', $path, $matches)) {
+    $statement = $db->prepare('SELECT * FROM content_pages WHERE slug = ? AND published = 1');
+    $statement->execute([$matches[1]]);
+    $page = $statement->fetch();
+    if (!$page) {
+        fail('صفحه پیدا نشد', 404);
+    }
+    respond(contentRow($page));
+}
+
+if ($method === 'GET' && $path === '/api/articles') {
+    $rows = $db->query('SELECT * FROM articles WHERE published = 1 ORDER BY created_at DESC, id DESC')->fetchAll();
+    respond(array_map('contentRow', $rows));
+}
+
+if ($method === 'GET' && preg_match('#^/api/articles/([a-z0-9-]+)$#', $path, $matches)) {
+    $statement = $db->prepare('SELECT * FROM articles WHERE slug = ? AND published = 1');
+    $statement->execute([$matches[1]]);
+    $article = $statement->fetch();
+    if (!$article) {
+        fail('مقاله پیدا نشد', 404);
+    }
+    respond(contentRow($article));
+}
+
 if ($method === 'GET' && $path === '/api/home') {
     $categories = $db->query('SELECT * FROM categories ORDER BY sort_order, id')->fetchAll();
     foreach ($categories as &$category) {
@@ -298,23 +397,7 @@ if ($method === 'POST' && $path === '/api/admin/products') {
         fail('اطلاعات محصول معتبر نیست', 422);
     }
 
-    $imageUrl = null;
-    $imageData = $payload['image_data'] ?? null;
-    if ($imageData) {
-        if (!preg_match('#^data:image/(jpeg|png|webp);base64,(.+)$#s', (string) $imageData, $matches)) {
-            fail('فرمت تصویر باید JPG، PNG یا WebP باشد', 422);
-        }
-        $binary = base64_decode($matches[2], true);
-        if ($binary === false || strlen($binary) > 3 * 1024 * 1024) {
-            fail('تصویر نامعتبر یا بزرگ‌تر از ۳ مگابایت است', 422);
-        }
-        $extension = $matches[1] === 'jpeg' ? 'jpg' : $matches[1];
-        $filename = bin2hex(random_bytes(16)) . '.' . $extension;
-        if (file_put_contents($uploadDir . '/' . $filename, $binary, LOCK_EX) === false) {
-            fail('ذخیره تصویر انجام نشد', 500);
-        }
-        $imageUrl = '/uploads/' . $filename;
-    }
+    $imageUrl = saveImage(isset($payload['image_data']) ? (string) $payload['image_data'] : null, $uploadDir);
 
     try {
         $statement = $db->prepare(
@@ -341,6 +424,128 @@ if ($method === 'POST' && $path === '/api/admin/products') {
     $statement = $db->prepare('SELECT * FROM products WHERE id = ?');
     $statement->execute([(int) $db->lastInsertId()]);
     respond(productRow($statement->fetch()), 201);
+}
+
+if ($method === 'GET' && $path === '/api/admin/pages') {
+    requireAdmin($db);
+    respond(array_map('contentRow', $db->query('SELECT * FROM content_pages ORDER BY id')->fetchAll()));
+}
+
+if ($method === 'PUT' && preg_match('#^/api/admin/pages/(\d+)$#', $path, $matches)) {
+    requireAdmin($db);
+    $pageId = (int) $matches[1];
+    $statement = $db->prepare('SELECT * FROM content_pages WHERE id = ?');
+    $statement->execute([$pageId]);
+    $current = $statement->fetch();
+    if (!$current) {
+        fail('صفحه پیدا نشد', 404);
+    }
+    $payload = body();
+    $eyebrow = trim((string) ($payload['eyebrow'] ?? ''));
+    $title = trim((string) ($payload['title'] ?? ''));
+    $summary = trim((string) ($payload['summary'] ?? ''));
+    $pageBody = trim((string) ($payload['body'] ?? ''));
+    if (stringLength($eyebrow) < 2 || stringLength($eyebrow) > 80
+        || stringLength($title) < 2 || stringLength($title) > 160
+        || stringLength($summary) < 2 || stringLength($summary) > 500
+        || stringLength($pageBody) < 2 || stringLength($pageBody) > 20000) {
+        fail('اطلاعات صفحه معتبر نیست', 422);
+    }
+    $newImage = saveImage(isset($payload['image_data']) ? (string) $payload['image_data'] : null, $uploadDir);
+    $imageUrl = $newImage ?: (!empty($payload['remove_image']) ? null : $current['image_url']);
+    $statement = $db->prepare(
+        'UPDATE content_pages SET eyebrow = ?, title = ?, summary = ?, body = ?, image_url = ?, published = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
+    );
+    $statement->execute([$eyebrow, $title, $summary, $pageBody, $imageUrl, !empty($payload['published']) ? 1 : 0, $pageId]);
+    if (($newImage || !empty($payload['remove_image'])) && $current['image_url'] !== $imageUrl) {
+        removeUploadedImage($current['image_url'], $uploadDir);
+    }
+    $statement = $db->prepare('SELECT * FROM content_pages WHERE id = ?');
+    $statement->execute([$pageId]);
+    respond(contentRow($statement->fetch()));
+}
+
+if ($method === 'GET' && $path === '/api/admin/articles') {
+    requireAdmin($db);
+    respond(array_map('contentRow', $db->query('SELECT * FROM articles ORDER BY created_at DESC, id DESC')->fetchAll()));
+}
+
+if ($method === 'POST' && $path === '/api/admin/articles') {
+    requireAdmin($db);
+    $payload = body();
+    $slug = trim((string) ($payload['slug'] ?? ''));
+    $title = trim((string) ($payload['title'] ?? ''));
+    $excerpt = trim((string) ($payload['excerpt'] ?? ''));
+    $articleBody = trim((string) ($payload['body'] ?? ''));
+    if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug)
+        || stringLength($title) < 2 || stringLength($title) > 180
+        || stringLength($excerpt) < 2 || stringLength($excerpt) > 500
+        || stringLength($articleBody) < 2 || stringLength($articleBody) > 30000) {
+        fail('اطلاعات مقاله معتبر نیست', 422);
+    }
+    $imageUrl = saveImage(isset($payload['image_data']) ? (string) $payload['image_data'] : null, $uploadDir);
+    try {
+        $statement = $db->prepare('INSERT INTO articles (slug, title, excerpt, body, image_url, published) VALUES (?, ?, ?, ?, ?, ?)');
+        $statement->execute([$slug, $title, $excerpt, $articleBody, $imageUrl, !empty($payload['published']) ? 1 : 0]);
+    } catch (PDOException $error) {
+        removeUploadedImage($imageUrl, $uploadDir);
+        fail('این شناسه مقاله قبلاً استفاده شده است', 409);
+    }
+    $statement = $db->prepare('SELECT * FROM articles WHERE id = ?');
+    $statement->execute([(int) $db->lastInsertId()]);
+    respond(contentRow($statement->fetch()), 201);
+}
+
+if ($method === 'PUT' && preg_match('#^/api/admin/articles/(\d+)$#', $path, $matches)) {
+    requireAdmin($db);
+    $articleId = (int) $matches[1];
+    $statement = $db->prepare('SELECT * FROM articles WHERE id = ?');
+    $statement->execute([$articleId]);
+    $current = $statement->fetch();
+    if (!$current) {
+        fail('مقاله پیدا نشد', 404);
+    }
+    $payload = body();
+    $slug = trim((string) ($payload['slug'] ?? ''));
+    $title = trim((string) ($payload['title'] ?? ''));
+    $excerpt = trim((string) ($payload['excerpt'] ?? ''));
+    $articleBody = trim((string) ($payload['body'] ?? ''));
+    if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug)
+        || stringLength($title) < 2 || stringLength($title) > 180
+        || stringLength($excerpt) < 2 || stringLength($excerpt) > 500
+        || stringLength($articleBody) < 2 || stringLength($articleBody) > 30000) {
+        fail('اطلاعات مقاله معتبر نیست', 422);
+    }
+    $newImage = saveImage(isset($payload['image_data']) ? (string) $payload['image_data'] : null, $uploadDir);
+    $imageUrl = $newImage ?: (!empty($payload['remove_image']) ? null : $current['image_url']);
+    try {
+        $statement = $db->prepare(
+            'UPDATE articles SET slug = ?, title = ?, excerpt = ?, body = ?, image_url = ?, published = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
+        );
+        $statement->execute([$slug, $title, $excerpt, $articleBody, $imageUrl, !empty($payload['published']) ? 1 : 0, $articleId]);
+    } catch (PDOException $error) {
+        removeUploadedImage($newImage, $uploadDir);
+        fail('این شناسه مقاله قبلاً استفاده شده است', 409);
+    }
+    if (($newImage || !empty($payload['remove_image'])) && $current['image_url'] !== $imageUrl) {
+        removeUploadedImage($current['image_url'], $uploadDir);
+    }
+    $statement = $db->prepare('SELECT * FROM articles WHERE id = ?');
+    $statement->execute([$articleId]);
+    respond(contentRow($statement->fetch()));
+}
+
+if ($method === 'DELETE' && preg_match('#^/api/admin/articles/(\d+)$#', $path, $matches)) {
+    requireAdmin($db);
+    $statement = $db->prepare('SELECT image_url FROM articles WHERE id = ?');
+    $statement->execute([(int) $matches[1]]);
+    $article = $statement->fetch();
+    if (!$article) {
+        fail('مقاله پیدا نشد', 404);
+    }
+    $db->prepare('DELETE FROM articles WHERE id = ?')->execute([(int) $matches[1]]);
+    removeUploadedImage($article['image_url'], $uploadDir);
+    respond(null, 204);
 }
 
 if ($method === 'DELETE' && preg_match('#^/api/admin/products/(\d+)$#', $path, $matches)) {

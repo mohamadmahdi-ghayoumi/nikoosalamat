@@ -96,3 +96,64 @@ def test_admin_auth_protects_product_management():
 
         client.post("/api/admin/logout", headers=headers)
         assert client.get("/api/admin/me", headers=headers).status_code == 401
+
+
+def test_admin_can_edit_pages_and_publish_articles():
+    article_slug = "cms-api-test-article"
+    with connect() as connection:
+        connection.execute("DELETE FROM articles WHERE slug = ?", (article_slug,))
+
+    with TestClient(app) as client:
+        login = client.post(
+            "/api/admin/login",
+            json={
+                "username": os.getenv("SOVARA_ADMIN_USERNAME", "admin"),
+                "password": os.getenv("SOVARA_ADMIN_PASSWORD", "1234"),
+            },
+        )
+        headers = {"Authorization": f"Bearer {login.json()['token']}"}
+
+        pages = client.get("/api/admin/pages", headers=headers)
+        assert pages.status_code == 200
+        page = pages.json()[0]
+        updated = client.put(
+            f"/api/admin/pages/{page['id']}",
+            headers=headers,
+            json={
+                "eyebrow": page["eyebrow"],
+                "title": page["title"],
+                "summary": page["summary"],
+                "body": page["body"] + "\n\nمتن آزمایشی",
+                "published": True,
+            },
+        )
+        assert updated.status_code == 200
+        assert client.get(f"/api/pages/{page['slug']}").status_code == 200
+
+        created = client.post(
+            "/api/admin/articles",
+            headers=headers,
+            json={
+                "slug": article_slug,
+                "title": "مقاله آزمایشی",
+                "excerpt": "خلاصه مقاله آزمایشی",
+                "body": "متن کامل مقاله آزمایشی برای بررسی سامانه مدیریت محتوا.",
+                "published": True,
+            },
+        )
+        assert created.status_code == 201
+        article_id = created.json()["id"]
+        assert client.get(f"/api/articles/{article_slug}").status_code == 200
+        assert client.delete(f"/api/admin/articles/{article_id}", headers=headers).status_code == 204
+
+        client.put(
+            f"/api/admin/pages/{page['id']}",
+            headers=headers,
+            json={
+                "eyebrow": page["eyebrow"],
+                "title": page["title"],
+                "summary": page["summary"],
+                "body": page["body"],
+                "published": page["published"],
+            },
+        )

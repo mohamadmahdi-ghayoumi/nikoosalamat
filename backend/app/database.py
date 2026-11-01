@@ -50,6 +50,13 @@ PRODUCTS = [
     ("hoof-cleaner", "پاک‌کننده سُم فارمیکو", "مراقبت از سُم", 410_000, "amber", "bottle", None, 0, "/images/hoof-cleaner.jpg"),
 ]
 
+CONTENT_PAGES = [
+    ("hoof-care", "مراقبت تخصصی", "مراقبت از سُم", "راهکارهای پیشگیری و مراقبت برای حرکت سالم دام", "در این صفحه می‌توانید معرفی محصولات، نکات مراقبتی و محتوای مرتبط با سلامت سُم را منتشر کنید.", None, 1),
+    ("udder-health", "سلامت گله", "سلامت پستان", "مراقبت روزانه و حمایت از سلامت پستان دام", "این صفحه برای معرفی راهکارها، محصولات و مطالب آموزشی مرتبط با سلامت پستان در نظر گرفته شده است.", None, 1),
+    ("farm-disinfection", "بهداشت دامداری", "ضدعفونی دامداری", "بهداشت محیط، تجهیزات و جایگاه دام", "در این بخش می‌توانید روش‌ها و محصولات مرتبط با ضدعفونی و مدیریت بهداشت جایگاه را معرفی کنید.", None, 1),
+    ("animal-hygiene", "مراقبت حرفه‌ای", "بهداشت دام و اسب", "محصولات و مطالب کاربردی برای مراقبت حرفه‌ای", "این صفحه محل انتشار راهکارهای بهداشتی و مراقبتی ویژه دام و اسب است.", None, 1),
+]
+
 
 def connect() -> sqlite3.Connection:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -113,6 +120,30 @@ def init_database() -> None:
                 message TEXT NOT NULL,
                 created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
             );
+
+            CREATE TABLE IF NOT EXISTS content_pages (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                slug TEXT NOT NULL UNIQUE,
+                eyebrow TEXT NOT NULL,
+                title TEXT NOT NULL,
+                summary TEXT NOT NULL,
+                body TEXT NOT NULL,
+                image_url TEXT,
+                published INTEGER NOT NULL DEFAULT 1,
+                updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+
+            CREATE TABLE IF NOT EXISTS articles (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                slug TEXT NOT NULL UNIQUE,
+                title TEXT NOT NULL,
+                excerpt TEXT NOT NULL,
+                body TEXT NOT NULL,
+                image_url TEXT,
+                published INTEGER NOT NULL DEFAULT 1,
+                created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
             """
         )
 
@@ -139,6 +170,15 @@ def init_database() -> None:
                 """,
                 PRODUCTS,
             )
+
+        connection.executemany(
+            """
+            INSERT OR IGNORE INTO content_pages
+                (slug, eyebrow, title, summary, body, image_url, published)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+            CONTENT_PAGES,
+        )
 
         admin_email = os.getenv("SOVARA_ADMIN_USERNAME", "admin").strip().lower()
         admin_password = os.getenv("SOVARA_ADMIN_PASSWORD", "1234")

@@ -25,6 +25,10 @@ from .schemas import (
     NewsletterOut,
     Product,
     ProductCreateIn,
+    ContentPage,
+    ContentPageUpdateIn,
+    Article,
+    ArticleWriteIn,
     AdminLoginIn,
     AdminMeOut,
     AdminSessionOut,
@@ -92,7 +96,7 @@ def require_admin(authorization: str | None = Header(default=None)) -> dict:
     return session
 
 
-def save_product_image(image_data: str | None) -> str | None:
+def save_image(image_data: str | None) -> str | None:
     if not image_data:
         return None
     match = re.fullmatch(r"data:image/(jpeg|png|webp);base64,(.+)", image_data, flags=re.DOTALL)
@@ -108,6 +112,11 @@ def save_product_image(image_data: str | None) -> str | None:
     filename = f"{secrets.token_hex(16)}.{extension}"
     (UPLOAD_DIR / filename).write_bytes(content)
     return f"/uploads/{filename}"
+
+
+def delete_uploaded_image(image_url: str | None) -> None:
+    if image_url and image_url.startswith("/uploads/"):
+        (UPLOAD_DIR / Path(image_url).name).unlink(missing_ok=True)
 
 
 @app.get("/api/health")
@@ -150,6 +159,27 @@ def product_detail(product_id: int) -> Product:
     return Product(**row)
 
 
+@app.get("/api/pages/{slug}", response_model=ContentPage)
+def content_page(slug: str) -> ContentPage:
+    row = fetch_one("SELECT * FROM content_pages WHERE slug = ? AND published = 1", (slug,))
+    if not row:
+        raise HTTPException(status_code=404, detail="صفحه پیدا نشد")
+    return ContentPage(**row)
+
+
+@app.get("/api/articles", response_model=list[Article])
+def articles() -> list[Article]:
+    return [Article(**row) for row in fetch_all("SELECT * FROM articles WHERE published = 1 ORDER BY created_at DESC, id DESC")]
+
+
+@app.get("/api/articles/{slug}", response_model=Article)
+def article_detail(slug: str) -> Article:
+    row = fetch_one("SELECT * FROM articles WHERE slug = ? AND published = 1", (slug,))
+    if not row:
+        raise HTTPException(status_code=404, detail="مقاله پیدا نشد")
+    return Article(**row)
+
+
 @app.post("/api/admin/login", response_model=AdminSessionOut)
 def admin_login(payload: AdminLoginIn) -> AdminSessionOut:
     admin = fetch_one("SELECT * FROM admins WHERE email = ?", (payload.username.strip().lower(),))
@@ -179,7 +209,7 @@ def admin_logout(authorization: str | None = Header(default=None)) -> None:
 
 @app.post("/api/admin/products", response_model=Product, status_code=status.HTTP_201_CREATED)
 def create_product(payload: ProductCreateIn, _: dict = Depends(require_admin)) -> Product:
-    image_url = save_product_image(payload.image_data)
+    image_url = save_image(payload.image_data)
     try:
         product_id = execute(
             """
@@ -205,6 +235,80 @@ def create_product(payload: ProductCreateIn, _: dict = Depends(require_admin)) -
     return Product(**fetch_one("SELECT * FROM products WHERE id = ?", (product_id,)))
 
 
+@app.get("/api/admin/pages", response_model=list[ContentPage])
+def admin_pages(_: dict = Depends(require_admin)) -> list[ContentPage]:
+    return [ContentPage(**row) for row in fetch_all("SELECT * FROM content_pages ORDER BY id")]
+
+
+@app.put("/api/admin/pages/{page_id}", response_model=ContentPage)
+def update_page(page_id: int, payload: ContentPageUpdateIn, _: dict = Depends(require_admin)) -> ContentPage:
+    current = fetch_one("SELECT * FROM content_pages WHERE id = ?", (page_id,))
+    if not current:
+        raise HTTPException(status_code=404, detail="صفحه پیدا نشد")
+    new_image = save_image(payload.image_data)
+    image_url = new_image if new_image else (None if payload.remove_image else current["image_url"])
+    execute(
+        """
+        UPDATE content_pages SET eyebrow = ?, title = ?, summary = ?, body = ?, image_url = ?,
+            published = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?
+        """,
+        (payload.eyebrow.strip(), payload.title.strip(), payload.summary.strip(), payload.body.strip(), image_url, int(payload.published), page_id),
+    )
+    if (new_image or payload.remove_image) and current["image_url"] != image_url:
+        delete_uploaded_image(current["image_url"])
+    return ContentPage(**fetch_one("SELECT * FROM content_pages WHERE id = ?", (page_id,)))
+
+
+@app.get("/api/admin/articles", response_model=list[Article])
+def admin_articles(_: dict = Depends(require_admin)) -> list[Article]:
+    return [Article(**row) for row in fetch_all("SELECT * FROM articles ORDER BY created_at DESC, id DESC")]
+
+
+@app.post("/api/admin/articles", response_model=Article, status_code=status.HTTP_201_CREATED)
+def create_article(payload: ArticleWriteIn, _: dict = Depends(require_admin)) -> Article:
+    image_url = save_image(payload.image_data)
+    try:
+        article_id = execute(
+            """INSERT INTO articles (slug, title, excerpt, body, image_url, published)
+            VALUES (?, ?, ?, ?, ?, ?)""",
+            (payload.slug, payload.title.strip(), payload.excerpt.strip(), payload.body.strip(), image_url, int(payload.published)),
+        )
+    except sqlite3.IntegrityError:
+        delete_uploaded_image(image_url)
+        raise HTTPException(status_code=409, detail="این شناسه مقاله قبلاً استفاده شده است") from None
+    return Article(**fetch_one("SELECT * FROM articles WHERE id = ?", (article_id,)))
+
+
+@app.put("/api/admin/articles/{article_id}", response_model=Article)
+def update_article(article_id: int, payload: ArticleWriteIn, _: dict = Depends(require_admin)) -> Article:
+    current = fetch_one("SELECT * FROM articles WHERE id = ?", (article_id,))
+    if not current:
+        raise HTTPException(status_code=404, detail="مقاله پیدا نشد")
+    new_image = save_image(payload.image_data)
+    image_url = new_image if new_image else (None if payload.remove_image else current["image_url"])
+    try:
+        execute(
+            """UPDATE articles SET slug = ?, title = ?, excerpt = ?, body = ?, image_url = ?,
+            published = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?""",
+            (payload.slug, payload.title.strip(), payload.excerpt.strip(), payload.body.strip(), image_url, int(payload.published), article_id),
+        )
+    except sqlite3.IntegrityError:
+        delete_uploaded_image(new_image)
+        raise HTTPException(status_code=409, detail="این شناسه مقاله قبلاً استفاده شده است") from None
+    if (new_image or payload.remove_image) and current["image_url"] != image_url:
+        delete_uploaded_image(current["image_url"])
+    return Article(**fetch_one("SELECT * FROM articles WHERE id = ?", (article_id,)))
+
+
+@app.delete("/api/admin/articles/{article_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_article(article_id: int, _: dict = Depends(require_admin)) -> None:
+    article = fetch_one("SELECT image_url FROM articles WHERE id = ?", (article_id,))
+    if not article:
+        raise HTTPException(status_code=404, detail="مقاله پیدا نشد")
+    execute("DELETE FROM articles WHERE id = ?", (article_id,))
+    delete_uploaded_image(article["image_url"])
+
+
 @app.delete("/api/admin/products/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_product(product_id: int, _: dict = Depends(require_admin)) -> None:
     product = fetch_one("SELECT image_url FROM products WHERE id = ?", (product_id,))
@@ -212,7 +316,7 @@ def delete_product(product_id: int, _: dict = Depends(require_admin)) -> None:
         raise HTTPException(status_code=404, detail="محصول پیدا نشد")
     execute("DELETE FROM products WHERE id = ?", (product_id,))
     if product["image_url"]:
-        (UPLOAD_DIR / Path(product["image_url"]).name).unlink(missing_ok=True)
+        delete_uploaded_image(product["image_url"])
 
 
 @app.post("/api/newsletter", response_model=NewsletterOut, status_code=status.HTTP_201_CREATED)

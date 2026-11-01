@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { adminLogin, adminLogout, createAdminProduct, deleteAdminProduct, getAdminProfile, getHomeData, getProducts, quoteCart, resolveMediaUrl, sendContactMessage, subscribeNewsletter } from './api.js'
+import { adminLogin, adminLogout, createAdminArticle, createAdminProduct, deleteAdminArticle, deleteAdminProduct, getAdminArticles, getAdminPages, getAdminProfile, getArticle, getArticles, getContentPage, getHomeData, getProducts, quoteCart, resolveMediaUrl, sendContactMessage, subscribeNewsletter, updateAdminArticle, updateAdminPage } from './api.js'
 
 const Icon = ({ name, size = 22 }) => {
   const paths = {
@@ -30,10 +30,10 @@ const Icon = ({ name, size = 22 }) => {
 }
 
 const fallbackCategories = [
-  { name: 'مراقبت از سُم', text: 'پیشگیری و مراقبت برای حرکت سالم دام', icon: 'hoof', color: 'gold' },
-  { name: 'سلامت پستان', text: 'مراقبت روزانه و حمایت از سلامت گله', icon: 'heart', color: 'rose' },
-  { name: 'ضدعفونی دامداری', text: 'بهداشت محیط، تجهیزات و جایگاه دام', icon: 'shield', color: 'green' },
-  { name: 'بهداشت دام و اسب', text: 'محصولات کاربردی برای مراقبت حرفه‌ای', icon: 'spray', color: 'blue' },
+  { slug: 'hoof-care', name: 'مراقبت از سُم', text: 'پیشگیری و مراقبت برای حرکت سالم دام', icon: 'hoof', color: 'gold' },
+  { slug: 'udder-health', name: 'سلامت پستان', text: 'مراقبت روزانه و حمایت از سلامت گله', icon: 'heart', color: 'rose' },
+  { slug: 'farm-disinfection', name: 'ضدعفونی دامداری', text: 'بهداشت محیط، تجهیزات و جایگاه دام', icon: 'shield', color: 'green' },
+  { slug: 'animal-hygiene', name: 'بهداشت دام و اسب', text: 'محصولات کاربردی برای مراقبت حرفه‌ای', icon: 'spray', color: 'blue' },
 ]
 
 const fallbackProducts = [
@@ -65,6 +65,8 @@ const fallbackStory = {
   description: 'نیکو سلامت با تمرکز بر نیاز واقعی دامداری‌ها و مراکز پرورش اسب، محصولات تخصصی مراقبت از سُم، سلامت پستان، ضدعفونی و بهداشت جایگاه را با رویکردی علمی و مسئولانه عرضه می‌کند.',
 }
 
+const categoryPageSlugs = ['hoof-care', 'udder-health', 'farm-disinfection', 'animal-hygiene']
+
 const navigationItems = [
   { label: 'خانه', path: '/' },
   {
@@ -88,13 +90,13 @@ const navigationItems = [
   },
   {
     label: 'مقالات',
-    path: '/about',
+    path: '/articles',
     children: [
-      { label: 'سلامت دام', path: '/about' },
-      { label: 'بیماری‌ها', path: '/about' },
-      { label: 'آموزش', path: '/about' },
-      { label: 'مقالات علمی', path: '/about' },
-      { label: 'اخبار', path: '/about' },
+      { label: 'سلامت دام', path: '/articles' },
+      { label: 'بیماری‌ها', path: '/articles' },
+      { label: 'آموزش', path: '/articles' },
+      { label: 'مقالات علمی', path: '/articles' },
+      { label: 'اخبار', path: '/articles' },
     ],
   },
   {
@@ -254,6 +256,95 @@ function ProductsPage({ products, onAddToCart }) {
   )
 }
 
+function ContentBody({ text }) {
+  return String(text || '').split(/\n{2,}/).filter(Boolean).map((paragraph, index) => (
+    <p key={`${paragraph.slice(0, 24)}-${index}`}>{paragraph}</p>
+  ))
+}
+
+function ContentPageView({ slug, navigate }) {
+  const [page, setPage] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    setLoading(true)
+    getContentPage(slug)
+      .then((data) => { setPage(data); setError('') })
+      .catch((requestError) => setError(requestError.message))
+      .finally(() => setLoading(false))
+  }, [slug])
+
+  if (loading) return <main className="content-loading">در حال دریافت صفحه…</main>
+  if (error || !page) return <main className="not-found"><span>۴۰۴</span><h1>این صفحه در دسترس نیست</h1><p>{error}</p><button className="button primary" onClick={(event) => navigate(event, '/')}>بازگشت به خانه</button></main>
+
+  return (
+    <main className="inner-page content-page" id="top">
+      <PageHero eyebrow={page.eyebrow} title={page.title} description={page.summary} />
+      <article className="section editorial-content">
+        {page.image_url && <img className="editorial-cover" src={resolveMediaUrl(page.image_url)} alt={page.title} />}
+        <div className="editorial-body"><ContentBody text={page.body} /></div>
+        <a className="button outline" href="/products" onClick={(event) => navigate(event, '/products')}>مشاهده محصولات <Icon name="arrow" size={18} /></a>
+      </article>
+    </main>
+  )
+}
+
+function ArticlesPage({ navigate }) {
+  const [articles, setArticles] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    getArticles().then(setArticles).catch(() => setArticles([])).finally(() => setLoading(false))
+  }, [])
+
+  return (
+    <main className="inner-page" id="top">
+      <PageHero eyebrow="دانش و تجربه" title="مقالات نیکو سلامت" description="مطالب آموزشی و علمی درباره سلامت دام، مراقبت، بهداشت و بهره‌وری پایدار." />
+      <section className="section articles-section">
+        {loading ? <div className="content-loading">در حال دریافت مقالات…</div> : articles.length ? (
+          <div className="article-grid">
+            {articles.map((article) => (
+              <a className="article-card" href={`/articles/${article.slug}`} onClick={(event) => navigate(event, `/articles/${article.slug}`)} key={article.id}>
+                {article.image_url ? <img src={resolveMediaUrl(article.image_url)} alt={article.title} /> : <span className="article-placeholder"><Icon name="leaf" size={38} /></span>}
+                <div><span>مقاله</span><h2>{article.title}</h2><p>{article.excerpt}</p><b>ادامه مطلب <Icon name="arrow" size={16} /></b></div>
+              </a>
+            ))}
+          </div>
+        ) : <div className="empty-state"><Icon name="leaf" size={30} /><h2>هنوز مقاله‌ای منتشر نشده است</h2><p>مقاله‌های جدید از پنل مدیریت در این بخش منتشر می‌شوند.</p></div>}
+      </section>
+    </main>
+  )
+}
+
+function ArticlePage({ slug, navigate }) {
+  const [article, setArticle] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    setLoading(true)
+    getArticle(slug)
+      .then((data) => { setArticle(data); setError('') })
+      .catch((requestError) => setError(requestError.message))
+      .finally(() => setLoading(false))
+  }, [slug])
+
+  if (loading) return <main className="content-loading">در حال دریافت مقاله…</main>
+  if (error || !article) return <main className="not-found"><span>۴۰۴</span><h1>مقاله پیدا نشد</h1><p>{error}</p><button className="button primary" onClick={(event) => navigate(event, '/articles')}>بازگشت به مقالات</button></main>
+
+  return (
+    <main className="inner-page article-detail" id="top">
+      <PageHero eyebrow="مقالات نیکو سلامت" title={article.title} description={article.excerpt} />
+      <article className="section editorial-content">
+        {article.image_url && <img className="editorial-cover" src={resolveMediaUrl(article.image_url)} alt={article.title} />}
+        <div className="editorial-body"><ContentBody text={article.body} /></div>
+        <a className="button outline" href="/articles" onClick={(event) => navigate(event, '/articles')}>بازگشت به مقالات <Icon name="arrow" size={18} /></a>
+      </article>
+    </main>
+  )
+}
+
 function AboutPage({ navigate }) {
   const values = [
     { icon: 'heart', title: 'دامپروری', text: 'راهکارهای تخصصی برای ارتقای سلامت و بهداشت دام و افزایش بهره‌وری پایدار دامداری.' },
@@ -379,163 +470,168 @@ function ContactPage({ showNotice }) {
   )
 }
 
+async function readImageFile(file) {
+  if (!file?.size) return null
+  if (file.size > 3 * 1024 * 1024) throw new Error('حجم تصویر نباید بیشتر از ۳ مگابایت باشد')
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = () => reject(new Error('خواندن تصویر ممکن نبود'))
+    reader.readAsDataURL(file)
+  })
+}
+
 function AdminPage({ showNotice }) {
   const [token, setToken] = useState(() => window.sessionStorage.getItem('sovara_admin_token') || '')
   const [admin, setAdmin] = useState(null)
   const [checking, setChecking] = useState(Boolean(token))
   const [busy, setBusy] = useState(false)
+  const [activeTab, setActiveTab] = useState('products')
   const [products, setProducts] = useState([])
+  const [pages, setPages] = useState([])
+  const [articles, setArticles] = useState([])
+  const [editingArticle, setEditingArticle] = useState(null)
 
-  const loadProducts = () => getProducts().then(setProducts).catch((error) => showNotice(error.message))
+  const loadAdminData = async (activeToken = token) => {
+    const [nextProducts, nextPages, nextArticles] = await Promise.all([
+      getProducts(), getAdminPages(activeToken), getAdminArticles(activeToken),
+    ])
+    setProducts(nextProducts)
+    setPages(nextPages)
+    setArticles(nextArticles)
+  }
 
   useEffect(() => {
-    if (!token) {
-      setChecking(false)
-      return
-    }
+    if (!token) { setChecking(false); return }
     getAdminProfile(token)
-      .then((profile) => {
-        setAdmin(profile)
-        loadProducts()
-      })
-      .catch(() => {
-        window.sessionStorage.removeItem('sovara_admin_token')
-        setToken('')
-      })
+      .then((profile) => { setAdmin(profile); return loadAdminData(token) })
+      .catch(() => { window.sessionStorage.removeItem('sovara_admin_token'); setToken(''); setAdmin(null) })
       .finally(() => setChecking(false))
   }, [token])
 
   const login = async (event) => {
-    event.preventDefault()
-    setBusy(true)
-    const credentials = Object.fromEntries(new FormData(event.currentTarget))
+    event.preventDefault(); setBusy(true)
     try {
-      const session = await adminLogin(credentials)
+      const session = await adminLogin(Object.fromEntries(new FormData(event.currentTarget)))
       window.sessionStorage.setItem('sovara_admin_token', session.token)
-      setToken(session.token)
-      setAdmin({ username: session.username })
-      showNotice('با موفقیت وارد شدید')
-    } catch (error) {
-      showNotice(error.message)
-    } finally {
-      setBusy(false)
-    }
+      setToken(session.token); setAdmin({ username: session.username }); showNotice('با موفقیت وارد شدید')
+    } catch (error) { showNotice(error.message) } finally { setBusy(false) }
   }
 
-  const logout = async () => {
+  const logout = () => {
     if (token) adminLogout(token).catch(() => {})
     window.sessionStorage.removeItem('sovara_admin_token')
-    setToken('')
-    setAdmin(null)
-    setProducts([])
+    setToken(''); setAdmin(null); setProducts([]); setPages([]); setArticles([])
   }
 
   const createProduct = async (event) => {
-    event.preventDefault()
+    event.preventDefault(); setBusy(true)
     const form = event.currentTarget
-    const formData = new FormData(form)
-    const file = formData.get('image')
-    setBusy(true)
+    const data = new FormData(form)
     try {
-      let imageData = null
-      if (file?.size) {
-        if (file.size > 3 * 1024 * 1024) throw new Error('حجم تصویر نباید بیشتر از ۳ مگابایت باشد')
-        imageData = await new Promise((resolve, reject) => {
-          const reader = new FileReader()
-          reader.onload = () => resolve(reader.result)
-          reader.onerror = () => reject(new Error('خواندن تصویر ممکن نبود'))
-          reader.readAsDataURL(file)
-        })
-      }
       await createAdminProduct(token, {
-        slug: String(formData.get('slug')).trim().toLowerCase(),
-        name: String(formData.get('name')).trim(),
-        category: String(formData.get('category')).trim(),
-        price: Number(formData.get('price')),
-        tone: formData.get('tone'),
-        shape: formData.get('shape'),
-        badge: String(formData.get('badge') || '').trim() || null,
-        featured: formData.get('featured') === 'on',
-        image_data: imageData,
+        slug: String(data.get('slug')).trim().toLowerCase(), name: String(data.get('name')).trim(),
+        category: String(data.get('category')).trim(), price: Number(data.get('price')),
+        tone: data.get('tone'), shape: data.get('shape'), badge: String(data.get('badge') || '').trim() || null,
+        featured: data.get('featured') === 'on', image_data: await readImageFile(data.get('image')),
       })
-      form.reset()
-      await loadProducts()
-      showNotice('محصول با موفقیت ثبت شد')
-    } catch (error) {
-      showNotice(error.message)
-    } finally {
-      setBusy(false)
-    }
+      form.reset(); await loadAdminData(); showNotice('محصول با موفقیت ثبت شد')
+    } catch (error) { showNotice(error.message) } finally { setBusy(false) }
   }
 
   const removeProduct = async (product) => {
     if (!window.confirm(`محصول «${product.name}» حذف شود؟`)) return
+    try { await deleteAdminProduct(token, product.id); setProducts((items) => items.filter((item) => item.id !== product.id)); showNotice('محصول حذف شد') } catch (error) { showNotice(error.message) }
+  }
+
+  const savePage = async (event, page) => {
+    event.preventDefault(); setBusy(true)
+    const data = new FormData(event.currentTarget)
     try {
-      await deleteAdminProduct(token, product.id)
-      setProducts((items) => items.filter((item) => item.id !== product.id))
-      showNotice('محصول حذف شد')
-    } catch (error) {
-      showNotice(error.message)
-    }
+      const updated = await updateAdminPage(token, page.id, {
+        eyebrow: String(data.get('eyebrow')).trim(), title: String(data.get('title')).trim(),
+        summary: String(data.get('summary')).trim(), body: String(data.get('body')).trim(),
+        published: data.get('published') === 'on', image_data: await readImageFile(data.get('image')),
+        remove_image: data.get('remove_image') === 'on',
+      })
+      setPages((items) => items.map((item) => item.id === updated.id ? updated : item)); showNotice('صفحه با موفقیت به‌روزرسانی شد')
+    } catch (error) { showNotice(error.message) } finally { setBusy(false) }
+  }
+
+  const saveArticle = async (event) => {
+    event.preventDefault(); setBusy(true)
+    const form = event.currentTarget
+    const data = new FormData(form)
+    try {
+      const payload = {
+        slug: String(data.get('slug')).trim().toLowerCase(), title: String(data.get('title')).trim(),
+        excerpt: String(data.get('excerpt')).trim(), body: String(data.get('body')).trim(),
+        published: data.get('published') === 'on', image_data: await readImageFile(data.get('image')),
+        remove_image: data.get('remove_image') === 'on',
+      }
+      if (editingArticle) await updateAdminArticle(token, editingArticle.id, payload)
+      else await createAdminArticle(token, payload)
+      setEditingArticle(null); form.reset(); await loadAdminData(); showNotice(editingArticle ? 'مقاله ویرایش شد' : 'مقاله منتشر شد')
+    } catch (error) { showNotice(error.message) } finally { setBusy(false) }
+  }
+
+  const removeArticle = async (article) => {
+    if (!window.confirm(`مقاله «${article.title}» حذف شود؟`)) return
+    try { await deleteAdminArticle(token, article.id); setArticles((items) => items.filter((item) => item.id !== article.id)); if (editingArticle?.id === article.id) setEditingArticle(null); showNotice('مقاله حذف شد') } catch (error) { showNotice(error.message) }
   }
 
   if (checking) return <main className="admin-loading">در حال بررسی دسترسی…</main>
-
-  if (!admin) {
-    return (
-      <main className="admin-login-page">
-        <section className="admin-login-card">
-          <div className="admin-lock"><Icon name="shield" size={30} /></div>
-          <span className="eyebrow">ورود امن</span>
-          <h1>داشبورد مدیریت نیکو سلامت</h1>
-          <p>این بخش فقط برای مدیر سایت قابل دسترسی است.</p>
-          <form onSubmit={login}>
-            <label>نام کاربری<input name="username" type="text" dir="ltr" autoComplete="username" placeholder="admin" minLength="3" required /></label>
-            <label>رمز عبور<input name="password" type="password" dir="ltr" autoComplete="current-password" minLength="4" required /></label>
-            <button className="button primary" type="submit" disabled={busy}>{busy ? 'در حال ورود…' : 'ورود به داشبورد'} <Icon name="arrow" size={18} /></button>
-          </form>
-        </section>
-      </main>
-    )
-  }
+  if (!admin) return (
+    <main className="admin-login-page"><section className="admin-login-card">
+      <div className="admin-lock"><Icon name="shield" size={30} /></div><span className="eyebrow">ورود امن</span><h1>داشبورد مدیریت نیکو سلامت</h1><p>این بخش فقط برای مدیر سایت قابل دسترسی است.</p>
+      <form onSubmit={login}><label>نام کاربری<input name="username" type="text" dir="ltr" autoComplete="username" placeholder="admin" minLength="3" required /></label><label>رمز عبور<input name="password" type="password" dir="ltr" autoComplete="current-password" minLength="4" required /></label><button className="button primary" type="submit" disabled={busy}>{busy ? 'در حال ورود…' : 'ورود به داشبورد'} <Icon name="arrow" size={18} /></button></form>
+    </section></main>
+  )
 
   return (
     <main className="admin-page">
-      <div className="admin-topbar">
-        <div><span className="eyebrow">پنل مدیریت</span><h1>مدیریت محصولات</h1><p>خوش آمدید، <b dir="ltr">{admin.username}</b></p></div>
-        <button className="button admin-logout" onClick={logout}>خروج از حساب</button>
+      <div className="admin-topbar"><div><span className="eyebrow">پنل مدیریت محتوا</span><h1>مدیریت سایت</h1><p>خوش آمدید، <b dir="ltr">{admin.username}</b></p></div><button className="button admin-logout" onClick={logout}>خروج از حساب</button></div>
+      <div className="admin-tabs" role="tablist">
+        {[['products', 'محصولات'], ['pages', 'صفحات دسته‌بندی'], ['articles', 'مقالات']].map(([id, label]) => <button className={activeTab === id ? 'active' : ''} onClick={() => setActiveTab(id)} key={id}>{label}</button>)}
       </div>
-      <div className="admin-layout">
+
+      {activeTab === 'products' && <div className="admin-layout">
         <form className="admin-product-form" onSubmit={createProduct}>
           <div className="form-heading"><span>محصول تازه</span><h2>افزودن محصول</h2></div>
           <label>نام محصول<input name="name" type="text" minLength="2" required /></label>
-          <div className="form-row">
-            <label>شناسه انگلیسی<input name="slug" type="text" dir="ltr" placeholder="hoof-care-oil" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required /></label>
-            <label>دسته‌بندی<input name="category" type="text" placeholder="مراقبت از سُم" required /></label>
-          </div>
-          <div className="form-row three">
-            <label>قیمت (تومان)<input name="price" type="number" dir="ltr" min="0" required /></label>
-            <label>رنگ نمایشی<select name="tone" defaultValue="olive"><option value="olive">سبز زیتونی</option><option value="wine">زرشکی</option><option value="amber">کهربایی</option><option value="cream">کرم</option></select></label>
-            <label>نوع بسته‌بندی<select name="shape" defaultValue="bottle"><option value="bottle">بطری</option><option value="spray">اسپری</option><option value="tin">قوطی</option><option value="jar">کاسه‌ای</option></select></label>
-          </div>
+          <div className="form-row"><label>شناسه انگلیسی<input name="slug" type="text" dir="ltr" placeholder="hoof-care-oil" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required /></label><label>دسته‌بندی<input name="category" type="text" placeholder="مراقبت از سُم" required /></label></div>
+          <div className="form-row three"><label>قیمت (تومان)<input name="price" type="number" dir="ltr" min="0" required /></label><label>رنگ نمایشی<select name="tone" defaultValue="olive"><option value="olive">سبز زیتونی</option><option value="wine">زرشکی</option><option value="amber">کهربایی</option><option value="cream">کرم</option></select></label><label>نوع بسته‌بندی<select name="shape" defaultValue="bottle"><option value="bottle">بطری</option><option value="spray">اسپری</option><option value="tin">قوطی</option><option value="jar">کاسه‌ای</option></select></label></div>
           <label>برچسب <small>(اختیاری)</small><input name="badge" type="text" placeholder="جدید یا پرفروش" maxLength="30" /></label>
           <label className="admin-file">تصویر محصول <small>JPG، PNG یا WebP تا ۳ مگابایت</small><input name="image" type="file" accept="image/jpeg,image/png,image/webp" /></label>
           <label className="admin-check"><input name="featured" type="checkbox" /> نمایش در محصولات پیشنهادی صفحه اصلی</label>
           <button className="button primary" type="submit" disabled={busy}>{busy ? 'در حال ثبت…' : 'ثبت محصول'} <Icon name="plus" size={18} /></button>
         </form>
-        <section className="admin-products">
-          <div className="admin-list-head"><div><span>فهرست محصولات</span><h2>{new Intl.NumberFormat('fa-IR').format(products.length)} محصول</h2></div></div>
-          <div className="admin-product-list">
-            {products.map((product) => (
-              <article key={product.id}>
-                <ProductVisual product={product} />
-                <div><span>{product.category}</span><h3>{product.name}</h3><p>{formatPrice(product.price)} تومان</p></div>
-                <button onClick={() => removeProduct(product)} aria-label={`حذف ${product.name}`}>حذف</button>
-              </article>
-            ))}
-          </div>
-        </section>
-      </div>
+        <section className="admin-products"><div className="admin-list-head"><div><span>فهرست محصولات</span><h2>{new Intl.NumberFormat('fa-IR').format(products.length)} محصول</h2></div></div><div className="admin-product-list">{products.map((product) => <article key={product.id}><ProductVisual product={product} /><div><span>{product.category}</span><h3>{product.name}</h3><p>{formatPrice(product.price)} تومان</p></div><button onClick={() => removeProduct(product)}>حذف</button></article>)}</div></section>
+      </div>}
+
+      {activeTab === 'pages' && <section className="admin-content-list">
+        <div className="admin-section-intro"><span>صفحات چهار دسته اصلی</span><h2>ویرایش متن و تصویر صفحات</h2><p>تغییرات هر صفحه را جداگانه ذخیره کنید.</p></div>
+        {pages.map((page) => <form className="admin-editor-form" onSubmit={(event) => savePage(event, page)} key={`${page.id}-${page.updated_at}`}>
+          <div className="admin-editor-head"><div><span dir="ltr">/pages/{page.slug}</span><h3>{page.title}</h3></div>{page.image_url && <img src={resolveMediaUrl(page.image_url)} alt="" />}</div>
+          <div className="form-row"><label>متن بالای عنوان<input name="eyebrow" defaultValue={page.eyebrow} required /></label><label>عنوان صفحه<input name="title" defaultValue={page.title} required /></label></div>
+          <label>خلاصه<textarea name="summary" rows="3" defaultValue={page.summary} required /></label><label>متن کامل صفحه<textarea name="body" rows="8" defaultValue={page.body} required /></label>
+          <label className="admin-file">تصویر شاخص <small>JPG، PNG یا WebP تا ۳ مگابایت</small><input name="image" type="file" accept="image/jpeg,image/png,image/webp" /></label>
+          <div className="admin-options"><label className="admin-check"><input name="published" type="checkbox" defaultChecked={page.published} /> صفحه منتشر باشد</label>{page.image_url && <label className="admin-check danger"><input name="remove_image" type="checkbox" /> حذف تصویر فعلی</label>}</div>
+          <button className="button primary" type="submit" disabled={busy}>ذخیره تغییرات</button>
+        </form>)}
+      </section>}
+
+      {activeTab === 'articles' && <div className="admin-layout admin-articles-layout">
+        <form className="admin-product-form admin-editor-form" onSubmit={saveArticle} key={editingArticle?.id || 'new'}>
+          <div className="form-heading"><span>{editingArticle ? 'ویرایش مقاله' : 'مقاله تازه'}</span><h2>{editingArticle ? editingArticle.title : 'افزودن مقاله'}</h2></div>
+          <label>عنوان مقاله<input name="title" defaultValue={editingArticle?.title || ''} required /></label><label>شناسه انگلیسی<input name="slug" dir="ltr" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" placeholder="hoof-care-guide" defaultValue={editingArticle?.slug || ''} required /></label>
+          <label>خلاصه مقاله<textarea name="excerpt" rows="3" defaultValue={editingArticle?.excerpt || ''} required /></label><label>متن کامل مقاله<textarea name="body" rows="10" defaultValue={editingArticle?.body || ''} required /></label>
+          <label className="admin-file">تصویر شاخص <small>JPG، PNG یا WebP تا ۳ مگابایت</small><input name="image" type="file" accept="image/jpeg,image/png,image/webp" /></label>
+          <div className="admin-options"><label className="admin-check"><input name="published" type="checkbox" defaultChecked={editingArticle ? editingArticle.published : true} /> نمایش در سایت</label>{editingArticle?.image_url && <label className="admin-check danger"><input name="remove_image" type="checkbox" /> حذف تصویر فعلی</label>}</div>
+          <div className="admin-form-actions"><button className="button primary" type="submit" disabled={busy}>{editingArticle ? 'ذخیره مقاله' : 'انتشار مقاله'}</button>{editingArticle && <button className="button outline" type="button" onClick={() => setEditingArticle(null)}>انصراف</button>}</div>
+        </form>
+        <section className="admin-products"><div className="admin-list-head"><div><span>فهرست مقالات</span><h2>{new Intl.NumberFormat('fa-IR').format(articles.length)} مقاله</h2></div></div><div className="admin-article-list">{articles.map((article) => <article key={article.id}>{article.image_url ? <img src={resolveMediaUrl(article.image_url)} alt="" /> : <span className="article-mini-placeholder"><Icon name="leaf" /></span>}<div><span>{article.published ? 'منتشرشده' : 'پیش‌نویس'}</span><h3>{article.title}</h3><p>{article.excerpt}</p></div><div className="admin-row-actions"><button onClick={() => setEditingArticle(article)}>ویرایش</button><button className="danger" onClick={() => removeArticle(article)}>حذف</button></div></article>)}</div></section>
+      </div>}
     </main>
   )
 }
@@ -582,11 +678,12 @@ export default function App() {
     const titles = {
       '/': 'نیکو سلامت | محصولات تخصصی سلامت دام و اسب',
       '/products': 'محصولات | نیکو سلامت',
+      '/articles': 'مقالات | نیکو سلامت',
       '/about': 'درباره ما | نیکو سلامت',
       '/contact': 'تماس با ما | نیکو سلامت',
       '/admin': 'داشبورد مدیریت | نیکو سلامت',
     }
-    document.title = titles[currentPath] || titles['/']
+    document.title = titles[currentPath] || (currentPath.startsWith('/articles/') ? 'مقاله | نیکو سلامت' : currentPath.startsWith('/pages/') ? 'راهکارهای نیکو سلامت' : titles['/'])
   }, [currentPath])
 
   const categories = homeData?.categories ?? fallbackCategories
@@ -702,7 +799,7 @@ export default function App() {
           </div>
           <div className="category-grid">
             {categories.map((category, index) => (
-              <a href="/products" onClick={(event) => navigate(event, '/products')} className={`category-card ${category.color}`} key={category.name}>
+              <a href={`/pages/${categoryPageSlugs[index]}`} onClick={(event) => navigate(event, `/pages/${categoryPageSlugs[index]}`)} className={`category-card ${category.color}`} key={category.name}>
                 <span className="category-number">۰{new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(index + 1)}</span>
                 <span className="category-icon"><Icon name={category.icon} size={34} /></span>
                 <h3>{category.name}</h3>
@@ -760,10 +857,13 @@ export default function App() {
       </main>}
 
       {currentPath === '/products' && <ProductsPage products={catalogProducts} onAddToCart={addToCart} />}
+      {currentPath === '/articles' && <ArticlesPage navigate={navigate} />}
+      {currentPath.startsWith('/articles/') && <ArticlePage slug={currentPath.slice('/articles/'.length)} navigate={navigate} />}
+      {currentPath.startsWith('/pages/') && <ContentPageView slug={currentPath.slice('/pages/'.length)} navigate={navigate} />}
       {currentPath === '/about' && <AboutPage navigate={navigate} />}
       {currentPath === '/contact' && <ContactPage showNotice={showNotice} />}
       {currentPath === '/admin' && <AdminPage showNotice={showNotice} />}
-      {!['/', '/products', '/about', '/contact', '/admin'].includes(currentPath) && (
+      {!['/', '/products', '/articles', '/about', '/contact', '/admin'].includes(currentPath) && !currentPath.startsWith('/articles/') && !currentPath.startsWith('/pages/') && (
         <main className="not-found"><span>۴۰۴</span><h1>این صفحه پیدا نشد</h1><p>ممکن است آدرس تغییر کرده باشد.</p><button className="button primary" onClick={(event) => navigate(event, '/')}>بازگشت به صفحه اصلی</button></main>
       )}
 
@@ -774,7 +874,7 @@ export default function App() {
             <p>راهکارهای تخصصی برای سلامت پایدار دام.</p>
             <div className="socials"><a href="#instagram" aria-label="اینستاگرام"><Icon name="instagram" /></a><span>@nikoosalamat</span></div>
           </div>
-          <div><h3>محصولات</h3><a href="/products" onClick={(event) => navigate(event, '/products')}>مراقبت از سُم</a><a href="/products" onClick={(event) => navigate(event, '/products')}>سلامت پستان</a><a href="/products" onClick={(event) => navigate(event, '/products')}>ضدعفونی دامداری</a><a href="/products" onClick={(event) => navigate(event, '/products')}>بهداشت جایگاه</a></div>
+          <div><h3>راهکارها</h3><a href="/pages/hoof-care" onClick={(event) => navigate(event, '/pages/hoof-care')}>مراقبت از سُم</a><a href="/pages/udder-health" onClick={(event) => navigate(event, '/pages/udder-health')}>سلامت پستان</a><a href="/pages/farm-disinfection" onClick={(event) => navigate(event, '/pages/farm-disinfection')}>ضدعفونی دامداری</a><a href="/pages/animal-hygiene" onClick={(event) => navigate(event, '/pages/animal-hygiene')}>بهداشت دام و اسب</a></div>
           <div><h3>راهنما</h3><a href="/about" onClick={(event) => navigate(event, '/about')}>درباره نیکو سلامت</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>پرسش‌های متداول</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>روش ارسال</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>شرایط بازگشت</a></div>
           <div><h3>ارتباط با ما</h3><a href="tel:+989124283834">۰۹۱۲۴۲۸۳۸۳۴</a><a href="mailto:info@nikoosalamat.ir">info@nikoosalamat.ir</a><a href="https://t.me/nikoosalamat" target="_blank" rel="noreferrer">@nikoosalamat</a><span>شهر قدس، کوی صنعت، پلاک ۵</span></div>
         </div>
