@@ -619,12 +619,8 @@ export default function App() {
             <Icon name={menuOpen ? 'close' : 'menu'} />
           </button>
 
-          <a href="/" onClick={(event) => navigate(event, '/')} className="brand" aria-label="صفحه اصلی نیکو سلامت">
-            <span className="brand-mark">ن</span>
-            <span className="brand-copy">
-              <strong>نیکو سلامت</strong>
-              <small>NIKOO SALAMAT</small>
-            </span>
+          <a href="/" onClick={(event) => navigate(event, '/')} className="brand" aria-label="صفحه اصلی حال نیکو سلامت">
+            <img className="brand-logo" src="/images/hns-logo.png" alt="حال نیکو سلامت" />
           </a>
 
           <nav className={`nav ${menuOpen ? 'is-open' : ''}`} aria-label="منوی اصلی">
@@ -657,30 +653,8 @@ export default function App() {
       </header>
 
       {currentPath === '/' && <main id="top">
-        <section className="hero">
-          <div className="hero-image" role="img" aria-label="دامپزشک در کنار گاو و اسب در مزرعه">
-            <div className="hero-stamp">
-              <span>ساخت ایران</span>
-              <b>با عشق</b>
-            </div>
-            <div className="photo-credit">تصویر اختصاصی نیکو سلامت</div>
-          </div>
-          <div className="hero-copy">
-            <span className="eyebrow"><Icon name="leaf" size={18} /> {hero.eyebrow}</span>
-            <h1>{hero.title}<br /><em>{hero.highlighted_title}</em></h1>
-            <p>{hero.description}</p>
-            <div className="hero-actions">
-              <button className="button primary" onClick={(event) => navigate(event, '/products')}>{hero.primary_action} <Icon name="arrow" size={19} /></button>
-              <a className="text-link" href="/about" onClick={(event) => navigate(event, '/about')}>{hero.secondary_action}</a>
-            </div>
-            <div className="hero-trust">
-              <div><strong>۶</strong><span>گروه محصول</span></div>
-              <i />
-              <div><strong>۳</strong><span>حوزه تخصصی</span></div>
-              <i />
-              <div><strong>ایران</strong><span>محدوده خدمت</span></div>
-            </div>
-          </div>
+        <section className="hero-poster" aria-label="معرفی محصولات حال نیکو سلامت">
+          <img src="/images/hns-home-poster.jpg" alt="پوستر حال نیکو سلامت؛ همراه دامداران در مسیر سلامت و بهره‌وری" />
         </section>
 
         <section className="benefits" aria-label="مزایای خرید از نیکو سلامت">
@@ -768,7 +742,7 @@ export default function App() {
       {currentPath !== '/admin' && <footer className="footer">
         <div className="footer-main">
           <div className="footer-brand">
-            <a href="/" onClick={(event) => navigate(event, '/')} className="brand brand-light"><span className="brand-mark">ن</span><span className="brand-copy"><strong>نیکو سلامت</strong><small>NIKOO SALAMAT</small></span></a>
+            <a href="/" onClick={(event) => navigate(event, '/')} className="brand brand-light"><img className="brand-logo footer-logo" src="/images/hns-logo.png" alt="حال نیکو سلامت" /></a>
             <p>راهکارهای تخصصی برای سلامت پایدار دام.</p>
             <div className="socials"><a href="#instagram" aria-label="اینستاگرام"><Icon name="instagram" /></a><span>@nikoosalamat</span></div>
           </div>
