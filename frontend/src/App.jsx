@@ -742,6 +742,7 @@ export default function App() {
           <video autoPlay muted loop playsInline preload="metadata" aria-label="ویدیوی معرفی حال نیکو سلامت">
             <source src="/videos/hns-site-cover.mp4" type="video/mp4" />
           </video>
+          <a href="/about" onClick={(event) => navigate(event, '/about')} className="button story-video-link">داستان ما را بخوانید <Icon name="arrow" size={18} /></a>
         </section>
 
         <section className="newsletter" id="contact">
