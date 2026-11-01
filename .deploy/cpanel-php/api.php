@@ -139,14 +139,14 @@ if ($adminPasswordReady) {
 // Apply this content refresh once, preserving future edits made from the admin panel.
 $db->exec('CREATE TABLE IF NOT EXISTS app_meta (meta_key TEXT PRIMARY KEY, meta_value TEXT NOT NULL)');
 $contentVersion = $db->query("SELECT meta_value FROM app_meta WHERE meta_key = 'content_version'")->fetchColumn();
-if ($contentVersion !== 'nikoosalamat-2026-01') {
+if ($contentVersion !== 'nikoosalamat-2026-02') {
     $productUpdates = [
-        ['هوف ژل فارمیکو', 'مراقبت از سُم', 'tin', 'پرفروش', '/images/hoof-gel.png', 'arnica-hoof-oil'],
-        ['پماد پستان فارمیکو', 'سلامت پستان', 'jar', 'پیشنهادی', '/images/udder-ointment.png', 'mane-shine-spray'],
-        ['محلول ویروگاردیا', 'ضدعفونی دامداری', 'bottle', null, '/images/virucardia-solution.png', 'herbal-shampoo'],
-        ['اسپری سُم فارمیکو', 'مراقبت از سُم', 'spray', null, '/images/hoof-spray.png', 'muscle-relief-balm'],
-        ['محلول بهداشت جایگاه دام', 'بهداشت دامداری', 'bottle', null, '/images/barn-hygiene.png', 'daily-coat-brush'],
-        ['پاک‌کننده سُم فارمیکو', 'مراقبت از سُم', 'bottle', null, '/images/hoof-cleaner.png', 'hoof-cleaner'],
+        ['هوف ژل فارمیکو', 'مراقبت از سُم', 'tin', 'پرفروش', '/images/hoof-gel.jpg', 'arnica-hoof-oil'],
+        ['پماد پستان فارمیکو', 'سلامت پستان', 'jar', 'پیشنهادی', '/images/udder-ointment.jpg', 'mane-shine-spray'],
+        ['محلول ویروگاردیا', 'ضدعفونی دامداری', 'bottle', null, '/images/virucardia-solution.jpg', 'herbal-shampoo'],
+        ['اسپری سُم فارمیکو', 'مراقبت از سُم', 'spray', null, '/images/hoof-spray.jpg', 'muscle-relief-balm'],
+        ['محلول بهداشت جایگاه دام', 'بهداشت دامداری', 'bottle', null, '/images/barn-hygiene.jpg', 'daily-coat-brush'],
+        ['پاک‌کننده سُم فارمیکو', 'مراقبت از سُم', 'bottle', null, '/images/hoof-cleaner.jpg', 'hoof-cleaner'],
     ];
     $db->beginTransaction();
     $statement = $db->prepare(
@@ -170,7 +170,7 @@ if ($contentVersion !== 'nikoosalamat-2026-01') {
     $statement = $db->prepare(
         "INSERT OR REPLACE INTO app_meta (meta_key, meta_value) VALUES ('content_version', ?)"
     );
-    $statement->execute(['nikoosalamat-2026-01']);
+    $statement->execute(['nikoosalamat-2026-02']);
     $db->commit();
 }
 

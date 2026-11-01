@@ -42,12 +42,12 @@ CATEGORIES = [
 ]
 
 PRODUCTS = [
-    ("arnica-hoof-oil", "هوف ژل فارمیکو", "مراقبت از سُم", 385_000, "amber", "tin", "پرفروش", 1, "/images/hoof-gel.png"),
-    ("mane-shine-spray", "پماد پستان فارمیکو", "سلامت پستان", 460_000, "wine", "jar", "پیشنهادی", 1, "/images/udder-ointment.png"),
-    ("herbal-shampoo", "محلول ویروگاردیا", "ضدعفونی دامداری", 325_000, "olive", "bottle", None, 1, "/images/virucardia-solution.png"),
-    ("muscle-relief-balm", "اسپری سُم فارمیکو", "مراقبت از سُم", 515_000, "cream", "spray", None, 1, "/images/hoof-spray.png"),
-    ("daily-coat-brush", "محلول بهداشت جایگاه دام", "بهداشت دامداری", 275_000, "olive", "bottle", None, 0, "/images/barn-hygiene.png"),
-    ("hoof-cleaner", "پاک‌کننده سُم فارمیکو", "مراقبت از سُم", 410_000, "amber", "bottle", None, 0, "/images/hoof-cleaner.png"),
+    ("arnica-hoof-oil", "هوف ژل فارمیکو", "مراقبت از سُم", 385_000, "amber", "tin", "پرفروش", 1, "/images/hoof-gel.jpg"),
+    ("mane-shine-spray", "پماد پستان فارمیکو", "سلامت پستان", 460_000, "wine", "jar", "پیشنهادی", 1, "/images/udder-ointment.jpg"),
+    ("herbal-shampoo", "محلول ویروگاردیا", "ضدعفونی دامداری", 325_000, "olive", "bottle", None, 1, "/images/virucardia-solution.jpg"),
+    ("muscle-relief-balm", "اسپری سُم فارمیکو", "مراقبت از سُم", 515_000, "cream", "spray", None, 1, "/images/hoof-spray.jpg"),
+    ("daily-coat-brush", "محلول بهداشت جایگاه دام", "بهداشت دامداری", 275_000, "olive", "bottle", None, 0, "/images/barn-hygiene.jpg"),
+    ("hoof-cleaner", "پاک‌کننده سُم فارمیکو", "مراقبت از سُم", 410_000, "amber", "bottle", None, 0, "/images/hoof-cleaner.jpg"),
 ]
 
 

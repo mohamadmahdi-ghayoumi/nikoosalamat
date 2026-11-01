@@ -37,10 +37,10 @@ const fallbackCategories = [
 ]
 
 const fallbackProducts = [
-  { id: 1, name: 'هوف ژل فارمیکو', category: 'مراقبت از سُم', price: 385000, tone: 'amber', shape: 'tin', badge: 'پرفروش', image_url: '/images/hoof-gel.png' },
-  { id: 2, name: 'پماد پستان فارمیکو', category: 'سلامت پستان', price: 460000, tone: 'wine', shape: 'jar', badge: 'پیشنهادی', image_url: '/images/udder-ointment.png' },
-  { id: 3, name: 'محلول ویروگاردیا', category: 'ضدعفونی دامداری', price: 325000, tone: 'olive', shape: 'bottle', image_url: '/images/virucardia-solution.png' },
-  { id: 4, name: 'اسپری سُم فارمیکو', category: 'مراقبت از سُم', price: 515000, tone: 'cream', shape: 'spray', image_url: '/images/hoof-spray.png' },
+  { id: 1, name: 'هوف ژل فارمیکو', category: 'مراقبت از سُم', price: 385000, tone: 'amber', shape: 'tin', badge: 'پرفروش', image_url: '/images/hoof-gel.jpg' },
+  { id: 2, name: 'پماد پستان فارمیکو', category: 'سلامت پستان', price: 460000, tone: 'wine', shape: 'jar', badge: 'پیشنهادی', image_url: '/images/udder-ointment.jpg' },
+  { id: 3, name: 'محلول ویروگاردیا', category: 'ضدعفونی دامداری', price: 325000, tone: 'olive', shape: 'bottle', image_url: '/images/virucardia-solution.jpg' },
+  { id: 4, name: 'اسپری سُم فارمیکو', category: 'مراقبت از سُم', price: 515000, tone: 'cream', shape: 'spray', image_url: '/images/hoof-spray.jpg' },
 ]
 
 const fallbackHero = {
