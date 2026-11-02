@@ -745,24 +745,15 @@ export default function App() {
 
       <header className="header">
         <div className="header-inner">
-          <button className="icon-button mobile-menu-button" aria-label="باز کردن منو" onClick={() => setMenuOpen((open) => !open)}>
+          <button className="icon-button mobile-menu-button" aria-label={menuOpen ? 'بستن منو' : 'باز کردن منو'} aria-expanded={menuOpen} aria-controls="main-navigation" onClick={() => setMenuOpen((open) => !open)}>
             <Icon name={menuOpen ? 'close' : 'menu'} />
           </button>
 
           <a href="/" onClick={(event) => navigate(event, '/')} className="brand" aria-label="صفحه اصلی حال نیکو سلامت">
-            <img className="brand-logo" src="/images/hns-logo.png" alt="حال نیکو سلامت" />
+            <svg className="brand-logo" viewBox="80 80 305 315" aria-hidden="true" focusable="false">
+              <image href="/images/hns-logo.png" width="461" height="526" />
+            </svg>
           </a>
-
-          <nav className={`nav ${menuOpen ? 'is-open' : ''}`} aria-label="منوی اصلی">
-            {navigationItems.map((item) => (
-              <NavigationItem
-                key={item.label}
-                item={item}
-                currentPath={currentPath}
-                navigate={navigate}
-              />
-            ))}
-          </nav>
 
           <div className="header-actions">
             <button className="icon-button search-button" aria-label="جست‌وجو" onClick={() => setSearchOpen((open) => !open)}><Icon name="search" /></button>
@@ -772,6 +763,18 @@ export default function App() {
               {cartCount > 0 && <span className="cart-count">{new Intl.NumberFormat('fa-IR').format(cartCount)}</span>}
             </button>
           </div>
+        </div>
+        <div className="navigation-bar">
+          <nav id="main-navigation" className={`nav ${menuOpen ? 'is-open' : ''}`} aria-label="منوی اصلی">
+            {navigationItems.map((item) => (
+              <NavigationItem
+                key={item.label}
+                item={item}
+                currentPath={currentPath}
+                navigate={navigate}
+              />
+            ))}
+          </nav>
         </div>
         {searchOpen && (
           <div className="search-panel">
