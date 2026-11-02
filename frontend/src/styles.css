@@ -193,8 +193,16 @@ h1 em, h2 em { color: var(--wine); font-style: normal; }
 .brand-light .brand-copy small { color: #baa997; }
 .footer-logo { height: 100px; padding: 7px; background: white; border-radius: 8px; }
 .footer-brand > p { margin: 23px 0; color: rgba(255,255,255,.52); font-size: 13px; }
-.socials { display: flex; align-items: center; gap: 10px; direction: ltr; }
-.socials a { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; }
+.social-links-dock { position: fixed; z-index: 40; right: 0; top: 50%; display: flex; flex-direction: column; padding: 5px; transform: translateY(-50%); color: var(--wine); background: #F7FAF7; border: 1px solid var(--line); border-right: 0; border-radius: 12px 0 0 12px; box-shadow: -4px 5px 20px rgba(24, 91, 46, .13); }
+.social-link { position: relative; display: inline-flex; align-items: center; justify-content: center; flex: none; gap: 8px; }
+.social-link svg { flex: none; }
+.social-links-dock .social-link { width: 40px; height: 44px; border-radius: 7px; }
+.social-links-dock .social-link + .social-link { border-top: 1px solid var(--line); }
+.social-links-dock .social-label { position: absolute; left: calc(100% + 13px); padding: 7px 12px; white-space: nowrap; color: var(--paper); background: var(--wine-dark); border-radius: 6px; font-size: 12px; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .15s; }
+.social-links-dock .social-link:hover, .social-links-dock .social-link:focus-visible { background: #E9F5EC; }
+.social-links-dock .social-link:hover .social-label, .social-links-dock .social-link:focus-visible .social-label { opacity: 1; visibility: visible; }
+.social-links-footer { display: none; }
+.social-link:focus-visible { outline: 2px solid var(--brand-green); outline-offset: 3px; }
 .footer-main > div:not(.footer-brand) { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
 .footer h3 { margin: 0 0 10px; color: white; font-size: 14px; }
 .footer a, .footer span { font-size: 11px; }
@@ -396,6 +404,10 @@ h1 em, h2 em { color: var(--wine); font-style: normal; }
 }
 
 @media (max-width: 960px) {
+  .social-links-dock { display: none; }
+  .social-links-footer { display: flex; flex-wrap: wrap; gap: 10px; }
+  .social-links-footer .social-link { min-height: 44px; padding: 8px 12px; color: #BDEBC7; border: 1px solid rgba(189, 235, 199, .3); border-radius: 8px; }
+  .social-links-footer .social-label { font-size: 12px; }
   html { scroll-padding-top: 112px; }
   .announcement span:last-child, .announcement-dot { display: none; }
   .announcement { min-height: 28px; padding-inline: 16px; text-align: center; }

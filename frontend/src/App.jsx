@@ -20,12 +20,34 @@ const Icon = ({ name, size = 22 }) => {
     spray: <><path d="M9 7h8v3h-3v2M10 12h5v9H7v-6c0-2 1-3 3-3Z" /><path d="M11 7V4h5M18 6h3M18 3l2-1M18 9l2 1" /></>,
     plus: <><path d="M12 5v14M5 12h14" /></>,
     instagram: <><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><path d="M17.5 6.5h.01" /></>,
+    telegram: <><path d="m21 3-4 18-6-5-4 3 1-6L3 10 21 3Z" /><path d="m8 13 9-6-6 9" /></>,
+    bale: <><path d="M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 3v-3a2 2 0 0 1-2-2V7a3 3 0 0 1 3-3Z" /><path d="m7 11 3 3 7-7" /></>,
   }
 
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       {paths[name]}
     </svg>
+  )
+}
+
+// Add the official channel URLs here when provided. No destination is assumed.
+const socialChannels = [
+  { icon: 'instagram', label: 'اینستاگرام', href: null },
+  { icon: 'telegram', label: 'تلگرام', href: null },
+  { icon: 'bale', label: 'بله', href: null },
+]
+
+function SocialLinks({ placement }) {
+  return (
+    <div className={`social-links social-links-${placement}`} role="group" aria-label="شبکه‌های اجتماعی نیکو سلامت">
+      {socialChannels.map(({ icon, label, href }) => {
+        const content = <><Icon name={icon} size={23} /><span className="social-label">{label}</span></>
+        return href
+          ? <a key={icon} className="social-link" href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}>{content}</a>
+          : <span key={icon} className="social-link" role="img" aria-label={label} title={label}>{content}</span>
+      })}
+    </div>
   )
 }
 
@@ -879,16 +901,18 @@ export default function App() {
         <main className="not-found"><span>۴۰۴</span><h1>این صفحه پیدا نشد</h1><p>ممکن است آدرس تغییر کرده باشد.</p><button className="button primary" onClick={(event) => navigate(event, '/')}>بازگشت به صفحه اصلی</button></main>
       )}
 
+      {currentPath !== '/admin' && <SocialLinks placement="dock" />}
+
       {currentPath !== '/admin' && <footer className="footer">
         <div className="footer-main">
           <div className="footer-brand">
             <a href="/" onClick={(event) => navigate(event, '/')} className="brand brand-light"><img className="brand-logo footer-logo" src="/images/hns-logo.png" alt="حال نیکو سلامت" /></a>
             <p>راهکارهای تخصصی برای سلامت پایدار دام.</p>
-            <div className="socials"><a href="#instagram" aria-label="اینستاگرام"><Icon name="instagram" /></a><span>@nikoosalamat</span></div>
+            <SocialLinks placement="footer" />
           </div>
           <div><h3>راهکارها</h3><a href="/pages/hoof-care" onClick={(event) => navigate(event, '/pages/hoof-care')}>مراقبت از سُم</a><a href="/pages/udder-health" onClick={(event) => navigate(event, '/pages/udder-health')}>سلامت پستان</a><a href="/pages/farm-disinfection" onClick={(event) => navigate(event, '/pages/farm-disinfection')}>ضدعفونی دامداری</a><a href="/pages/animal-hygiene" onClick={(event) => navigate(event, '/pages/animal-hygiene')}>بهداشت دام و اسب</a></div>
           <div><h3>راهنما</h3><a href="/about" onClick={(event) => navigate(event, '/about')}>درباره نیکو سلامت</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>پرسش‌های متداول</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>روش ارسال</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>شرایط بازگشت</a></div>
-          <div><h3>ارتباط با ما</h3><a href="tel:+989124283834">۰۹۱۲۴۲۸۳۸۳۴</a><a href="mailto:info@nikoosalamat.ir">info@nikoosalamat.ir</a><a href="https://t.me/nikoosalamat" target="_blank" rel="noreferrer">@nikoosalamat</a><span>شهر قدس، کوی صنعت، پلاک ۵</span></div>
+          <div><h3>ارتباط با ما</h3><a href="tel:+989124283834">۰۹۱۲۴۲۸۳۸۳۴</a><a href="mailto:info@nikoosalamat.ir">info@nikoosalamat.ir</a><span>شهر قدس، کوی صنعت، پلاک ۵</span></div>
         </div>
         <div className="footer-bottom"><span>© ۱۴۰۵ نیکو سلامت؛ همه حقوق محفوظ است.</span><span>با احترام به دام، دامدار و طبیعت</span></div>
       </footer>}
