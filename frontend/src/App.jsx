@@ -737,6 +737,7 @@ export default function App() {
 
   return (
     <div className="site-shell">
+      <div className="site-header">
       <div className="announcement">
         <span>ارسال رایگان سفارش‌های بالای ۱٬۵۰۰٬۰۰۰ تومان</span>
         <span className="announcement-dot" />
@@ -784,6 +785,7 @@ export default function App() {
           </div>
         )}
       </header>
+      </div>
 
       {currentPath === '/' && <main id="top">
         <section className="hero-poster" aria-label="معرفی محصولات حال نیکو سلامت">

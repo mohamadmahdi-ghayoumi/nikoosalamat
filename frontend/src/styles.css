@@ -16,7 +16,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; direction: rtl; }
+html { scroll-behavior: smooth; scroll-padding-top: 180px; direction: rtl; }
 body { margin: 0; min-width: 320px; overflow-x: hidden; direction: rtl; text-align: right; background: var(--cream); }
 button, input, select, textarea { font: inherit; }
 input, textarea, select { direction: rtl; text-align: right; }
@@ -25,7 +25,8 @@ img, video, svg { max-width: 100%; }
 button, a { -webkit-tap-highlight-color: transparent; }
 button { cursor: pointer; }
 a { color: inherit; text-decoration: none; }
-.site-shell { width: 100%; max-width: 100vw; overflow: hidden; }
+.site-shell { width: 100%; max-width: 100vw; overflow: clip; }
+.site-header { position: sticky; top: 0; z-index: 50; }
 
 .announcement {
   min-height: 28px;
@@ -34,18 +35,18 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   justify-content: center;
   gap: 18px;
-  color: #fff;
-  background: var(--brand-green);
+  color: var(--ink);
+  background: #F7FAF7;
   font-size: 11px;
   letter-spacing: -.1px;
 }
-.announcement-dot { width: 4px; height: 4px; border-radius: 50%; background: #E9F5EC; }
+.announcement-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--wine); }
 
 .header { position: relative; z-index: 30; background-color: var(--ink); background-image: linear-gradient(rgba(15, 24, 18, .66), rgba(15, 24, 18, .66)), url('/images/nikoosalamat-about.jpg'); background-size: cover; background-position: center 28%; }
 .header-inner { width: min(1240px, calc(100% - 64px)); height: 88px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; flex: none; }
 .brand-logo { width: auto; height: 112px; display: block; object-fit: contain; }
-.header .brand { width: 80px; height: 80px; justify-content: center; background: #E9F5EC; }
+.header .brand { width: 80px; height: 80px; align-self: flex-start; justify-content: center; background: #F7FAF7; }
 .header .brand-logo { width: 62px; height: 64px; display: block; overflow: hidden; flex: none; mix-blend-mode: multiply; }
 .brand-mark { width: 44px; height: 50px; display: grid; place-items: center; color: var(--paper); background: var(--wine); border-radius: 55% 55% 48% 48% / 35% 35% 65% 65%; font-size: 27px; font-weight: 800; transform: rotate(2deg); }
 .brand-copy { display: flex; flex-direction: column; line-height: 1; }
@@ -395,15 +396,15 @@ h1 em, h2 em { color: var(--wine); font-style: normal; }
 }
 
 @media (max-width: 960px) {
+  html { scroll-padding-top: 112px; }
   .announcement span:last-child, .announcement-dot { display: none; }
   .announcement { min-height: 28px; padding-inline: 16px; text-align: center; }
-  .header { position: sticky; top: 0; }
   .header-inner { position: relative; width: calc(100% - 28px); height: 68px; gap: 0; }
   .brand-mark { width: 38px; height: 43px; font-size: 23px; }
   .brand-copy strong { font-size: 20px; }
   .mobile-menu-button { position: absolute; right: 0; display: grid; }
   .header-actions { position: absolute; left: 0; gap: 1px; }
-  .header .brand { position: absolute; left: 50%; transform: translateX(-50%); }
+  .header .brand { position: absolute; top: 0; left: 50%; transform: translateX(-50%); }
   .header .brand { width: 60px; height: 60px; }
   .header .brand-logo { width: 45px; height: 46px; }
   .admin-entry { width: 40px; padding: 0; justify-content: center; }
