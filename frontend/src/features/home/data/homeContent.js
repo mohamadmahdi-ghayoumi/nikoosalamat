@@ -30,10 +30,18 @@ export const fallbackCategories = [
 ]
 
 export const fallbackBenefits = [
-  { title: 'کیفیت قابل اعتماد', description: 'انتخاب محصولات تخصصی و کاربردی', icon: 'leaf' },
-  { title: 'راهکارهای دامپزشکی', description: 'برای دام سنگین، اسب و جایگاه', icon: 'shield' },
-  { title: 'ارسال به سراسر ایران', description: 'تحویل سریع و بسته‌بندی امن', icon: 'truck' },
-  { title: 'مشاوره تخصصی', description: 'همراه شما در انتخاب بهتر', icon: 'heart' },
+  {
+    title: 'تنوع محصول، تعهد به کیفیت',
+    description: 'محصولات تخصصی برای انواع نیازها',
+    icon: 'badge-check',
+  },
+  {
+    title: 'از علم تا نوآوری سبز',
+    description: 'تلفیق دانش، تجربه و شیمی سبز',
+    icon: 'flask-conical',
+  },
+  { title: 'مشاوره تخصصی', description: 'همراه شما برای انتخاب درست', icon: 'sprout' },
+  { title: 'ارسال به سراسر ایران', description: 'تحویل سریع و مطمئن', icon: 'truck' },
 ]
 
 export const categoryPageSlugs = [

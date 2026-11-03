@@ -14,6 +14,12 @@ def test_home_returns_seeded_content():
     assert len(payload["categories"]) == 4
     assert len(payload["featured_products"]) == 4
     assert payload["hero"]["title"] == "سلامت دام،"
+    assert payload["benefits"] == [
+        {"title": "تنوع محصول، تعهد به کیفیت", "description": "محصولات تخصصی برای انواع نیازها", "icon": "badge-check"},
+        {"title": "از علم تا نوآوری سبز", "description": "تلفیق دانش، تجربه و شیمی سبز", "icon": "flask-conical"},
+        {"title": "مشاوره تخصصی", "description": "همراه شما برای انتخاب درست", "icon": "sprout"},
+        {"title": "ارسال به سراسر ایران", "description": "تحویل سریع و مطمئن", "icon": "truck"},
+    ]
 
 
 def test_product_catalog_is_protected_persisted_and_validated():

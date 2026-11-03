@@ -11,10 +11,10 @@ HERO = HeroContent(
 )
 
 BENEFITS = [
-    Benefit(title="کیفیت قابل اعتماد", description="انتخاب محصولات تخصصی و کاربردی", icon="leaf"),
-    Benefit(title="راهکارهای دامپزشکی", description="برای دام سنگین، اسب و جایگاه", icon="shield"),
-    Benefit(title="ارسال به سراسر ایران", description="تحویل سریع و بسته‌بندی امن", icon="truck"),
-    Benefit(title="مشاوره تخصصی", description="همراه شما در انتخاب بهتر", icon="heart"),
+    Benefit(title="تنوع محصول، تعهد به کیفیت", description="محصولات تخصصی برای انواع نیازها", icon="badge-check"),
+    Benefit(title="از علم تا نوآوری سبز", description="تلفیق دانش، تجربه و شیمی سبز", icon="flask-conical"),
+    Benefit(title="مشاوره تخصصی", description="همراه شما برای انتخاب درست", icon="sprout"),
+    Benefit(title="ارسال به سراسر ایران", description="تحویل سریع و مطمئن", icon="truck"),
 ]
 
 STORY = StoryContent(
