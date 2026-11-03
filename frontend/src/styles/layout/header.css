@@ -55,20 +55,20 @@
   object-fit: contain;
 }
 .header .brand {
-  min-height: 68px;
-  gap: 12px;
+  min-height: var(--navigation-height, 52px);
+  gap: 10px;
   color: var(--ink);
 }
 .header .brand-logo {
-  width: 43px;
-  height: 45px;
+  width: 34px;
+  height: 36px;
   display: block;
   overflow: hidden;
   flex: none;
   mix-blend-mode: multiply;
 }
 .brand-name {
-  font-size: 23px;
+  font-size: 21px;
   font-weight: 850;
   line-height: 1.4;
   letter-spacing: -1px;
@@ -104,6 +104,7 @@
   letter-spacing: 3.8px;
 }
 .navigation-bar {
+  --navigation-height: 52px;
   position: relative;
   background: #e9f5ec;
   border-bottom: 1px solid var(--line);
@@ -111,21 +112,21 @@
 }
 .navigation-inner {
   width: min(1240px, calc(100% - 64px));
-  min-height: 68px;
+  min-height: var(--navigation-height);
   margin-inline: auto;
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 24px;
 }
 .nav {
   position: relative;
   min-width: 0;
   flex: 1;
-  min-height: 68px;
+  min-height: var(--navigation-height);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0;
+  justify-content: center;
+  gap: 16px;
   padding-inline-start: 18px;
 }
 .nav > .nav-item + .nav-item {
@@ -146,10 +147,10 @@
   height: 28px;
 }
 .nav > .nav-item > .nav-row {
-  min-height: 68px;
+  min-height: var(--navigation-height);
 }
 .nav > .nav-item > .nav-row > .nav-link {
-  min-height: 68px;
+  min-height: var(--navigation-height);
   padding-inline: 8px;
   color: var(--ink);
   font-weight: 750;
@@ -178,7 +179,7 @@
   gap: 5px;
   position: relative;
   color: var(--ink);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   white-space: nowrap;
   transition:

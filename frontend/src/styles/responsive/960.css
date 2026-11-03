@@ -97,15 +97,15 @@
     gap: 10px;
   }
   .header .brand {
-    min-height: 64px;
+    min-height: var(--navigation-height);
     gap: 9px;
   }
   .header .brand-logo {
-    width: 36px;
-    height: 38px;
+    width: 32px;
+    height: 34px;
   }
   .brand-name {
-    font-size: 20px;
+    font-size: 18px;
     letter-spacing: -0.8px;
   }
   .admin-entry {
@@ -116,11 +116,12 @@
     display: inline;
   }
   .navigation-bar {
-    min-height: 64px;
+    --navigation-height: 56px;
+    min-height: var(--navigation-height);
   }
   .navigation-inner {
     width: calc(100% - 32px);
-    min-height: 64px;
+    min-height: var(--navigation-height);
     gap: 12px;
   }
   .nav {
