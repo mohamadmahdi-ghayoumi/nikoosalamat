@@ -151,7 +151,13 @@ try {
 
 $productColumns = $db->query('PRAGMA table_info(products)')->fetchAll(PDO::FETCH_COLUMN, 1);
 if (!in_array('catalog', $productColumns, true)) {
-    $db->exec("ALTER TABLE products ADD COLUMN catalog TEXT NOT NULL DEFAULT '{}'");
+    try {
+        $db->exec("ALTER TABLE products ADD COLUMN catalog TEXT NOT NULL DEFAULT '{}'");
+    } catch (PDOException $error) {
+        // Another request may have completed this one-time migration already.
+        $productColumns = $db->query('PRAGMA table_info(products)')->fetchAll(PDO::FETCH_COLUMN, 1);
+        if (!in_array('catalog', $productColumns, true)) { throw $error; }
+    }
 }
 
 $db->exec(
