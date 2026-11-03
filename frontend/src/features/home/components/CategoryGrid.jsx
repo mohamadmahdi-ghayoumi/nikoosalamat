@@ -8,7 +8,7 @@ export default function CategoryGrid({ categories, navigate }) {
     <section className="section categories-section" id="categories">
       <div className="section-heading">
         <div>
-          <span className="eyebrow">مراقبت کامل</span>
+          <span className="eyebrow">از علم تا مزرعه، با حال نیکو سلامت</span>
           <h2>
             هر آنچه برای <em>سلامت دام</em> لازم است
           </h2>
