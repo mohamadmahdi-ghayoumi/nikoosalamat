@@ -150,6 +150,8 @@ def init_database() -> None:
         columns = {row[1] for row in connection.execute("PRAGMA table_info(products)")}
         if "image_url" not in columns:
             connection.execute("ALTER TABLE products ADD COLUMN image_url TEXT")
+        if "catalog" not in columns:
+            connection.execute("ALTER TABLE products ADD COLUMN catalog TEXT NOT NULL DEFAULT '{}'")
 
         category_count = connection.execute("SELECT COUNT(*) FROM categories").fetchone()[0]
         if category_count == 0:

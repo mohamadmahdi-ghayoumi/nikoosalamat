@@ -100,6 +100,7 @@ function productRow(array $row): array
     $row['id'] = (int) $row['id'];
     $row['price'] = (int) $row['price'];
     $row['featured'] = (bool) $row['featured'];
+    $row['catalog'] = json_decode($row['catalog'] ?? '{}', true) ?: new stdClass();
     return $row;
 }
 
@@ -146,6 +147,11 @@ try {
     $db->exec('PRAGMA busy_timeout = 5000');
 } catch (Throwable $error) {
     fail('دیتابیس در دسترس نیست؛ افزونه PDO_SQLite هاست را فعال کنید', 503);
+}
+
+$productColumns = $db->query('PRAGMA table_info(products)')->fetchAll(PDO::FETCH_COLUMN, 1);
+if (!in_array('catalog', $productColumns, true)) {
+    $db->exec("ALTER TABLE products ADD COLUMN catalog TEXT NOT NULL DEFAULT '{}'");
 }
 
 $db->exec(
@@ -426,6 +432,55 @@ if ($method === 'POST' && $path === '/api/admin/products') {
     respond(productRow($statement->fetch()), 201);
 }
 
+if ($method === 'PUT' && preg_match('#^/api/admin/products/(\d+)/catalog$#', $path, $matches)) {
+    requireAdmin($db);
+    $statement = $db->prepare('SELECT * FROM products WHERE id = ?');
+    $statement->execute([(int) $matches[1]]);
+    $product = $statement->fetch();
+    if (!$product) { fail('محصول پیدا نشد', 404); }
+    $payload = body();
+    $previous = json_decode($product['catalog'] ?? '{}', true) ?: [];
+    $oldGallery = $previous['gallery'] ?? [];
+    $gallery = $payload['gallery'] ?? [];
+    $imageData = $payload['gallery_data'] ?? [];
+    $features = $payload['features'] ?? [];
+    if (!is_array($gallery) || !is_array($imageData) || !is_array($features)
+        || !array_is_list($gallery) || !array_is_list($imageData) || !array_is_list($features)
+        || count($gallery) + count($imageData) > 5 || count($features) > 20) {
+        fail('حداکثر ۵ تصویر و ۲۰ ویژگی قابل ثبت است', 422);
+    }
+    foreach ($gallery as $url) {
+        if (!is_string($url) || !in_array($url, $oldGallery, true)) { fail('تصویر گالری معتبر نیست', 422); }
+    }
+    foreach ($features as $feature) {
+        if (!is_string($feature) || stringLength($feature) > 1000) { fail('ویژگی محصول معتبر نیست', 422); }
+    }
+    $catalog = ['gallery' => $gallery, 'features' => array_values($features)];
+    foreach (['summary' => 350, 'description' => 15000, 'usage' => 10000] as $key => $limit) {
+        if (isset($payload[$key]) && !is_string($payload[$key])) { fail('اطلاعات محصول معتبر نیست', 422); }
+        $catalog[$key] = trim($payload[$key] ?? '');
+        if (stringLength($catalog[$key]) > $limit) { fail('متن محصول بیش از حد طولانی است', 422); }
+    }
+    $totalImageBytes = 0;
+    foreach ($imageData as $data) {
+        if (!is_string($data) || !preg_match('#^data:image/(jpeg|png|webp);base64,(.+)$#s', $data, $imageMatch)) { fail('تصویر معتبر نیست', 422); }
+        $binary = base64_decode($imageMatch[2], true);
+        if ($binary === false || strlen($binary) > 3 * 1024 * 1024) { fail('تصویر نامعتبر یا بزرگ‌تر از ۳ مگابایت است', 422); }
+        $totalImageBytes += strlen($binary);
+        if ($totalImageBytes > 5 * 1024 * 1024) { fail('حجم مجموع تصاویر جدید حداکثر ۵ مگابایت باشد', 422); }
+    }
+    foreach ($imageData as $data) {
+        $catalog['gallery'][] = saveImage($data, $uploadDir);
+    }
+    $statement = $db->prepare('UPDATE products SET catalog = ? WHERE id = ?');
+    $statement->execute([json_encode($catalog, JSON_UNESCAPED_UNICODE), $product['id']]);
+    foreach ($oldGallery as $url) {
+        if (!in_array($url, $catalog['gallery'], true)) { removeUploadedImage($url, $uploadDir); }
+    }
+    $product['catalog'] = json_encode($catalog, JSON_UNESCAPED_UNICODE);
+    respond(productRow($product));
+}
+
 if ($method === 'GET' && $path === '/api/admin/pages') {
     requireAdmin($db);
     respond(array_map('contentRow', $db->query('SELECT * FROM content_pages ORDER BY id')->fetchAll()));
@@ -550,16 +605,16 @@ if ($method === 'DELETE' && preg_match('#^/api/admin/articles/(\d+)$#', $path, $
 
 if ($method === 'DELETE' && preg_match('#^/api/admin/products/(\d+)$#', $path, $matches)) {
     requireAdmin($db);
-    $statement = $db->prepare('SELECT image_url FROM products WHERE id = ?');
+    $statement = $db->prepare('SELECT image_url, catalog FROM products WHERE id = ?');
     $statement->execute([(int) $matches[1]]);
     $product = $statement->fetch();
     if (!$product) {
         fail('محصول پیدا نشد', 404);
     }
     $db->prepare('DELETE FROM products WHERE id = ?')->execute([(int) $matches[1]]);
-    if ($product['image_url']) {
-        @unlink($uploadDir . '/' . basename($product['image_url']));
-    }
+    removeUploadedImage($product['image_url'], $uploadDir);
+    $catalog = json_decode($product['catalog'] ?? '{}', true) ?: [];
+    foreach ($catalog['gallery'] ?? [] as $url) { removeUploadedImage($url, $uploadDir); }
     respond(null, 204);
 }
 

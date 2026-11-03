@@ -28,6 +28,11 @@ async function request(path, options = {}) {
 export const getHomeData = () => request('/api/home')
 
 export const getProducts = () => request('/api/products')
+export const getProduct = (id) => request(`/api/products/${id}`)
+
+export const updateProductCatalog = (token, id, catalog) => request(`/api/admin/products/${id}/catalog`, {
+  method: 'PUT', headers: { Authorization: `Bearer ${token}` }, body: JSON.stringify(catalog),
+})
 
 export const getContentPage = (slug) => request(`/api/pages/${slug}`)
 

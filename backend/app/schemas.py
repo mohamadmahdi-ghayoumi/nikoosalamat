@@ -1,4 +1,6 @@
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+import json
+
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 
 
 class Category(BaseModel):
@@ -11,6 +13,34 @@ class Category(BaseModel):
     icon: str
     color: str
     sort_order: int
+
+
+class ProductCatalog(BaseModel):
+    summary: str = Field(default="", max_length=350)
+    description: str = Field(default="", max_length=15000)
+    features: list[str] = Field(default_factory=list, max_length=20)
+    usage: str = Field(default="", max_length=10000)
+    gallery: list[str] = Field(default_factory=list, max_length=5)
+
+    @field_validator("features")
+    @classmethod
+    def validate_features(cls, value):
+        if any(len(feature) > 1000 for feature in value):
+            raise ValueError("هر ویژگی حداکثر ۱۰۰۰ حرف باشد")
+        return value
+
+
+class ProductCatalogUpdate(ProductCatalog):
+    gallery_data: list[str] = Field(default_factory=list, max_length=5)
+
+    @field_validator("gallery_data")
+    @classmethod
+    def validate_gallery_size(cls, value):
+        if any(not data for data in value):
+            raise ValueError("تصویر گالری معتبر نیست")
+        if sum(len(data) for data in value) > 7_000_000:
+            raise ValueError("حجم مجموع تصاویر جدید بیش از حد مجاز است")
+        return value
 
 
 class Product(BaseModel):
@@ -26,6 +56,12 @@ class Product(BaseModel):
     badge: str | None = None
     featured: bool
     image_url: str | None = None
+    catalog: ProductCatalog = Field(default_factory=ProductCatalog)
+
+    @field_validator("catalog", mode="before")
+    @classmethod
+    def decode_catalog(cls, value):
+        return json.loads(value or "{}") if isinstance(value, str) else value
 
 
 class AdminLoginIn(BaseModel):

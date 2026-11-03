@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 import base64
 from datetime import datetime, timedelta, timezone
 import hashlib
+import json
 from pathlib import Path
 import re
 import secrets
@@ -25,6 +26,7 @@ from .schemas import (
     NewsletterOut,
     Product,
     ProductCreateIn,
+    ProductCatalogUpdate,
     ContentPage,
     ContentPageUpdateIn,
     Article,
@@ -235,6 +237,31 @@ def create_product(payload: ProductCreateIn, _: dict = Depends(require_admin)) -
     return Product(**fetch_one("SELECT * FROM products WHERE id = ?", (product_id,)))
 
 
+@app.put("/api/admin/products/{product_id}/catalog", response_model=Product)
+def update_product_catalog(product_id: int, payload: ProductCatalogUpdate, _: dict = Depends(require_admin)) -> Product:
+    product = fetch_one("SELECT * FROM products WHERE id = ?", (product_id,))
+    if not product:
+        raise HTTPException(status_code=404, detail="محصول پیدا نشد")
+    old_gallery = json.loads(product.get("catalog") or "{}").get("gallery", [])
+    if any(url not in old_gallery for url in payload.gallery) or len(payload.gallery) + len(payload.gallery_data) > 5:
+        raise HTTPException(status_code=422, detail="حداکثر ۵ تصویر گالری قابل ثبت است")
+    uploaded = []
+    try:
+        for data in payload.gallery_data:
+            uploaded.append(save_image(data))
+        catalog = payload.model_dump(exclude={"gallery_data"})
+        catalog["gallery"] = list(dict.fromkeys(payload.gallery + uploaded))
+        execute("UPDATE products SET catalog = ? WHERE id = ?", (json.dumps(catalog, ensure_ascii=False), product_id))
+    except Exception:
+        for url in uploaded:
+            delete_uploaded_image(url)
+        raise
+    for url in old_gallery:
+        if url not in catalog["gallery"]:
+            delete_uploaded_image(url)
+    return Product(**fetch_one("SELECT * FROM products WHERE id = ?", (product_id,)))
+
+
 @app.get("/api/admin/pages", response_model=list[ContentPage])
 def admin_pages(_: dict = Depends(require_admin)) -> list[ContentPage]:
     return [ContentPage(**row) for row in fetch_all("SELECT * FROM content_pages ORDER BY id")]
@@ -311,12 +338,14 @@ def delete_article(article_id: int, _: dict = Depends(require_admin)) -> None:
 
 @app.delete("/api/admin/products/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_product(product_id: int, _: dict = Depends(require_admin)) -> None:
-    product = fetch_one("SELECT image_url FROM products WHERE id = ?", (product_id,))
+    product = fetch_one("SELECT image_url, catalog FROM products WHERE id = ?", (product_id,))
     if not product:
         raise HTTPException(status_code=404, detail="محصول پیدا نشد")
     execute("DELETE FROM products WHERE id = ?", (product_id,))
     if product["image_url"]:
         delete_uploaded_image(product["image_url"])
+    for image_url in json.loads(product.get("catalog") or "{}").get("gallery", []):
+        delete_uploaded_image(image_url)
 
 
 @app.post("/api/newsletter", response_model=NewsletterOut, status_code=status.HTTP_201_CREATED)

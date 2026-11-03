@@ -16,6 +16,41 @@ def test_home_returns_seeded_content():
     assert payload["hero"]["title"] == "سلامت دام،"
 
 
+def test_product_catalog_is_protected_persisted_and_validated():
+    slug = "catalog-regression-test"
+    with connect() as connection:
+        connection.execute("DELETE FROM products WHERE slug = ?", (slug,))
+    with TestClient(app) as client:
+        session = client.post("/api/admin/login", json={
+            "username": os.getenv("SOVARA_ADMIN_USERNAME", "admin"),
+            "password": os.getenv("SOVARA_ADMIN_PASSWORD", "1234"),
+        }).json()
+        headers = {"Authorization": f"Bearer {session['token']}"}
+        product = client.post("/api/admin/products", headers=headers, json={
+            "slug": slug, "name": "محصول آزمایشی کاتالوگ", "category": "تست", "price": 1000,
+        }).json()
+        endpoint = f"/api/admin/products/{product['id']}/catalog"
+        payload = {"summary": "خلاصه آزمایشی", "description": "معرفی محصول", "features": ["ویژگی آزمایشی"], "usage": "مطابق برچسب محصول", "gallery_data": ["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a5l8AAAAASUVORK5CYII="]}
+        try:
+            assert client.put(endpoint, json=payload).status_code == 401
+            response = client.put(endpoint, headers=headers, json=payload)
+            assert response.status_code == 200
+            catalog = response.json()["catalog"]
+            assert len(catalog["gallery"]) == 1
+            assert client.get(f"/api/products/{product['id']}").json()["catalog"] == catalog
+            assert client.get(catalog["gallery"][0]).status_code == 200
+            assert client.put(endpoint, headers=headers, json={"gallery": ["https://example.com/injected.png"]}).status_code == 422
+            assert client.put(endpoint, headers=headers, json={"gallery_data": [""]}).status_code == 422
+            assert client.put(endpoint, headers=headers, json={"gallery_data": payload["gallery_data"] * 6}).status_code == 422
+            assert client.get(f"/api/products/{product['id']}").json()["catalog"] == catalog
+            assert client.put(endpoint, headers=headers, json={"summary": "ویرایش آزمایشی", "gallery": catalog["gallery"]}).status_code == 200
+            assert client.put(endpoint, headers=headers, json={"gallery": []}).status_code == 200
+            assert client.get(catalog["gallery"][0]).status_code == 404
+        finally:
+            client.delete(f"/api/admin/products/{product['id']}", headers=headers)
+            client.post("/api/admin/logout", headers=headers)
+
+
 def test_cart_quote_calculates_shipping():
     with TestClient(app) as client:
         response = client.post(

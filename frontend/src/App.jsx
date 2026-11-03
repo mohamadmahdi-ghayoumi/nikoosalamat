@@ -1,35 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { adminLogin, adminLogout, createAdminArticle, createAdminProduct, deleteAdminArticle, deleteAdminProduct, getAdminArticles, getAdminPages, getAdminProfile, getArticle, getArticles, getContentPage, getHomeData, getProducts, quoteCart, resolveMediaUrl, sendContactMessage, subscribeNewsletter, updateAdminArticle, updateAdminPage } from './api.js'
 
-const Icon = ({ name, size = 22 }) => {
-  const paths = {
-    menu: <><path d="M4 7h16M4 12h16M4 17h16" /></>,
-    close: <><path d="m6 6 12 12M18 6 6 18" /></>,
-    search: <><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></>,
-    user: <><circle cx="12" cy="8" r="4" /><path d="M4.5 21a7.5 7.5 0 0 1 15 0" /></>,
-    bag: <><path d="M5 8h14l-1 13H6L5 8Z" /><path d="M9 9V6a3 3 0 0 1 6 0v3" /></>,
-    arrow: <><path d="M5 12h14M13 6l6 6-6 6" /></>,
-    chevron: <><path d="m8 10 4 4 4-4" /></>,
-    leaf: <><path d="M20 4C11 4 5 8 5 15c0 3 2 5 5 5 7 0 10-7 10-16Z" /><path d="M4 21c2-5 6-9 12-12" /></>,
-    shield: <><path d="M12 3 5 6v5c0 5 3 8 7 10 4-2 7-5 7-10V6l-7-3Z" /><path d="m9 12 2 2 4-4" /></>,
-    truck: <><path d="M3 6h11v11H3zM14 10h4l3 3v4h-7z" /><circle cx="7" cy="19" r="2" /><circle cx="18" cy="19" r="2" /></>,
-    heart: <><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" /></>,
-    sparkle: <><path d="m12 3 1.2 4.1L17 9l-3.8 1.9L12 15l-1.2-4.1L7 9l3.8-1.9L12 3Z" /><path d="m19 15 .6 2.1L22 18l-2.4.9L19 21l-.6-2.1L16 18l2.4-.9L19 15Z" /></>,
-    drop: <><path d="M12 3s6 7 6 12a6 6 0 0 1-12 0c0-5 6-12 6-12Z" /></>,
-    hoof: <><path d="M8 5c-2 2-3 5-3 8 0 5 3 8 7 8s7-3 7-8c0-3-1-6-3-8" /><path d="M8 5c1 3 2 4 4 4s3-1 4-4M9 14h.01M15 14h.01M12 17h.01" /></>,
-    spray: <><path d="M9 7h8v3h-3v2M10 12h5v9H7v-6c0-2 1-3 3-3Z" /><path d="M11 7V4h5M18 6h3M18 3l2-1M18 9l2 1" /></>,
-    plus: <><path d="M12 5v14M5 12h14" /></>,
-    instagram: <><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><path d="M17.5 6.5h.01" /></>,
-    telegram: <><path d="m21 3-4 18-6-5-4 3 1-6L3 10 21 3Z" /><path d="m8 13 9-6-6 9" /></>,
-    bale: <><path d="M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 3v-3a2 2 0 0 1-2-2V7a3 3 0 0 1 3-3Z" /><path d="m7 11 3 3 7-7" /></>,
-  }
-
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      {paths[name]}
-    </svg>
-  )
-}
+import Icon from './Icons.jsx'
+import { CatalogEditor, CategoryArtwork, HeroSlider, ProductCard, ProductDetail, ProductVisual } from './Catalog.jsx'
+import { updateProductCatalog } from './api.js'
 
 // Add the official channel URLs here when provided. No destination is assumed.
 const socialChannels = [
@@ -190,43 +164,6 @@ function NavigationItem({ item, currentPath, navigate, depth = 0 }) {
 
 const formatPrice = (price) => new Intl.NumberFormat('fa-IR').format(price)
 
-function ProductVisual({ product }) {
-  if (product.image_url) {
-    return <div className="product-visual uploaded"><img src={resolveMediaUrl(product.image_url)} alt={product.name} /></div>
-  }
-  return (
-    <div className={`product-visual ${product.tone}`}>
-      <span className="botanical botanical-one">⌁</span>
-      <span className="botanical botanical-two">⌁</span>
-      <div className={`product-pack ${product.shape}`}>
-        {product.shape === 'spray' && <span className="sprayer" />}
-        <div className="mini-mark">نیکو سلامت</div>
-        <div className="mini-horse">♞</div>
-        <small>مراقبت طبیعی</small>
-      </div>
-    </div>
-  )
-}
-
-function ProductCard({ product, onAddToCart }) {
-  return (
-    <article className="product-card">
-      <div className="product-art-wrap">
-        {product.badge && <span className="product-badge">{product.badge}</span>}
-        <button className="wishlist" aria-label={`افزودن ${product.name} به علاقه‌مندی‌ها`}><Icon name="heart" size={19} /></button>
-        <ProductVisual product={product} />
-      </div>
-      <div className="product-info">
-        <span>{product.category}</span>
-        <h3>{product.name}</h3>
-        <div className="product-bottom">
-          <p><strong>{formatPrice(product.price)}</strong> تومان</p>
-          <button onClick={() => onAddToCart(product)} aria-label={`افزودن ${product.name} به سبد خرید`}><Icon name="plus" size={18} /></button>
-        </div>
-      </div>
-    </article>
-  )
-}
 
 function PageHero({ eyebrow, title, description }) {
   return (
@@ -241,7 +178,7 @@ function PageHero({ eyebrow, title, description }) {
   )
 }
 
-function ProductsPage({ products, onAddToCart }) {
+function ProductsPage({ products, navigate }) {
   const [query, setQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('همه محصولات')
   const categories = ['همه محصولات', ...new Set(products.map((product) => product.category))]
@@ -270,7 +207,7 @@ function ProductsPage({ products, onAddToCart }) {
         </div>
         {visibleProducts.length > 0 ? (
           <div className="product-grid catalog-grid">
-            {visibleProducts.map((product) => <ProductCard product={product} onAddToCart={onAddToCart} key={product.id} />)}
+            {visibleProducts.map((product) => <ProductCard product={product} navigate={navigate} key={product.id} />)}
           </div>
         ) : (
           <div className="empty-state"><Icon name="search" size={30} /><h2>محصولی پیدا نشد</h2><p>عبارت دیگری را جست‌وجو کنید یا فیلتر را تغییر دهید.</p></div>
@@ -537,6 +474,7 @@ function AdminPage({ showNotice }) {
   const [pages, setPages] = useState([])
   const [articles, setArticles] = useState([])
   const [editingArticle, setEditingArticle] = useState(null)
+  const [editingCatalog, setEditingCatalog] = useState(null)
 
   const loadAdminData = async (activeToken = token) => {
     const [nextProducts, nextPages, nextArticles] = await Promise.all([
@@ -567,7 +505,7 @@ function AdminPage({ showNotice }) {
   const logout = () => {
     if (token) adminLogout(token).catch(() => {})
     window.sessionStorage.removeItem('sovara_admin_token')
-    setToken(''); setAdmin(null); setProducts([]); setPages([]); setArticles([])
+    setToken(''); setAdmin(null); setProducts([]); setPages([]); setArticles([]); setEditingCatalog(null)
   }
 
   const createProduct = async (event) => {
@@ -588,6 +526,27 @@ function AdminPage({ showNotice }) {
   const removeProduct = async (product) => {
     if (!window.confirm(`محصول «${product.name}» حذف شود؟`)) return
     try { await deleteAdminProduct(token, product.id); setProducts((items) => items.filter((item) => item.id !== product.id)); showNotice('محصول حذف شد') } catch (error) { showNotice(error.message) }
+    if (editingCatalog?.id === product.id) setEditingCatalog(null)
+  }
+
+  const saveCatalog = async (event, product) => {
+    event.preventDefault(); setBusy(true)
+    const data = new FormData(event.currentTarget)
+    try {
+      const files = data.getAll('gallery_images').filter(file => file instanceof File && file.size > 0)
+      const retained = data.getAll('gallery')
+      if (retained.length + files.length > 5) throw new Error('حداکثر ۵ تصویر برای گالری انتخاب کنید')
+      if (files.reduce((total, file) => total + file.size, 0) > 5 * 1024 * 1024) throw new Error('حجم مجموع تصاویر جدید حداکثر ۵ مگابایت باشد')
+      const features = String(data.get('features') || '').split('\n').map(line => line.trim()).filter(Boolean)
+      if (features.length > 20 || features.some(line => line.length > 1000)) throw new Error('حداکثر ۲۰ ویژگی، هر مورد تا ۱۰۰۰ حرف ثبت کنید')
+      const updated = await updateProductCatalog(token, product.id, {
+        summary: String(data.get('summary') || '').trim(), description: String(data.get('description') || '').trim(),
+        features, usage: String(data.get('usage') || '').trim(), gallery: retained,
+        gallery_data: await Promise.all(files.map(readImageFile)),
+      })
+      setProducts(items => items.map(item => item.id === updated.id ? updated : item))
+      setEditingCatalog(null); showNotice('کاتالوگ محصول ذخیره شد')
+    } catch (error) { showNotice(error.message) } finally { setBusy(false) }
   }
 
   const savePage = async (event, page) => {
@@ -652,8 +611,9 @@ function AdminPage({ showNotice }) {
           <label className="admin-check"><input name="featured" type="checkbox" /> نمایش در محصولات پیشنهادی صفحه اصلی</label>
           <button className="button primary" type="submit" disabled={busy}>{busy ? 'در حال ثبت…' : 'ثبت محصول'} <Icon name="plus" size={18} /></button>
         </form>
-        <section className="admin-products"><div className="admin-list-head"><div><span>فهرست محصولات</span><h2>{new Intl.NumberFormat('fa-IR').format(products.length)} محصول</h2></div></div><div className="admin-product-list">{products.map((product) => <article key={product.id}><ProductVisual product={product} /><div><span>{product.category}</span><h3>{product.name}</h3><p>{formatPrice(product.price)} تومان</p></div><button onClick={() => removeProduct(product)}>حذف</button></article>)}</div></section>
+        <section className="admin-products"><div className="admin-list-head"><div><span>فهرست محصولات</span><h2>{new Intl.NumberFormat('fa-IR').format(products.length)} محصول</h2></div></div><div className="admin-product-list">{products.map((product) => <article key={product.id}><ProductVisual product={product} /><div><span>{product.category}</span><h3>{product.name}</h3><p>{formatPrice(product.price)} تومان</p></div><div className="admin-row-actions"><button onClick={() => setEditingCatalog(product)}>کاتالوگ</button><button className="danger" onClick={() => removeProduct(product)}>حذف</button></div></article>)}</div></section>
       </div>}
+      {activeTab === 'products' && editingCatalog && <CatalogEditor product={editingCatalog} busy={busy} onSave={saveCatalog} onCancel={() => setEditingCatalog(null)} />}
 
       {activeTab === 'pages' && <section className="admin-content-list">
         <div className="admin-section-intro"><span>صفحات چهار دسته اصلی</span><h2>ویرایش متن و تصویر صفحات</h2><p>تغییرات هر صفحه را جداگانه ذخیره کنید.</p></div>
@@ -748,7 +708,7 @@ export default function App() {
       '/contact': 'تماس با ما | نیکو سلامت',
       '/admin': 'داشبورد مدیریت | نیکو سلامت',
     }
-    document.title = titles[currentPath] || (currentPath.startsWith('/articles/') ? 'مقاله | نیکو سلامت' : currentPath.startsWith('/pages/') ? 'راهکارهای نیکو سلامت' : titles['/'])
+    document.title = titles[currentPath] || (currentPath.startsWith('/products/') ? 'کاتالوگ محصول | نیکو سلامت' : currentPath.startsWith('/articles/') ? 'مقاله | نیکو سلامت' : currentPath.startsWith('/pages/') ? 'راهکارهای نیکو سلامت' : titles['/'])
   }, [currentPath])
 
   const categories = homeData?.categories ?? fallbackCategories
@@ -851,15 +811,7 @@ export default function App() {
       </div>
 
       {currentPath === '/' && <main id="top">
-        <section className="hero-poster" aria-label="معرفی محصولات حال نیکو سلامت">
-          <img src="/images/hns-home-banner.png" alt="حال نیکو سلامت؛ از علم تا مزرعه، با حال نیک" />
-          <a href="/products" onClick={(event) => navigate(event, '/products')} className="hero-poster-link" aria-label="مشاهده محصولات" title="مشاهده محصولات" />
-          <div className="hero-mobile-copy">
-            <span>حال نیکو سلامت</span>
-            <h1>از علم تا مزرعه، با حال نیک</h1>
-            <a href="/products" onClick={(event) => navigate(event, '/products')} className="button primary">مشاهده محصولات <Icon name="arrow" size={17} /></a>
-          </div>
-        </section>
+        <HeroSlider navigate={navigate} />
 
         <section className="benefits" aria-label="مزایای خرید از نیکو سلامت">
           {benefits.map((benefit) => (
@@ -875,6 +827,7 @@ export default function App() {
           <div className="category-grid">
             {categories.map((category, index) => (
               <a href={`/pages/${categoryPageSlugs[index]}`} onClick={(event) => navigate(event, `/pages/${categoryPageSlugs[index]}`)} className={`category-card ${category.color}`} key={category.name}>
+                <CategoryArtwork index={index} />
                 <span className="category-number">۰{new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(index + 1)}</span>
                 <span className="category-icon"><Icon name={category.icon} size={34} /></span>
                 <h3>{category.name}</h3>
@@ -890,23 +843,7 @@ export default function App() {
             <div><span className="eyebrow">انتخاب تخصصی دامداران</span><h2>محصولات <em>پیشنهادی</em></h2></div>
           </div>
           <div className="product-grid">
-            {products.map((product) => (
-              <article className="product-card" key={product.id}>
-                <div className="product-art-wrap">
-                  {product.badge && <span className="product-badge">{product.badge}</span>}
-                  <button className="wishlist" aria-label={`افزودن ${product.name} به علاقه‌مندی‌ها`}><Icon name="heart" size={19} /></button>
-                  <ProductVisual product={product} />
-                </div>
-                <div className="product-info">
-                  <span>{product.category}</span>
-                  <h3>{product.name}</h3>
-                  <div className="product-bottom">
-                    <p><strong>{formatPrice(product.price)}</strong> تومان</p>
-                    <button onClick={() => addToCart(product)} aria-label={`افزودن ${product.name} به سبد خرید`}><Icon name="plus" size={18} /></button>
-                  </div>
-                </div>
-              </article>
-            ))}
+            {products.map(product => <ProductCard product={product} navigate={navigate} key={product.id} />)}
           </div>
           <button className="button outline products-cta" onClick={(event) => navigate(event, '/products')}>دیدن همه محصولات <Icon name="arrow" size={18} /></button>
         </section>
@@ -931,14 +868,15 @@ export default function App() {
         </section>
       </main>}
 
-      {currentPath === '/products' && <ProductsPage products={catalogProducts} onAddToCart={addToCart} />}
+      {currentPath === '/products' && <ProductsPage products={catalogProducts} navigate={navigate} />}
+      {/^\/products\/\d+$/.test(currentPath) && <ProductDetail id={currentPath.split('/')[2]} navigate={navigate} onAddToCart={addToCart} />}
       {currentPath === '/articles' && <ArticlesPage navigate={navigate} />}
       {currentPath.startsWith('/articles/') && <ArticlePage slug={currentPath.slice('/articles/'.length)} navigate={navigate} />}
       {currentPath.startsWith('/pages/') && <ContentPageView slug={currentPath.slice('/pages/'.length)} navigate={navigate} />}
       {currentPath === '/about' && <AboutPage navigate={navigate} />}
       {currentPath === '/contact' && <ContactPage showNotice={showNotice} />}
       {currentPath === '/admin' && <AdminPage showNotice={showNotice} />}
-      {!['/', '/products', '/articles', '/about', '/contact', '/admin'].includes(currentPath) && !currentPath.startsWith('/articles/') && !currentPath.startsWith('/pages/') && (
+      {!['/', '/products', '/articles', '/about', '/contact', '/admin'].includes(currentPath) && !/^\/products\/\d+$/.test(currentPath) && !currentPath.startsWith('/articles/') && !currentPath.startsWith('/pages/') && (
         <main className="not-found"><span>۴۰۴</span><h1>این صفحه پیدا نشد</h1><p>ممکن است آدرس تغییر کرده باشد.</p><button className="button primary" onClick={(event) => navigate(event, '/')}>بازگشت به صفحه اصلی</button></main>
       )}
 
