@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import { heroSlides } from '../data/heroSlides.js'
+import useSlidePlayback from '../hooks/useSlidePlayback.js'
 
 export default function HeroSlider({ navigate }) {
-  const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(
     () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   )
   const [hovered, setHovered] = useState(false)
   const [focused, setFocused] = useState(false)
   const [visible, setVisible] = useState(!document.hidden)
-  const move = (delta) =>
-    setActive((index) => (index + delta + heroSlides.length) % heroSlides.length)
+  const playing = !paused && !hovered && !focused && visible
+  const { active, select, move, progressRef } = useSlidePlayback({
+    slideCount: heroSlides.length,
+    playing,
+  })
   useEffect(() => {
     const onVisibility = () => setVisible(!document.hidden)
     document.addEventListener('visibilitychange', onVisibility)
     return () => document.removeEventListener('visibilitychange', onVisibility)
   }, [])
-  useEffect(() => {
-    if (paused || hovered || focused || !visible) return
-    const timer = window.setInterval(() => move(1), 6000)
-    return () => window.clearInterval(timer)
-  }, [paused, hovered, focused, visible, active])
   return (
     <section
       className="hero-slider"
@@ -45,6 +43,9 @@ export default function HeroSlider({ navigate }) {
         }
       }}
     >
+      <div className="hero-progress" aria-hidden="true" data-playing={playing}>
+        <span className="hero-progress-fill" ref={progressRef} />
+      </div>
       <div className="hero-slides" aria-live={paused ? 'polite' : 'off'}>
         {heroSlides.map((slide, index) => (
           <div
@@ -98,7 +99,7 @@ export default function HeroSlider({ navigate }) {
           {heroSlides.map((slide, index) => (
             <button
               key={slide.image}
-              onClick={() => setActive(index)}
+              onClick={() => select(index)}
               aria-label={`نمایش اسلاید ${index + 1}`}
               aria-pressed={active === index}
             >
