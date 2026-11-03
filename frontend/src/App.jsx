@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { adminLogin, adminLogout, createAdminArticle, createAdminProduct, deleteAdminArticle, deleteAdminProduct, getAdminArticles, getAdminPages, getAdminProfile, getArticle, getArticles, getContentPage, getHomeData, getProducts, quoteCart, resolveMediaUrl, sendContactMessage, subscribeNewsletter, updateAdminArticle, updateAdminPage } from './api.js'
 
 const Icon = ({ name, size = 22 }) => {
@@ -314,6 +314,17 @@ function ContentPageView({ slug, navigate }) {
   )
 }
 
+function ArticleMeta({ article }) {
+  const minutes = Math.max(1, Math.ceil(String(article.body || article.excerpt || '').trim().split(/\s+/).filter(Boolean).length / 200))
+  const published = article.created_at ? new Date(article.created_at.replace(' ', 'T')) : null
+  return (
+    <div className="article-meta">
+      <span>{new Intl.NumberFormat('fa-IR').format(minutes)} دقیقه مطالعه</span>
+      {published && !Number.isNaN(published.getTime()) && <time dateTime={published.toISOString()}>{new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' }).format(published)}</time>}
+    </div>
+  )
+}
+
 function ArticlesPage({ navigate }) {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
@@ -323,19 +334,23 @@ function ArticlesPage({ navigate }) {
   }, [])
 
   return (
-    <main className="inner-page" id="top">
-      <PageHero eyebrow="دانش و تجربه" title="مقالات نیکو سلامت" description="مطالب آموزشی و علمی درباره سلامت دام، مراقبت، بهداشت و بهره‌وری پایدار." />
+    <main className="inner-page magazine-page" id="top">
+      <header className="magazine-heading section">
+        <span className="eyebrow">دانش و تجربه، از علم تا مزرعه</span>
+        <h1>مجله نیکو سلامت</h1>
+        <p>مطالب آموزشی و علمی درباره سلامت دام، مراقبت، بهداشت و بهره‌وری پایدار.</p>
+      </header>
       <section className="section articles-section">
         {loading ? <div className="content-loading">در حال دریافت مقالات…</div> : articles.length ? (
           <div className="article-grid">
-            {articles.map((article) => (
-              <a className="article-card" href={`/articles/${article.slug}`} onClick={(event) => navigate(event, `/articles/${article.slug}`)} key={article.id}>
-                {article.image_url ? <img src={resolveMediaUrl(article.image_url)} alt={article.title} /> : <span className="article-placeholder"><Icon name="leaf" size={38} /></span>}
-                <div><span>مقاله</span><h2>{article.title}</h2><p>{article.excerpt}</p><b>ادامه مطلب <Icon name="arrow" size={16} /></b></div>
+            {articles.map((article, index) => (
+              <a className={`article-card ${index === 0 ? 'article-featured' : ''}`} href={`/articles/${article.slug}`} onClick={(event) => navigate(event, `/articles/${article.slug}`)} key={article.id}>
+                {article.image_url ? <img src={resolveMediaUrl(article.image_url)} alt={article.title} loading={index === 0 ? 'eager' : 'lazy'} /> : <span className="article-placeholder"><Icon name="leaf" size={48} /></span>}
+                <div className="article-card-copy"><span className="eyebrow">{index === 0 ? 'از مجله نیکو سلامت' : 'دانش و تجربه'}</span><h2>{article.title}</h2><p>{article.excerpt}</p><ArticleMeta article={article} /><b>خواندن مقاله <Icon name="arrow" size={16} /></b></div>
               </a>
             ))}
           </div>
-        ) : <div className="empty-state"><Icon name="leaf" size={30} /><h2>هنوز مقاله‌ای منتشر نشده است</h2><p>مقاله‌های جدید از پنل مدیریت در این بخش منتشر می‌شوند.</p></div>}
+        ) : <div className="empty-state"><Icon name="leaf" size={30} /><h2>به‌زودی در مجله نیکو سلامت</h2><p>مطالب تازه درباره سلامت دام و مراقبت‌های روزانه را اینجا بخوانید.</p></div>}
       </section>
     </main>
   )
@@ -359,11 +374,18 @@ function ArticlePage({ slug, navigate }) {
 
   return (
     <main className="inner-page article-detail" id="top">
-      <PageHero eyebrow="مقالات نیکو سلامت" title={article.title} description={article.excerpt} />
+      <header className="article-heading">
+        <a className="article-back" href="/articles" onClick={(event) => navigate(event, '/articles')}>مجله نیکو سلامت <Icon name="arrow" size={16} /></a>
+        <h1>{article.title}</h1>
+        {article.excerpt && <p className="article-standfirst">{article.excerpt}</p>}
+        <ArticleMeta article={article} />
+      </header>
       <article className="section editorial-content">
-        {article.image_url && <img className="editorial-cover" src={resolveMediaUrl(article.image_url)} alt={article.title} />}
-        <div className="editorial-body"><ContentBody text={article.body} /></div>
-        <a className="button outline" href="/articles" onClick={(event) => navigate(event, '/articles')}>بازگشت به مقالات <Icon name="arrow" size={18} /></a>
+        {article.image_url && <img className="editorial-cover article-cover" src={resolveMediaUrl(article.image_url)} alt={article.title} />}
+        <div className="article-reading">
+          <div className="editorial-body"><ContentBody text={article.body} /></div>
+          <div className="article-ending"><a className="button outline" href="/articles" onClick={(event) => navigate(event, '/articles')}>مقاله‌های بیشتر <Icon name="arrow" size={18} /></a></div>
+        </div>
       </article>
     </main>
   )
@@ -661,6 +683,7 @@ function AdminPage({ showNotice }) {
 }
 
 export default function App() {
+  const siteHeaderRef = useRef(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [cartCount, setCartCount] = useState(0)
@@ -669,6 +692,24 @@ export default function App() {
   const [apiOnline, setApiOnline] = useState(false)
   const [catalogProducts, setCatalogProducts] = useState(fallbackProducts)
   const [currentPath, setCurrentPath] = useState(() => window.location.pathname.replace(/\/$/, '') || '/')
+
+  useEffect(() => {
+    const header = siteHeaderRef.current
+    if (!header) return
+    const announcement = header.querySelector('.announcement')
+    const utilityRow = header.querySelector('.header-inner')
+    const updateOffset = () => {
+      const desktop = window.matchMedia('(min-width: 961px)').matches
+      const offset = announcement.offsetHeight + (desktop ? utilityRow.offsetHeight : 0)
+      header.style.setProperty('--header-scroll-offset', `${offset}px`)
+    }
+    const observer = new ResizeObserver(updateOffset)
+    observer.observe(announcement)
+    observer.observe(utilityRow)
+    window.addEventListener('resize', updateOffset)
+    updateOffset()
+    return () => { observer.disconnect(); window.removeEventListener('resize', updateOffset) }
+  }, [])
 
   useEffect(() => {
     let active = true
@@ -759,7 +800,7 @@ export default function App() {
 
   return (
     <div className="site-shell">
-      <div className="site-header">
+      <div className="site-header" ref={siteHeaderRef}>
       <div className="announcement">
         <span>ارسال رایگان سفارش‌های بالای ۱٬۵۰۰٬۰۰۰ تومان</span>
         <span className="announcement-dot" />
@@ -906,13 +947,13 @@ export default function App() {
       {currentPath !== '/admin' && <footer className="footer">
         <div className="footer-main">
           <div className="footer-brand">
-            <a href="/" onClick={(event) => navigate(event, '/')} className="brand brand-light"><img className="brand-logo footer-logo" src="/images/hns-logo.png" alt="حال نیکو سلامت" /></a>
+            <div className="footer-identity"><a href="/" onClick={(event) => navigate(event, '/')} className="brand" aria-label="صفحه اصلی حال نیکو سلامت"><svg className="brand-logo footer-logo" viewBox="80 80 305 315" aria-hidden="true" focusable="false"><image href="/images/hns-logo.png" width="461" height="526" /></svg></a><div><strong>حال نیکو سلامت</strong><p>از علم تا مزرعه، با حال نیک</p></div></div>
             <p>راهکارهای تخصصی برای سلامت پایدار دام.</p>
             <SocialLinks placement="footer" />
           </div>
-          <div><h3>راهکارها</h3><a href="/pages/hoof-care" onClick={(event) => navigate(event, '/pages/hoof-care')}>مراقبت از سُم</a><a href="/pages/udder-health" onClick={(event) => navigate(event, '/pages/udder-health')}>سلامت پستان</a><a href="/pages/farm-disinfection" onClick={(event) => navigate(event, '/pages/farm-disinfection')}>ضدعفونی دامداری</a><a href="/pages/animal-hygiene" onClick={(event) => navigate(event, '/pages/animal-hygiene')}>بهداشت دام و اسب</a></div>
-          <div><h3>راهنما</h3><a href="/about" onClick={(event) => navigate(event, '/about')}>درباره نیکو سلامت</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>پرسش‌های متداول</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>روش ارسال</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>شرایط بازگشت</a></div>
-          <div><h3>ارتباط با ما</h3><a href="tel:+989124283834">۰۹۱۲۴۲۸۳۸۳۴</a><a href="mailto:info@nikoosalamat.ir">info@nikoosalamat.ir</a><span>شهر قدس، کوی صنعت، پلاک ۵</span></div>
+          <div className="footer-group"><h3>راهکارها</h3><a href="/pages/hoof-care" onClick={(event) => navigate(event, '/pages/hoof-care')}>مراقبت از سُم</a><a href="/pages/udder-health" onClick={(event) => navigate(event, '/pages/udder-health')}>سلامت پستان</a><a href="/pages/farm-disinfection" onClick={(event) => navigate(event, '/pages/farm-disinfection')}>ضدعفونی دامداری</a><a href="/pages/animal-hygiene" onClick={(event) => navigate(event, '/pages/animal-hygiene')}>بهداشت دام و اسب</a></div>
+          <div className="footer-group"><h3>راهنما</h3><a href="/about" onClick={(event) => navigate(event, '/about')}>درباره نیکو سلامت</a><a href="/articles" onClick={(event) => navigate(event, '/articles')}>مجله نیکو سلامت</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>پرسش‌های متداول</a><a href="/contact" onClick={(event) => navigate(event, '/contact')}>ارسال و بازگشت سفارش</a></div>
+          <div className="footer-group footer-contact"><h3>ارتباط با ما</h3><a href="tel:+989124283834">۰۹۱۲۴۲۸۳۸۳۴</a><a href="mailto:info@nikoosalamat.ir">info@nikoosalamat.ir</a><span>شهر قدس، کوی صنعت، پلاک ۵</span></div>
         </div>
         <div className="footer-bottom"><span>© ۱۴۰۵ نیکو سلامت؛ همه حقوق محفوظ است.</span><span>با احترام به دام، دامدار و طبیعت</span></div>
       </footer>}
