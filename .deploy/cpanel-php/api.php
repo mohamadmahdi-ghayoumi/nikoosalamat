@@ -227,12 +227,12 @@ $db->exec('CREATE TABLE IF NOT EXISTS app_meta (meta_key TEXT PRIMARY KEY, meta_
 $contentVersion = $db->query("SELECT meta_value FROM app_meta WHERE meta_key = 'content_version'")->fetchColumn();
 if ($contentVersion !== 'nikoosalamat-2026-02') {
     $productUpdates = [
-        ['هوف ژل فارمیکو', 'مراقبت از سُم', 'tin', 'پرفروش', '/images/hoof-gel.jpg', 'arnica-hoof-oil'],
-        ['پماد پستان فارمیکو', 'سلامت پستان', 'jar', 'پیشنهادی', '/images/udder-ointment.jpg', 'mane-shine-spray'],
+        ['هوف ژل فارمیکِر', 'مراقبت از سُم', 'tin', 'پرفروش', '/images/hoof-gel.jpg', 'arnica-hoof-oil'],
+        ['پماد پستان فارمیکِر', 'سلامت پستان', 'jar', 'پیشنهادی', '/images/udder-ointment.jpg', 'mane-shine-spray'],
         ['محلول ویروگاردیا', 'ضدعفونی دامداری', 'bottle', null, '/images/virucardia-solution.jpg', 'herbal-shampoo'],
-        ['اسپری سُم فارمیکو', 'مراقبت از سُم', 'spray', null, '/images/hoof-spray.jpg', 'muscle-relief-balm'],
+        ['اسپری سُم فارمیکِر', 'مراقبت از سُم', 'spray', null, '/images/hoof-spray.jpg', 'muscle-relief-balm'],
         ['محلول بهداشت جایگاه دام', 'بهداشت دامداری', 'bottle', null, '/images/barn-hygiene.jpg', 'daily-coat-brush'],
-        ['پاک‌کننده سُم فارمیکو', 'مراقبت از سُم', 'bottle', null, '/images/hoof-cleaner.jpg', 'hoof-cleaner'],
+        ['پاک‌کننده سُم فارمیکِر', 'مراقبت از سُم', 'bottle', null, '/images/hoof-cleaner.jpg', 'hoof-cleaner'],
     ];
     $db->beginTransaction();
     $statement = $db->prepare(
@@ -257,6 +257,27 @@ if ($contentVersion !== 'nikoosalamat-2026-02') {
         "INSERT OR REPLACE INTO app_meta (meta_key, meta_value) VALUES ('content_version', ?)"
     );
     $statement->execute(['nikoosalamat-2026-02']);
+    $db->commit();
+}
+
+// Correct only brand spelling in existing content; keep admin edits and media intact.
+if ($db->query("SELECT meta_value FROM app_meta WHERE meta_key = 'brand_spelling_v1'")->fetchColumn() !== 'done') {
+    $db->beginTransaction();
+    $brandFields = [
+        'products' => ['name', 'catalog'],
+        'categories' => ['name', 'description'],
+        'content_pages' => ['eyebrow', 'title', 'summary', 'body'],
+        'articles' => ['title', 'excerpt', 'body'],
+    ];
+    foreach ($brandFields as $table => $fields) {
+        foreach ($fields as $field) {
+            $statement = $db->prepare("UPDATE $table SET $field = replace($field, ?, ?) WHERE instr($field, ?) > 0");
+            foreach (['فارمیکور', 'فارمیکو', 'فارمیوکر', 'فارمیکر'] as $oldSpelling) {
+                $statement->execute([$oldSpelling, 'فارمیکِر', $oldSpelling]);
+            }
+        }
+    }
+    $db->exec("INSERT OR REPLACE INTO app_meta (meta_key, meta_value) VALUES ('brand_spelling_v1', 'done')");
     $db->commit();
 }
 

@@ -42,12 +42,12 @@ CATEGORIES = [
 ]
 
 PRODUCTS = [
-    ("arnica-hoof-oil", "هوف ژل فارمیکو", "مراقبت از سُم", 385_000, "amber", "tin", "پرفروش", 1, "/images/hoof-gel.jpg"),
-    ("mane-shine-spray", "پماد پستان فارمیکو", "سلامت پستان", 460_000, "wine", "jar", "پیشنهادی", 1, "/images/udder-ointment.jpg"),
+    ("arnica-hoof-oil", "هوف ژل فارمیکِر", "مراقبت از سُم", 385_000, "amber", "tin", "پرفروش", 1, "/images/hoof-gel.jpg"),
+    ("mane-shine-spray", "پماد پستان فارمیکِر", "سلامت پستان", 460_000, "wine", "jar", "پیشنهادی", 1, "/images/udder-ointment.jpg"),
     ("herbal-shampoo", "محلول ویروگاردیا", "ضدعفونی دامداری", 325_000, "olive", "bottle", None, 1, "/images/virucardia-solution.jpg"),
-    ("muscle-relief-balm", "اسپری سُم فارمیکو", "مراقبت از سُم", 515_000, "cream", "spray", None, 1, "/images/hoof-spray.jpg"),
+    ("muscle-relief-balm", "اسپری سُم فارمیکِر", "مراقبت از سُم", 515_000, "cream", "spray", None, 1, "/images/hoof-spray.jpg"),
     ("daily-coat-brush", "محلول بهداشت جایگاه دام", "بهداشت دامداری", 275_000, "olive", "bottle", None, 0, "/images/barn-hygiene.jpg"),
-    ("hoof-cleaner", "پاک‌کننده سُم فارمیکو", "مراقبت از سُم", 410_000, "amber", "bottle", None, 0, "/images/hoof-cleaner.jpg"),
+    ("hoof-cleaner", "پاک‌کننده سُم فارمیکِر", "مراقبت از سُم", 410_000, "amber", "bottle", None, 0, "/images/hoof-cleaner.jpg"),
 ]
 
 CONTENT_PAGES = [
@@ -181,6 +181,29 @@ def init_database() -> None:
             """,
             CONTENT_PAGES,
         )
+
+        connection.execute(
+            "CREATE TABLE IF NOT EXISTS app_meta (meta_key TEXT PRIMARY KEY, meta_value TEXT NOT NULL)"
+        )
+        if connection.execute(
+            "SELECT 1 FROM app_meta WHERE meta_key = 'brand_spelling_v1'"
+        ).fetchone() is None:
+            brand_fields = {
+                "products": ("name", "catalog"),
+                "categories": ("name", "description"),
+                "content_pages": ("eyebrow", "title", "summary", "body"),
+                "articles": ("title", "excerpt", "body"),
+            }
+            for table, fields in brand_fields.items():
+                for field in fields:
+                    for spelling in ("فارمیکور", "فارمیکو", "فارمیوکر", "فارمیکر"):
+                        connection.execute(
+                            f"UPDATE {table} SET {field} = replace({field}, ?, ?) WHERE instr({field}, ?) > 0",
+                            (spelling, "فارمیکِر", spelling),
+                        )
+            connection.execute(
+                "INSERT INTO app_meta (meta_key, meta_value) VALUES ('brand_spelling_v1', 'done')"
+            )
 
         admin_email = os.getenv("SOVARA_ADMIN_USERNAME", "admin").strip().lower()
         admin_password = os.getenv("SOVARA_ADMIN_PASSWORD", "1234")
