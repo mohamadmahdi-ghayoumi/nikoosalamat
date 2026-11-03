@@ -22,21 +22,10 @@ export default function CategoryGrid({ categories, navigate }) {
           <a
             href={`/pages/${categoryPageSlugs[index]}`}
             onClick={(event) => navigate(event, `/pages/${categoryPageSlugs[index]}`)}
-            className={`category-card ${category.color}`}
+            className="category-card category-card--image"
             key={category.name}
           >
             <CategoryArtwork index={index} />
-            <span className="category-number">
-              ۰{new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(index + 1)}
-            </span>
-            <span className="category-icon">
-              <Icon name={category.icon} size={34} />
-            </span>
-            <h3>{category.name}</h3>
-            <p>{category.description ?? category.text}</p>
-            <span className="circle-arrow">
-              <Icon name="arrow" size={18} />
-            </span>
           </a>
         ))}
       </div>

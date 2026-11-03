@@ -1,6 +1,18 @@
 export const categoryImages = [
-  { image: '/images/hns-home-banner.png', crop: '0 430 660 300' },
-  { image: '/images/nikoosalamat-about.jpg', position: '65% 45%' },
-  { image: '/images/nikoosalamat-hero.jpg', position: '90% 55%' },
-  { image: '/images/hero-horse.jpg', position: '65% 35%' },
+  {
+    image: '/images/categories/hoof-care.webp',
+    alt: 'مراقبت از سُم؛ پیشگیری و مراقبت از اندام حرکتی دام',
+  },
+  {
+    image: '/images/categories/udder-health.webp',
+    alt: 'سلامت پستان؛ مراقبت روزانه و حمایت از سلامت گله',
+  },
+  {
+    image: '/images/categories/farm-disinfection.webp',
+    alt: 'ضدعفونی دامداری؛ بهداشت محیط و تجهیزات',
+  },
+  {
+    image: '/images/categories/horse-hygiene.webp',
+    alt: 'بهداشت و سلامت اسب؛ محصولات کاربردی برای مراقبت حرفه‌ای',
+  },
 ]
