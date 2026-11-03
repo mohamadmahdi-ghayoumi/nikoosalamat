@@ -1,0 +1,6 @@
+{
+  "asset": "frontend/public/images/slides/hoof-gel-complete.webp",
+  "source": "User-supplied hoof-gel slide from the homepage-slides archive",
+  "tool": "Built-in image_gen.imagegen (edit mode); no CLI/API fallback",
+  "prompt": "Edit the supplied website banner with maximum fidelity. Remove ONLY the black Persian advertising headline and subtitle on the RIGHT, and the green rounded advertising call-to-action button on the RIGHT. Replace those removed advertising areas with a smooth continuation of the existing pale cream/white background gradient. Preserve the ENTIRE cow unchanged, especially its complete head, BOTH ears, forehead, muzzle/nose and eyes, plus all legs and hooves. Preserve the product jar on the left, its logo and all packaging label text exactly, along with the barn, straw, lighting and framing. Do not redraw, relocate, crop, or cut off any part of the cow or product. No new text, no new button, no new logo, no new objects. Keep the original wide 2.5:1 banner composition. This is precise text/button removal, NOT a redesign or an illustration."
+}

@@ -12,6 +12,9 @@
   .hero-scene::after {
     background: linear-gradient(to top, var(--cream), transparent 20%);
   }
+  .hero-scene--contain::after {
+    background: linear-gradient(to top, var(--cream), transparent 8%);
+  }
   .hero-copy {
     grid-row: 2;
     padding: 18px 28px 68px;

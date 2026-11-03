@@ -1,5 +1,5 @@
-// Only the left 64% of the supplied 2400 × 960 artwork is displayed. Printed
-// text stays outside the SVG viewport; HeroSlider renders real text and links.
+// Most supplied banners have printed copy on the right, outside this viewport.
+// The text-free hoof banner uses a wider, uncropped scene to retain the cow's head.
 const scene = { viewBox: '0 0 1536 960', width: 2400, height: 960 }
 
 export const heroSlides = [
@@ -34,8 +34,8 @@ export const heroSlides = [
     alt: 'ضدعفونی جایگاه دام با تجهیزات حفاظت فردی',
   },
   {
-    image: '/images/slides/hoof-gel.webp',
-    scene,
+    image: '/images/slides/hoof-gel-complete.webp',
+    scene: { viewBox: '0 0 1800 960', width: 2400, height: 960, fit: 'contain' },
     eyebrow: 'مراقبت از سُم',
     title: 'هوف ژل فارمیکو',
     text: 'گاهی باید از نزدیک به سُم نگاه کرد!',

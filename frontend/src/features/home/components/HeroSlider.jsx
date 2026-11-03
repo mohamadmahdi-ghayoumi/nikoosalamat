@@ -70,11 +70,15 @@ export default function HeroSlider({ navigate }) {
                 <Icon name="arrow" size={18} />
               </a>
             </div>
-            <div className="hero-scene">
+            <div
+              className={`hero-scene ${slide.scene?.fit === 'contain' ? 'hero-scene--contain' : ''}`}
+            >
               {slide.scene ? (
                 <svg
                   viewBox={slide.scene.viewBox}
-                  preserveAspectRatio="xMidYMid slice"
+                  preserveAspectRatio={
+                    slide.scene.fit === 'contain' ? 'xMidYMid meet' : 'xMidYMid slice'
+                  }
                   role="img"
                   aria-label={slide.alt}
                 >

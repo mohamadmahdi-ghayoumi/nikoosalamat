@@ -89,6 +89,9 @@
   background: linear-gradient(to left, var(--cream), transparent 18%);
   pointer-events: none;
 }
+.hero-scene--contain::after {
+  background: linear-gradient(to left, var(--cream), transparent 6%);
+}
 .hero-controls {
   position: absolute;
   z-index: 3;
