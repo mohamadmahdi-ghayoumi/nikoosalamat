@@ -66,21 +66,17 @@
     scroll-padding-top: 84px;
   }
   .site-header {
-    top: calc(-1 * var(--header-scroll-offset, 28px));
-  }
-  .announcement span:last-child,
-  .announcement-dot {
-    display: none;
+    top: calc(-1 * var(--header-scroll-offset, 108px));
   }
   .announcement {
-    min-height: 28px;
+    min-height: 36px;
     padding-inline: 16px;
     text-align: center;
   }
   .header-inner {
     position: relative;
     width: calc(100% - 28px);
-    height: 68px;
+    height: 72px;
     gap: 0;
   }
   .brand-mark {
@@ -92,44 +88,44 @@
     font-size: 20px;
   }
   .mobile-menu-button {
-    position: absolute;
-    right: 0;
     display: grid;
+    flex: none;
+    margin-inline-start: auto;
+    color: var(--wine);
   }
   .header-actions {
-    position: absolute;
-    left: 0;
-    gap: 1px;
+    gap: 10px;
   }
   .header .brand {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .header .brand {
-    width: 60px;
-    height: 60px;
+    min-height: 64px;
+    gap: 9px;
   }
   .header .brand-logo {
-    width: 45px;
-    height: 46px;
+    width: 36px;
+    height: 38px;
+  }
+  .brand-name {
+    font-size: 20px;
+    letter-spacing: -0.8px;
   }
   .admin-entry {
-    width: 40px;
-    padding: 0;
+    padding-inline: 13px;
     justify-content: center;
   }
   .admin-entry span {
-    display: none;
+    display: inline;
   }
   .navigation-bar {
-    height: 4px;
-    backdrop-filter: none;
+    min-height: 64px;
+  }
+  .navigation-inner {
+    width: calc(100% - 32px);
+    min-height: 64px;
+    gap: 12px;
   }
   .nav {
     position: absolute;
-    top: 72px;
+    top: 100%;
     right: 0;
     left: 0;
     width: 100%;
@@ -150,6 +146,14 @@
   .nav.is-open {
     display: flex;
   }
+  .nav > .nav-item + .nav-item {
+    padding-inline-start: 0;
+    border-inline-start: 0;
+  }
+  .nav::before,
+  .nav > .nav-item + .nav-item::before {
+    display: none;
+  }
   .nav > .nav-item > .nav-row {
     min-height: 48px;
     border-bottom: 1px solid var(--line);
@@ -158,6 +162,7 @@
     border-bottom: 0;
   }
   .nav > .nav-item > .nav-row > .nav-link {
+    min-height: 48px;
     min-width: 0;
     padding: 12px;
     flex: 1;

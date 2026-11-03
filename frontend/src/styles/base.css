@@ -70,6 +70,6 @@ a {
 }
 .site-header {
   position: sticky;
-  top: calc(-1 * var(--header-scroll-offset, 116px));
+  top: calc(-1 * var(--header-scroll-offset, 128px));
   z-index: 50;
 }

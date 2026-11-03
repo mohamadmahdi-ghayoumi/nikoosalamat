@@ -3,8 +3,12 @@
     width: min(100% - 36px, 1000px);
     gap: 18px;
   }
-  .nav {
-    gap: 13px;
+  .navigation-inner {
+    width: calc(100% - 36px);
+    gap: 18px;
+  }
+  .nav > .nav-item + .nav-item {
+    padding-inline-start: 7px;
   }
   .nav a {
     font-size: 12px;

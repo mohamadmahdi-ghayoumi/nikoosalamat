@@ -1,39 +1,45 @@
 .announcement {
-  min-height: 28px;
-  padding: 4px 24px;
+  min-height: 36px;
+  padding: 6px 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 18px;
-  color: var(--ink);
-  background: #f7faf7;
-  font-size: 11px;
+  color: #ffffff;
+  background: #23763c;
+  font-size: 12px;
   letter-spacing: -0.1px;
 }
-.announcement-dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--wine);
+.announcement-contact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+.announcement-contact:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .header {
   position: relative;
   z-index: 30;
+}
+.header-utility {
   background-color: var(--ink);
   background-image:
-    linear-gradient(rgba(15, 24, 18, 0.66), rgba(15, 24, 18, 0.66)),
+    linear-gradient(rgba(15, 24, 18, 0.4), rgba(15, 24, 18, 0.4)),
     url('/images/nikoosalamat-about.jpg');
   background-size: cover;
   background-position: center 28%;
 }
 .header-inner {
   width: min(1240px, calc(100% - 64px));
-  height: 88px;
+  height: 92px;
   margin: auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 40px;
 }
 .brand {
@@ -49,19 +55,24 @@
   object-fit: contain;
 }
 .header .brand {
-  width: 80px;
-  height: 80px;
-  align-self: flex-start;
-  justify-content: center;
-  background: #f7faf7;
+  min-height: 68px;
+  gap: 12px;
+  color: var(--ink);
 }
 .header .brand-logo {
-  width: 62px;
-  height: 64px;
+  width: 43px;
+  height: 45px;
   display: block;
   overflow: hidden;
   flex: none;
   mix-blend-mode: multiply;
+}
+.brand-name {
+  font-size: 23px;
+  font-weight: 850;
+  line-height: 1.4;
+  letter-spacing: -1px;
+  white-space: nowrap;
 }
 .brand-mark {
   width: 44px;
@@ -93,37 +104,65 @@
   letter-spacing: 3.8px;
 }
 .navigation-bar {
-  background: rgba(35, 118, 60, 0.7);
-  border-top: 1px solid rgba(233, 245, 236, 0.13);
-  backdrop-filter: blur(3px);
+  position: relative;
+  background: #e9f5ec;
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 5px 16px rgba(28, 56, 35, 0.07);
 }
-.nav {
+.navigation-inner {
   width: min(1240px, calc(100% - 64px));
-  min-height: 48px;
+  min-height: 68px;
+  margin-inline: auto;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 28px;
-  margin-inline: auto;
+}
+.nav {
+  position: relative;
+  min-width: 0;
+  flex: 1;
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  padding-inline-start: 18px;
+}
+.nav > .nav-item + .nav-item {
+  padding-inline-start: 12px;
+}
+.nav::before,
+.nav > .nav-item + .nav-item::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 50%;
+  width: 1px;
+  height: 20px;
+  background: #cddfd2;
+  transform: translateY(-50%);
+}
+.nav::before {
+  height: 28px;
 }
 .nav > .nav-item > .nav-row {
-  min-height: 48px;
+  min-height: 68px;
 }
 .nav > .nav-item > .nav-row > .nav-link {
-  min-height: 48px;
+  min-height: 68px;
   padding-inline: 8px;
-  color: var(--paper);
-  font-weight: 650;
+  color: var(--ink);
+  font-weight: 750;
 }
 .nav > .nav-item > .nav-row > .submenu-toggle {
-  color: var(--paper);
+  color: var(--wine);
 }
 .nav > .nav-item:hover > .nav-row,
 .nav > .nav-item.expanded > .nav-row {
-  background: var(--wine-dark);
+  background: #dcefe1;
 }
 .nav > .nav-item > .nav-row > .submenu-toggle:hover {
-  background: var(--wine-dark);
+  background: #d0e8d7;
 }
 .nav-item {
   position: relative;
@@ -139,7 +178,7 @@
   gap: 5px;
   position: relative;
   color: var(--ink);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   white-space: nowrap;
   transition:
@@ -179,8 +218,8 @@
   right: 8px;
   left: 8px;
   bottom: 5px;
-  height: 2px;
-  background: var(--paper);
+  height: 3px;
+  background: var(--wine);
 }
 .submenu {
   position: absolute;
@@ -260,17 +299,17 @@
 }
 .header-actions .icon-button,
 .header-actions .admin-entry {
-  color: #bdebc7;
+  color: #ffffff;
 }
 .header-actions .admin-entry {
-  border-color: rgba(189, 235, 199, 0.35);
+  border-color: rgba(255, 255, 255, 0.55);
 }
 .header-actions .icon-button:hover {
   color: var(--paper);
   background: rgba(60, 173, 85, 0.22);
 }
-.header .mobile-menu-button {
-  color: #bdebc7;
+.header-actions .cart-button {
+  border: 1px solid rgba(255, 255, 255, 0.55);
 }
 .header-actions .admin-entry:hover,
 .header-actions .admin-entry.active {

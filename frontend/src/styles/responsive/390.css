@@ -2,9 +2,6 @@
   .header-inner {
     width: calc(100% - 20px);
   }
-  .header-actions .search-button {
-    display: none;
-  }
   .icon-button {
     width: 38px;
     height: 38px;

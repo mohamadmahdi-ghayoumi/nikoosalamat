@@ -8,8 +8,7 @@ export default function useHeaderOffset() {
     const announcement = header.querySelector('.announcement')
     const utilityRow = header.querySelector('.header-inner')
     const updateOffset = () => {
-      const desktop = window.matchMedia('(min-width: 961px)').matches
-      const offset = announcement.offsetHeight + (desktop ? utilityRow.offsetHeight : 0)
+      const offset = announcement.offsetHeight + utilityRow.offsetHeight
       header.style.setProperty('--header-scroll-offset', `${offset}px`)
     }
     const observer = new ResizeObserver(updateOffset)
