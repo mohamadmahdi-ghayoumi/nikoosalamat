@@ -1,0 +1,56 @@
+/* Inner pages */
+.inner-page {
+  min-height: 70vh;
+  background: var(--cream);
+}
+.page-hero {
+  position: relative;
+  min-height: 260px;
+  padding: 52px 32px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--cream);
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.25;
+  background-image: radial-gradient(circle at 25% 30%, #dce6de 0 1px, transparent 1.5px);
+  background-size: 27px 27px;
+}
+.page-hero-inner {
+  position: relative;
+  z-index: 2;
+  width: min(850px, 100%);
+}
+.page-hero .eyebrow {
+  color: var(--wine);
+}
+.page-hero h1 {
+  margin: 12px 0 16px;
+  font-size: clamp(34px, 4.5vw, 54px);
+  font-weight: 750;
+  line-height: 1.4;
+  letter-spacing: -1.8px;
+}
+.page-hero p {
+  max-width: 700px;
+  margin: auto;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 2;
+}
+.page-hero-pattern {
+  position: absolute;
+  left: 7%;
+  bottom: -80px;
+  color: rgba(61, 63, 68, 0.035);
+  font-size: 300px;
+  line-height: 1;
+  transform: scaleX(-1);
+}

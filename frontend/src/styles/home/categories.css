@@ -1,0 +1,219 @@
+.benefits {
+  width: min(1320px, calc(100% - 64px));
+  min-height: 124px;
+  margin: -1px auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: 0;
+}
+.benefits > div {
+  min-height: 70px;
+  padding: 15px 34px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-left: 1px solid var(--line);
+}
+.benefits > div:last-child {
+  border-left: 0;
+}
+.benefit-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  color: var(--wine);
+  background: #e9f5ec;
+  border-radius: 50%;
+}
+.benefits p {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.benefits strong {
+  font-size: 13px;
+}
+.benefits small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.section {
+  width: min(1240px, calc(100% - 64px));
+  margin: auto;
+  padding: 64px 0;
+}
+.section-heading {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.section-heading h2 {
+  margin: 12px 0 0;
+  font-size: clamp(32px, 3.4vw, 48px);
+  line-height: 1.35;
+  letter-spacing: -2px;
+}
+.view-all {
+  padding-bottom: 7px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--wine);
+  border-bottom: 1px solid rgba(35, 118, 60, 0.35);
+  font-size: 13px;
+  font-weight: 700;
+}
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.category-card {
+  position: relative;
+  min-height: 275px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+  border-radius: 8px;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.category-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 38px rgba(69, 51, 41, 0.11);
+}
+.category-card::before,
+.category-card::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(74, 52, 40, 0.08);
+}
+.category-card::before {
+  width: 220px;
+  height: 220px;
+  left: -80px;
+  bottom: -100px;
+}
+.category-card::after {
+  width: 130px;
+  height: 130px;
+  left: -35px;
+  bottom: -55px;
+}
+.category-card {
+  border: 1px solid var(--line);
+}
+.category-card.rose,
+.category-card.gold,
+.category-card.green,
+.category-card.blue {
+  background: #e9f5ec;
+}
+.category-number {
+  align-self: flex-end;
+  color: rgba(55, 42, 35, 0.35);
+  font: 600 11px Arial;
+}
+.category-icon {
+  width: 70px;
+  height: 70px;
+  margin: 14px 0 23px;
+  display: grid;
+  place-items: center;
+  color: var(--wine);
+  border: 1px solid rgba(35, 118, 60, 0.18);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+}
+.category-card h3 {
+  margin: 0 0 8px;
+  font-size: 19px;
+}
+.category-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.circle-arrow {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: white;
+  background: var(--wine);
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.category-card:hover .circle-arrow {
+  transform: translateX(-4px);
+}
+.category-card {
+  min-height: 350px;
+  padding-top: 165px;
+  background: var(--paper) !important;
+}
+.category-photo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 145px;
+  overflow: hidden;
+  background: #e9f5ec;
+}
+.category-photo img,
+.category-photo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.35s;
+}
+.category-card:hover .category-photo img,
+.category-card:hover .category-photo svg {
+  transform: scale(1.04);
+}
+.category-card .category-icon {
+  position: absolute;
+  z-index: 1;
+  top: 113px;
+  right: 22px;
+  width: 48px;
+  height: 48px;
+  margin: 0;
+  background: var(--cream);
+  border: 3px solid var(--paper);
+}
+.category-card .category-icon svg {
+  width: 25px;
+  height: 25px;
+}
+.category-card .category-number {
+  position: absolute;
+  top: 170px;
+  left: 24px;
+}
+.category-card h3 {
+  margin-top: 12px;
+  padding-inline-end: 14px;
+}
+.category-card p {
+  line-height: 1.9;
+  padding-bottom: 45px;
+}

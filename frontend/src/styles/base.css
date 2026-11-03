@@ -1,0 +1,75 @@
+:root {
+  font-family: 'Vazirmatn Variable', 'Vazirmatn', Tahoma, Arial, sans-serif;
+  color: #3d3f44;
+  background: #f7faf7;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --brand-green: #3cad55;
+  --wine: #23763c;
+  --wine-dark: #185b2e;
+  --olive: #3cad55;
+  --cream: #f7faf7;
+  --paper: #ffffff;
+  --ink: #3d3f44;
+  --muted: #6b7076;
+  --line: #dce6de;
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+  direction: rtl;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+  direction: rtl;
+  text-align: right;
+  background: var(--cream);
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+input,
+textarea,
+select {
+  direction: rtl;
+  text-align: right;
+}
+[dir='ltr'] {
+  direction: ltr;
+  text-align: left;
+}
+img,
+video,
+svg {
+  max-width: 100%;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  cursor: pointer;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.site-shell {
+  width: 100%;
+  max-width: 100vw;
+  overflow: clip;
+}
+.site-header {
+  position: sticky;
+  top: calc(-1 * var(--header-scroll-offset, 116px));
+  z-index: 50;
+}

@@ -1,0 +1,21 @@
+import React from 'react'
+
+export default function AdminTabs({ activeTab, setActiveTab }) {
+  return (
+    <div className="admin-tabs" role="tablist">
+      {[
+        ['products', 'محصولات'],
+        ['pages', 'صفحات دسته‌بندی'],
+        ['articles', 'مقالات'],
+      ].map(([id, label]) => (
+        <button
+          className={activeTab === id ? 'active' : ''}
+          onClick={() => setActiveTab(id)}
+          key={id}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  )
+}

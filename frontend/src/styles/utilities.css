@@ -1,0 +1,19 @@
+.category-card h3,
+.category-card p,
+.product-info h3,
+.article-card h2,
+.article-card p,
+.editorial-body,
+.about-copy p,
+.contact-details p,
+.faq-list p {
+  overflow-wrap: anywhere;
+}
+.admin-layout > *,
+.form-row > *,
+.contact-layout > *,
+.about-intro > *,
+.article-card,
+.product-card {
+  min-width: 0;
+}

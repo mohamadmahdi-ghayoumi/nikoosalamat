@@ -1,0 +1,47 @@
+@media (max-width: 390px) {
+  .header-inner {
+    width: calc(100% - 20px);
+  }
+  .header-actions .search-button {
+    display: none;
+  }
+  .icon-button {
+    width: 38px;
+    height: 38px;
+  }
+  .hero-poster {
+    height: 400px;
+  }
+  .section {
+    width: calc(100% - 28px);
+  }
+  .benefits,
+  .newsletter,
+  .footer-main,
+  .footer-bottom {
+    width: calc(100% - 28px);
+  }
+  .category-card {
+    padding: 20px;
+  }
+  .admin-page {
+    padding-inline: 12px;
+  }
+  .admin-product-form,
+  .admin-products,
+  .admin-login-card,
+  .admin-editor-form {
+    padding-inline: 15px;
+  }
+  .admin-product-list article {
+    grid-template-columns: 54px minmax(0, 1fr);
+  }
+  .admin-product-list .product-visual {
+    width: 54px;
+    height: 54px;
+  }
+  .admin-product-list article > button {
+    grid-column: 1 / -1;
+    justify-self: end;
+  }
+}

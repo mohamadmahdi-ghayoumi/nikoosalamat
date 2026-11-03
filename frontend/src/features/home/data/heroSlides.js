@@ -1,0 +1,30 @@
+export const heroSlides = [
+  {
+    image: '/images/hns-home-banner.png',
+    crop: true,
+    eyebrow: 'حال نیکو سلامت',
+    title: 'از علم تا مزرعه، با حال نیک',
+    text: 'همراه دامداران در مسیر سلامت و بهره‌وری.',
+    action: 'مشاهده محصولات',
+    path: '/products',
+    alt: 'دامپزشک در کنار گاو، اسب و دام‌های مزرعه',
+  },
+  {
+    image: '/images/nikoosalamat-about.jpg',
+    eyebrow: 'دانش و تجربه در کنار شما',
+    title: 'مراقبت آگاهانه، هر روز در مزرعه',
+    text: 'راهکارهای مراقبتی و بهداشتی متناسب با نیاز دامداری.',
+    action: 'آشنایی با راهکارها',
+    path: '/pages/udder-health',
+    alt: 'دامپزشک در حال مراقبت از گوساله در دامداری',
+  },
+  {
+    image: '/images/nikoosalamat-hero.jpg',
+    eyebrow: 'دام، اسب و مزرعه',
+    title: 'همراه سلامت دام و اسب شما',
+    text: 'با حال نیکو سلامت و حوزه‌های فعالیت ما بیشتر آشنا شوید.',
+    action: 'درباره نیکو سلامت',
+    path: '/about',
+    alt: 'مراقبت دامپزشکی از گاو و اسب در مزرعه',
+  },
+]

@@ -1,0 +1,27 @@
+@media (max-width: 1100px) {
+  .header-inner {
+    width: min(100% - 36px, 1000px);
+    gap: 18px;
+  }
+  .nav {
+    gap: 13px;
+  }
+  .nav a {
+    font-size: 12px;
+  }
+  .benefits > div {
+    padding: 15px 18px;
+  }
+  .category-card {
+    min-height: 270px;
+    padding: 22px;
+  }
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .catalog-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+}

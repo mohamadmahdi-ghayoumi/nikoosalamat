@@ -1,0 +1,213 @@
+/* Editable pages and articles */
+.content-loading {
+  min-height: 55vh;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+}
+.editorial-content {
+  width: min(920px, calc(100% - 40px));
+  padding-top: 48px;
+  padding-bottom: 64px;
+}
+.editorial-cover {
+  width: 100%;
+  max-height: 510px;
+  margin-bottom: 42px;
+  display: block;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 22px 55px rgba(39, 58, 44, 0.12);
+}
+.editorial-body {
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 2.35;
+}
+.editorial-body p {
+  margin: 0 0 25px;
+}
+.editorial-content > .button {
+  margin-top: 24px;
+}
+.magazine-heading {
+  padding-top: 48px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--line);
+}
+.magazine-heading h1 {
+  margin: 10px 0 14px;
+  color: var(--ink);
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1.4;
+  letter-spacing: -1.5px;
+}
+.magazine-heading > p {
+  max-width: 660px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 2;
+}
+.articles-section {
+  min-height: 360px;
+  padding-top: 32px;
+}
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.article-card {
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.article-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 45px rgba(41, 65, 48, 0.12);
+}
+.article-card > img,
+.article-placeholder {
+  width: 100%;
+  aspect-ratio: 1.65 / 1;
+  display: grid;
+  place-items: center;
+  object-fit: cover;
+  color: var(--wine);
+  background: #e9f5ec;
+}
+.article-card-copy {
+  padding: 24px;
+}
+.article-card .eyebrow {
+  color: var(--wine);
+  font-size: 11px;
+  font-weight: 750;
+}
+.article-card h2 {
+  margin: 8px 0 10px;
+  font-size: 20px;
+  line-height: 1.65;
+}
+.article-card p {
+  margin: 0 0 18px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 2;
+}
+.article-card b {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--wine);
+  font-size: 11px;
+}
+.article-card b svg,
+.article-back svg {
+  transform: scaleX(-1);
+}
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+.article-meta time {
+  padding-inline-start: 16px;
+  border-inline-start: 1px solid var(--line);
+}
+.article-card .article-meta {
+  margin-bottom: 18px;
+}
+.article-featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  align-items: stretch;
+  margin-bottom: 10px;
+}
+.article-featured > img,
+.article-featured > .article-placeholder {
+  height: 100%;
+  min-height: 360px;
+  aspect-ratio: 16 / 10;
+}
+.article-featured .article-card-copy {
+  padding: clamp(24px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.article-featured h2 {
+  margin: 14px 0;
+  font-size: clamp(25px, 3vw, 36px);
+  line-height: 1.6;
+  letter-spacing: -0.7px;
+}
+.article-featured p {
+  font-size: 14px;
+}
+.article-heading {
+  width: min(780px, calc(100% - 48px));
+  margin: auto;
+  padding-top: 44px;
+}
+.article-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--wine);
+  font-size: 12px;
+  font-weight: 700;
+}
+.article-heading h1 {
+  margin: 20px 0;
+  color: var(--ink);
+  font-size: clamp(30px, 3.6vw, 48px);
+  line-height: 1.65;
+  letter-spacing: -1px;
+  overflow-wrap: anywhere;
+}
+.article-standfirst {
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 2;
+}
+.article-detail .editorial-content {
+  width: min(1080px, calc(100% - 48px));
+  padding-top: 32px;
+}
+.article-cover {
+  max-height: 600px;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 36px;
+  box-shadow: none;
+}
+.article-reading {
+  width: min(740px, 100%);
+  margin-inline: auto;
+}
+.article-reading .editorial-body {
+  font-size: 17px;
+  line-height: 2.2;
+}
+.article-ending {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
