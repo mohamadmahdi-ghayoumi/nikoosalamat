@@ -70,14 +70,14 @@ export default function HeroSlider({ navigate }) {
               </a>
             </div>
             <div className="hero-scene">
-              {slide.crop ? (
+              {slide.scene ? (
                 <svg
-                  viewBox="0 0 1260 740"
+                  viewBox={slide.scene.viewBox}
                   preserveAspectRatio="xMidYMid slice"
                   role="img"
                   aria-label={slide.alt}
                 >
-                  <image href={slide.image} width="1983" height="793" />
+                  <image href={slide.image} width={slide.scene.width} height={slide.scene.height} />
                 </svg>
               ) : (
                 <img src={slide.image} alt={slide.alt} loading={index === 0 ? 'eager' : 'lazy'} />
