@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import Icon from '../ui/Icon.jsx'
 import useHeaderOffset from '../../hooks/useHeaderOffset.js'
+import useHeaderMenus, { desktopNavigation } from '../../hooks/useHeaderMenus.js'
 import { navigationItems } from '../../config/navigation.js'
 import NavigationItem from './NavigationItem.jsx'
 
 export default function Header({ currentPath, navigate, cartCount }) {
   const siteHeaderRef = useHeaderOffset()
-  const [menuOpen, setMenuOpen] = useState(false)
+  const {
+    navigationRef,
+    mobileToggleRef,
+    menuOpen,
+    setMenuOpen,
+    openPath,
+    setOpenPath,
+    closeMenus,
+  } = useHeaderMenus(currentPath)
   const [searchOpen, setSearchOpen] = useState(false)
   const handleNavigate = (event, target) => {
-    setMenuOpen(false)
+    closeMenus()
     setSearchOpen(false)
     navigate(event, target)
   }
@@ -83,16 +92,31 @@ export default function Header({ currentPath, navigate, cartCount }) {
             </a>
             <button
               className="icon-button mobile-menu-button"
+              ref={mobileToggleRef}
               aria-label={menuOpen ? 'بستن منو' : 'باز کردن منو'}
               aria-expanded={menuOpen}
               aria-controls="main-navigation"
-              onClick={() => setMenuOpen((open) => !open)}
+              onClick={() => {
+                setMenuOpen((open) => !open)
+                setOpenPath([])
+              }}
             >
               <Icon name={menuOpen ? 'close' : 'menu'} />
             </button>
 
             <nav
+              ref={navigationRef}
               id="main-navigation"
+              onPointerLeave={(event) => {
+                if (event.pointerType === 'mouse' && desktopNavigation()) setOpenPath([])
+              }}
+              onBlur={(event) => {
+                if (
+                  !event.currentTarget.contains(event.relatedTarget) &&
+                  !mobileToggleRef.current?.contains(event.relatedTarget)
+                )
+                  closeMenus()
+              }}
               className={`nav ${menuOpen ? 'is-open' : ''}`}
               aria-label="منوی اصلی"
             >
@@ -102,6 +126,8 @@ export default function Header({ currentPath, navigate, cartCount }) {
                   item={item}
                   currentPath={currentPath}
                   navigate={handleNavigate}
+                  openPath={openPath}
+                  setOpenPath={setOpenPath}
                 />
               ))}
             </nav>

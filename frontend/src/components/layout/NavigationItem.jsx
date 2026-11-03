@@ -1,13 +1,29 @@
-import React, { useState } from 'react'
+import React, { useId } from 'react'
 import Icon from '../ui/Icon.jsx'
+import { desktopNavigation } from '../../hooks/useHeaderMenus.js'
 
-export default function NavigationItem({ item, currentPath, navigate, depth = 0 }) {
+export default function NavigationItem({
+  item,
+  currentPath,
+  navigate,
+  openPath,
+  setOpenPath,
+  parentPath = [],
+  depth = 0,
+}) {
   const hasChildren = Boolean(item.children?.length)
   const isActive = currentPath === item.path && (item.path === '/' || depth === 0)
-  const [expanded, setExpanded] = useState(false)
+  const submenuId = useId()
+  const path = [...parentPath, item.label]
+  const expanded = hasChildren && path.every((label, index) => openPath[index] === label)
 
   return (
     <div
+      onPointerEnter={(event) => {
+        if (event.pointerType === 'mouse' && desktopNavigation()) {
+          setOpenPath(hasChildren ? path : parentPath)
+        }
+      }}
       className={`nav-item nav-depth-${depth} ${hasChildren ? 'has-children' : ''} ${expanded ? 'expanded' : ''}`}
     >
       <div className="nav-row">
@@ -24,14 +40,23 @@ export default function NavigationItem({ item, currentPath, navigate, depth = 0 
             type="button"
             aria-label={`نمایش زیرمنوی ${item.label}`}
             aria-expanded={expanded}
-            onClick={() => setExpanded((value) => !value)}
+            aria-controls={submenuId}
+            onClick={() => setOpenPath(expanded ? parentPath : path)}
+            onKeyDown={(event) => {
+              if (event.key !== 'ArrowDown') return
+              event.preventDefault()
+              setOpenPath(path)
+              requestAnimationFrame(() =>
+                document.getElementById(submenuId)?.querySelector('a')?.focus(),
+              )
+            }}
           >
             <Icon name="chevron" size={14} />
           </button>
         )}
       </div>
       {hasChildren && (
-        <div className="submenu" role="menu">
+        <div className="submenu" id={submenuId} inert={!expanded}>
           {item.children.map((child) => (
             <NavigationItem
               key={`${item.label}-${child.label}`}
@@ -39,6 +64,9 @@ export default function NavigationItem({ item, currentPath, navigate, depth = 0 
               currentPath={currentPath}
               navigate={navigate}
               depth={depth + 1}
+              parentPath={path}
+              openPath={openPath}
+              setOpenPath={setOpenPath}
             />
           ))}
         </div>
