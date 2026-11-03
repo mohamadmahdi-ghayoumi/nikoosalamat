@@ -1,10 +1,10 @@
 @media (max-width: 960px) {
   .hero-slides {
-    height: 600px;
+    height: calc(min(53.333333vw, 400px) + 350px);
   }
   .hero-slide {
     grid-template-columns: 1fr;
-    grid-template-rows: 280px 1fr;
+    grid-template-rows: min(53.333333vw, 400px) 1fr;
   }
   .hero-scene {
     grid-row: 1;
@@ -12,8 +12,26 @@
   .hero-scene::after {
     background: linear-gradient(to top, var(--cream), transparent 20%);
   }
-  .hero-scene--contain::after {
-    background: linear-gradient(to top, var(--cream), transparent 8%);
+  .hero-slide--panoramic {
+    display: grid;
+  }
+  .hero-slide--panoramic .hero-scene {
+    position: relative;
+    inset: auto;
+  }
+  .hero-slide--panoramic .hero-scene::after {
+    background: linear-gradient(to top, #163c25, transparent 6%);
+  }
+  .hero-slide--panoramic .hero-copy {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    padding: 18px 28px 68px;
+    background: #163c25;
+    text-shadow: none;
+  }
+  .hero-slide--panoramic .hero-copy h1 {
+    font-size: 32px;
   }
   .hero-copy {
     grid-row: 2;

@@ -22,7 +22,7 @@ export default function HeroSlider({ navigate }) {
   }, [])
   return (
     <section
-      className="hero-slider"
+      className={`hero-slider ${heroSlides[active].layout === 'panoramic' ? 'hero-slider--panoramic' : ''}`}
       role="region"
       aria-roledescription="اسلایدر"
       aria-label="معرفی حال نیکو سلامت"
@@ -49,7 +49,7 @@ export default function HeroSlider({ navigate }) {
       <div className="hero-slides" aria-live={paused ? 'polite' : 'off'}>
         {heroSlides.map((slide, index) => (
           <div
-            className={`hero-slide ${active === index ? 'is-active' : ''}`}
+            className={`hero-slide ${slide.layout === 'panoramic' ? 'hero-slide--panoramic' : ''} ${active === index ? 'is-active' : ''}`}
             key={slide.image}
             role="group"
             aria-roledescription="اسلاید"
@@ -70,15 +70,11 @@ export default function HeroSlider({ navigate }) {
                 <Icon name="arrow" size={18} />
               </a>
             </div>
-            <div
-              className={`hero-scene ${slide.scene?.fit === 'contain' ? 'hero-scene--contain' : ''}`}
-            >
+            <div className="hero-scene">
               {slide.scene ? (
                 <svg
                   viewBox={slide.scene.viewBox}
-                  preserveAspectRatio={
-                    slide.scene.fit === 'contain' ? 'xMidYMid meet' : 'xMidYMid slice'
-                  }
+                  preserveAspectRatio={slide.scene.align ?? 'xMidYMid slice'}
                   role="img"
                   aria-label={slide.alt}
                 >

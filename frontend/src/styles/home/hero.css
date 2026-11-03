@@ -23,7 +23,7 @@
 }
 .hero-slides {
   position: relative;
-  height: clamp(450px, 38vw, 560px);
+  height: 40vw;
 }
 .hero-slide {
   position: absolute;
@@ -89,8 +89,51 @@
   background: linear-gradient(to left, var(--cream), transparent 18%);
   pointer-events: none;
 }
-.hero-scene--contain::after {
-  background: linear-gradient(to left, var(--cream), transparent 6%);
+.hero-slide--panoramic {
+  display: block;
+}
+.hero-slide--panoramic .hero-scene {
+  position: absolute;
+  inset: 0;
+}
+.hero-slide--panoramic .hero-scene::after {
+  background: linear-gradient(
+    to left,
+    rgba(8, 29, 17, 0.82),
+    rgba(8, 29, 17, 0.58) 25%,
+    transparent 49%
+  );
+}
+.hero-slide--panoramic .hero-copy {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 33%;
+  padding: 24px clamp(24px, 4vw, 64px) 72px 24px;
+  color: white;
+  background: transparent;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+.hero-slide--panoramic .hero-copy h1 {
+  color: white;
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1.5;
+}
+.hero-slide--panoramic .hero-copy p {
+  color: #f0f6f1;
+  font-size: 14px;
+}
+.hero-slide--panoramic .hero-copy .eyebrow {
+  color: #d3f2db;
+}
+.hero-slide--panoramic .hero-copy .button {
+  text-shadow: none;
+}
+.hero-slider--panoramic .slider-dots span {
+  background: rgba(255, 255, 255, 0.45);
+}
+.hero-slider--panoramic .slider-dots button[aria-pressed='true'] span {
+  background: white;
 }
 .hero-controls {
   position: absolute;

@@ -1,6 +1,7 @@
-// Most supplied banners have printed copy on the right, outside this viewport.
-// The text-free hoof banner uses a wider, uncropped scene to retain the cow's head.
+// The introduction excludes its original printed copy. Product backgrounds are
+// text-free, edge-to-edge photographs with live HTML text layered above them.
 const scene = { viewBox: '0 0 1536 960', width: 2400, height: 960 }
+const panorama = { viewBox: '0 0 2400 960', width: 2400, height: 960, align: 'xMinYMid slice' }
 
 export const heroSlides = [
   {
@@ -14,8 +15,9 @@ export const heroSlides = [
     alt: 'دامپزشک در کنار گاو، اسب، گوسفند و بز در مزرعه',
   },
   {
-    image: '/images/slides/viroguardia.webp',
-    scene,
+    image: '/images/slides/viroguardia-panoramic.webp',
+    scene: panorama,
+    layout: 'panoramic',
     eyebrow: 'مراقبت از سلامت دام',
     title: 'محلول ویروگاردیا',
     text: 'تب برفکی منتظر نمی‌ماند؛ شما هم منتظر نمانید!',
@@ -24,8 +26,9 @@ export const heroSlides = [
     alt: 'دامپزشک در حال معاینه دهان گاو در دامداری',
   },
   {
-    image: '/images/slides/farm-disinfection.webp',
-    scene,
+    image: '/images/slides/farm-disinfection-panoramic.webp',
+    scene: panorama,
+    layout: 'panoramic',
     eyebrow: 'بهداشت دامداری',
     title: 'ضدعفونی‌کننده فارمیکو',
     text: 'گاهی باید فراتر از تمیزی نگاه کرد…',
@@ -34,8 +37,9 @@ export const heroSlides = [
     alt: 'ضدعفونی جایگاه دام با تجهیزات حفاظت فردی',
   },
   {
-    image: '/images/slides/hoof-gel-complete.webp',
-    scene: { viewBox: '0 0 1800 960', width: 2400, height: 960, fit: 'contain' },
+    image: '/images/slides/hoof-gel-panoramic.webp',
+    scene: panorama,
+    layout: 'panoramic',
     eyebrow: 'مراقبت از سُم',
     title: 'هوف ژل فارمیکو',
     text: 'گاهی باید از نزدیک به سُم نگاه کرد!',
@@ -44,8 +48,9 @@ export const heroSlides = [
     alt: 'هوف ژل فارمیکو در کنار گاو و نمای سُم در دامداری',
   },
   {
-    image: '/images/slides/udder-balm.webp',
-    scene,
+    image: '/images/slides/udder-balm-panoramic.webp',
+    scene: panorama,
+    layout: 'panoramic',
     eyebrow: 'سلامت پستان',
     title: 'پماد پستان فارمیکو',
     text: 'گاهی یک زخم کوچک، توجه می‌خواهد…',
