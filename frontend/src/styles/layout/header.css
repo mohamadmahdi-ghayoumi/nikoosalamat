@@ -417,8 +417,10 @@
   outline: 0;
   color: var(--ink);
   background: transparent;
+  min-width: 0;
 }
 .search-panel button {
+  flex: none;
   width: 38px;
   height: 38px;
   display: grid;

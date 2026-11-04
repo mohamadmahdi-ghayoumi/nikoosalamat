@@ -231,3 +231,13 @@
   display: flex;
   margin: 24px auto 0;
 }
+.field-error,
+.form-error {
+  color: #a62929;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.9;
+}
+.contact-form [aria-invalid='true'] {
+  border-color: #a62929;
+}

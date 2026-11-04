@@ -8,7 +8,7 @@ import SiteLayout from '../components/layout/SiteLayout.jsx'
 import AppRoutes from './AppRoutes.jsx'
 
 export default function App() {
-  const { currentPath, navigate } = useNavigation()
+  const { currentPath, currentSearch, navigate } = useNavigation()
   const { notice, showNotice } = useNotice()
   const { homeData, apiOnline, catalogProducts, markApiOnline } = useSiteData(currentPath)
   const { cartCount, addToCart } = useCart({ apiOnline, showNotice })
@@ -17,6 +17,7 @@ export default function App() {
     <SiteLayout currentPath={currentPath} navigate={navigate} cartCount={cartCount} notice={notice}>
       <AppRoutes
         currentPath={currentPath}
+        currentSearch={currentSearch}
         navigate={navigate}
         homeData={homeData}
         catalogProducts={catalogProducts}

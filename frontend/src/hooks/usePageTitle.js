@@ -7,6 +7,7 @@ export default function usePageTitle(currentPath) {
       '/products': 'محصولات | نیکو سلامت',
       '/articles': 'مقالات | نیکو سلامت',
       '/solutions': 'راهکارها | نیکو سلامت',
+      '/search': 'نتایج جست‌وجو | نیکو سلامت',
       '/about': 'درباره ما | نیکو سلامت',
       '/contact': 'تماس با ما | نیکو سلامت',
       '/admin': 'داشبورد مدیریت | نیکو سلامت',

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Icon from '../ui/Icon.jsx'
 import useHeaderOffset from '../../hooks/useHeaderOffset.js'
 import useHeaderMenus, { desktopNavigation } from '../../hooks/useHeaderMenus.js'
 import { navigationItems } from '../../config/navigation.js'
 import NavigationItem from './NavigationItem.jsx'
+import HeaderSearch from './HeaderSearch.jsx'
 
 export default function Header({ currentPath, navigate, cartCount }) {
   const siteHeaderRef = useHeaderOffset()
@@ -17,6 +18,11 @@ export default function Header({ currentPath, navigate, cartCount }) {
     closeMenus,
   } = useHeaderMenus(currentPath)
   const [searchOpen, setSearchOpen] = useState(false)
+  const searchButtonRef = useRef(null)
+  const closeSearch = useCallback((restoreFocus) => {
+    setSearchOpen(false)
+    if (restoreFocus) searchButtonRef.current?.focus()
+  }, [])
   const handleNavigate = (event, target) => {
     closeMenus()
     setSearchOpen(false)
@@ -43,31 +49,13 @@ export default function Header({ currentPath, navigate, cartCount }) {
             <div className="header-actions">
               <button
                 className="icon-button search-button"
+                ref={searchButtonRef}
                 aria-label="جست‌وجو"
                 aria-expanded={searchOpen}
                 aria-controls="header-search"
                 onClick={() => setSearchOpen((open) => !open)}
               >
                 <Icon name="search" />
-              </button>
-              <a
-                className={`admin-entry ${currentPath === '/admin' ? 'active' : ''}`}
-                href="/admin"
-                onClick={(event) => handleNavigate(event, '/admin')}
-              >
-                <Icon name="user" size={18} />
-                <span>ورود</span>
-              </a>
-              <button
-                className="icon-button cart-button"
-                aria-label={`سبد خرید، ${cartCount} کالا`}
-              >
-                <Icon name="bag" />
-                {cartCount > 0 && (
-                  <span className="cart-count">
-                    {new Intl.NumberFormat('fa-IR').format(cartCount)}
-                  </span>
-                )}
               </button>
             </div>
           </div>
@@ -134,18 +122,11 @@ export default function Header({ currentPath, navigate, cartCount }) {
           </div>
         </div>
         {searchOpen && (
-          <div className="search-panel" id="header-search">
-            <Icon name="search" />
-            <input
-              autoFocus
-              type="search"
-              placeholder="جست‌وجوی محصول یا موضوع..."
-              aria-label="جست‌وجو در سایت"
-            />
-            <button onClick={() => setSearchOpen(false)} aria-label="بستن جست‌وجو">
-              <Icon name="close" size={19} />
-            </button>
-          </div>
+          <HeaderSearch
+            buttonRef={searchButtonRef}
+            onClose={closeSearch}
+            navigate={handleNavigate}
+          />
         )}
       </header>
     </div>

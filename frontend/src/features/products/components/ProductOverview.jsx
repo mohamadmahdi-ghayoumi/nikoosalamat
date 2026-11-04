@@ -2,7 +2,7 @@ import React from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import { productSummary } from '../utils/products.js'
 
-export default function ProductOverview({ product, navigate, onAddToCart }) {
+export default function ProductOverview({ product, navigate }) {
   return (
     <div className="product-overview-copy">
       <span className="eyebrow">{product.category}</span>
@@ -26,14 +26,18 @@ export default function ProductOverview({ product, navigate, onAddToCart }) {
         <span>تومان</span>
       </div>
       <div className="product-detail-actions">
-        <button className="button primary" onClick={() => onAddToCart(product)}>
-          افزودن به سبد خرید
-          <Icon name="bag" size={18} />
-        </button>
+        <a
+          className="button primary"
+          href="/contact#contact-form"
+          onClick={(event) => navigate(event, '/contact#contact-form')}
+        >
+          استعلام قیمت و سفارش
+          <Icon name="phone" size={18} />
+        </a>
         <a
           className="button outline"
-          href="/contact"
-          onClick={(event) => navigate(event, '/contact')}
+          href="/contact#sales"
+          onClick={(event) => navigate(event, '/contact#sales')}
         >
           مشاوره درباره محصول
         </a>

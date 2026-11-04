@@ -46,6 +46,28 @@ function stringLength(string $value): int
     return function_exists('mb_strlen') ? mb_strlen($value) : strlen($value);
 }
 
+function normalizeDigits(string $value): string
+{
+    return strtr($value, array_combine(
+        preg_split('//u', '۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩', -1, PREG_SPLIT_NO_EMPTY),
+        str_split('01234567890123456789')
+    ));
+}
+
+function normalizeMobile(string $value): string
+{
+    $value = preg_replace('/[\s\-()]/u', '', normalizeDigits($value));
+    if (preg_match('/^(?:\+98|0098|98)9[0-9]{9}$/', $value)) return '0' . substr($value, -10);
+    return preg_match('/^9[0-9]{9}$/', $value) ? '0' . $value : $value;
+}
+
+function normalizeSearch(string $value): string
+{
+    $value = strtr(normalizeDigits($value), ['ي' => 'ی', 'ى' => 'ی', 'ك' => 'ک', 'أ' => 'ا', 'إ' => 'ا', 'آ' => 'ا', "\u{200C}" => ' ', 'ـ' => '']);
+    $value = preg_replace('/[\x{064B}-\x{065F}\x{0670}]/u', '', $value);
+    return strtolower(trim(preg_replace('/\s+/u', ' ', $value)));
+}
+
 function authToken(): ?string
 {
     $header = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
@@ -298,6 +320,43 @@ if ($method === 'GET' && $path === '/api/categories') {
         $row['sort_order'] = (int) $row['sort_order'];
     }
     respond($rows);
+}
+
+if ($method === 'GET' && $path === '/api/search') {
+    $query = $_GET['q'] ?? '';
+    if (!is_string($query) || stringLength($query) > 120) fail('عبارت جست‌وجو باید حداکثر ۱۲۰ حرف باشد', 422);
+    $query = trim($query);
+    $normalized = normalizeSearch($query);
+    if ($normalized === '') respond(['query' => $query, 'total' => 0, 'results' => []]);
+    $candidates = [
+        ['kind' => 'page', 'title' => 'درباره حال نیکو سلامت', 'excerpt' => 'معرفی شرکت، حوزه‌های فعالیت و همکاری با فارمیکِر', 'path' => '/about'],
+        ['kind' => 'page', 'title' => 'ارتباط با ما', 'excerpt' => 'تماس با مدیر فروش، آدرس، فرم تماس و سؤالات متداول', 'path' => '/contact'],
+        ['kind' => 'page', 'title' => 'راهکارهای مراقبت از سلامت دام', 'excerpt' => 'موضوعات مراقبت از سُم، سلامت پستان و بهداشت دام', 'path' => '/solutions'],
+    ];
+    foreach ($db->query('SELECT id, name, category FROM products ORDER BY id')->fetchAll() as $row) {
+        $candidates[] = ['kind' => 'product', 'title' => $row['name'], 'excerpt' => $row['category'], 'path' => '/products/' . $row['id']];
+    }
+    foreach ([['article', 'articles', 'excerpt', 'articles'], ['page', 'content_pages', 'summary', 'pages']] as [$kind, $table, $excerpt, $prefix]) {
+        foreach ($db->query("SELECT slug, title, $excerpt, body FROM $table WHERE published = 1 ORDER BY id")->fetchAll() as $row) {
+            $candidates[] = ['kind' => $kind, 'title' => $row['title'], 'excerpt' => $row[$excerpt], 'path' => '/' . $prefix . '/' . $row['slug'], 'body' => $row['body']];
+        }
+    }
+    $results = [];
+    foreach ($candidates as $item) {
+        $haystack = normalizeSearch($item['title'] . ' ' . $item['excerpt'] . ' ' . ($item['body'] ?? ''));
+        foreach (explode(' ', $normalized) as $term) {
+            if (!str_contains($haystack, $term)) continue 2;
+        }
+        unset($item['body']);
+        $item['rank'] = str_contains(normalizeSearch($item['title']), $normalized) ? 0 : 1;
+        preg_match('/^.{0,160}/us', trim(preg_replace('/\s+/u', ' ', $item['excerpt'])), $snippet);
+        $item['excerpt'] = $snippet[0] ?? '';
+        $results[] = $item;
+    }
+    usort($results, fn($a, $b) => $a['rank'] <=> $b['rank']);
+    $total = count($results);
+    $results = array_map(function ($item) { unset($item['rank']); return $item; }, array_slice($results, 0, 30));
+    respond(['query' => $query, 'total' => $total, 'results' => $results]);
 }
 
 if ($method === 'GET' && $path === '/api/products') {
@@ -650,7 +709,7 @@ if ($method === 'DELETE' && preg_match('#^/api/admin/products/(\d+)$#', $path, $
 
 if ($method === 'POST' && $path === '/api/newsletter') {
     $payload = body();
-    $mobile = preg_replace('/\s+/', '', (string) ($payload['mobile'] ?? ''));
+    $mobile = normalizeMobile((string) ($payload['mobile'] ?? ''));
     if (!preg_match('/^(?:\+98|0098|98|0)?9\d{9}$/', $mobile)) {
         fail('شماره موبایل معتبر نیست', 422);
     }
@@ -697,7 +756,7 @@ if ($method === 'POST' && $path === '/api/cart/quote') {
 if ($method === 'POST' && $path === '/api/contact') {
     $payload = body();
     $name = trim((string) ($payload['name'] ?? ''));
-    $mobile = trim((string) ($payload['mobile'] ?? ''));
+    $mobile = normalizeMobile((string) ($payload['mobile'] ?? ''));
     $email = trim((string) ($payload['email'] ?? '')) ?: null;
     $message = trim((string) ($payload['message'] ?? ''));
     if (stringLength($name) < 2 || stringLength($name) > 80

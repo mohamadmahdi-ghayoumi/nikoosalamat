@@ -8,12 +8,13 @@ import re
 import secrets
 import sqlite3
 
-from fastapi import Depends, FastAPI, Header, HTTPException, status
+from fastapi import Depends, FastAPI, Header, HTTPException, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from .content import BENEFITS, HERO, STORY
+from .search import search_public_content
 from .database import execute, fetch_all, fetch_one, init_database, verify_password
 from .schemas import (
     CartLine,
@@ -124,6 +125,11 @@ def delete_uploaded_image(image_url: str | None) -> None:
 @app.get("/api/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.get("/api/search")
+def search(q: str = Query(default="", max_length=120)) -> dict:
+    return search_public_content(q.strip())
 
 
 @app.get("/api/home", response_model=HomeResponse)

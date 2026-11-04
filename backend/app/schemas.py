@@ -1,4 +1,5 @@
 import json
+from .text import normalize_mobile
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 
@@ -169,7 +170,12 @@ class HomeResponse(BaseModel):
 
 
 class NewsletterIn(BaseModel):
-    mobile: str = Field(pattern=r"^(?:\+98|0098|98|0)?9\d{9}$")
+    mobile: str = Field(pattern=r"^(?:\+98|0098|98|0)?9[0-9]{9}$")
+
+    @field_validator("mobile", mode="before")
+    @classmethod
+    def normalize_mobile_digits(cls, value):
+        return normalize_mobile(value)
 
 
 class NewsletterOut(BaseModel):
@@ -203,6 +209,11 @@ class CartQuoteOut(BaseModel):
 
 class ContactIn(BaseModel):
     name: str = Field(min_length=2, max_length=80)
-    mobile: str = Field(pattern=r"^(?:\+98|0098|98|0)?9\d{9}$")
+    mobile: str = Field(pattern=r"^(?:\+98|0098|98|0)?9[0-9]{9}$")
     email: EmailStr | None = None
     message: str = Field(min_length=10, max_length=2000)
+
+    @field_validator("mobile", mode="before")
+    @classmethod
+    def normalize_mobile_digits(cls, value):
+        return normalize_mobile(value)
