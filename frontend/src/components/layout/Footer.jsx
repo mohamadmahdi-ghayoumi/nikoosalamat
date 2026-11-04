@@ -59,7 +59,7 @@ export default function Footer({ navigate }) {
           <a href="/articles" onClick={(event) => navigate(event, '/articles')}>
             مجله نیکو سلامت
           </a>
-          <a href="/contact" onClick={(event) => navigate(event, '/contact')}>
+          <a href="/contact#faq" onClick={(event) => navigate(event, '/contact#faq')}>
             پرسش‌های متداول
           </a>
           <a href="/contact" onClick={(event) => navigate(event, '/contact')}>

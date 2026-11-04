@@ -22,7 +22,7 @@ export default function ContactForm({ showNotice }) {
     }
   }
   return (
-    <form className="contact-form" onSubmit={submitContact}>
+    <form className="contact-form" id="contact-form" onSubmit={submitContact}>
       <div className="form-heading">
         <span>فرم تماس</span>
         <h2>پیامتان را برای ما بنویسید</h2>

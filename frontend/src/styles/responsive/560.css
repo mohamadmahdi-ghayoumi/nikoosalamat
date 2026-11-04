@@ -1,23 +1,24 @@
 @media (max-width: 560px) {
   .hero-slides {
-    height: calc(53.333333vw + 350px);
+    height: auto;
   }
   .hero-slide {
     grid-template-rows: 53.333333vw 1fr;
   }
   .hero-copy {
-    padding: 20px 20px 72px;
+    min-height: 260px;
+    padding: 14px 20px 62px;
   }
   .hero-copy h1 {
-    font-size: 30px;
+    font-size: 28px;
     line-height: 1.5;
     letter-spacing: -0.8px;
   }
   .hero-slide--panoramic .hero-copy {
-    padding: 20px 20px 72px;
+    padding: 14px 20px 62px;
   }
   .hero-slide--panoramic .hero-copy h1 {
-    font-size: 30px;
+    font-size: 28px;
   }
   .hero-copy p {
     font-size: 15px;
@@ -133,9 +134,30 @@
     font-size: 32px;
     letter-spacing: -1.2px;
   }
-  .category-grid,
   .product-grid {
     grid-template-columns: 1fr;
+  }
+  .category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .category-card.category-card--image {
+    aspect-ratio: auto;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #e9f5ec !important;
+  }
+  .category-artwork {
+    aspect-ratio: 1.55;
+  }
+  .category-card .category-caption {
+    display: block;
+    margin: 0;
+    padding: 10px 7px 12px;
+    text-align: center;
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.8;
   }
   .category-card {
     min-height: 255px;
@@ -264,7 +286,7 @@
     align-items: flex-start;
   }
   .contact-cards strong {
-    font-size: 12px;
+    font-size: 14px;
   }
   .contact-form input,
   .contact-form textarea,
@@ -283,7 +305,7 @@
   .faq-list summary {
     min-height: 64px;
     padding: 16px;
-    font-size: 12px;
+    font-size: 14px;
   }
   .faq-list details p {
     padding: 0 16px 18px;

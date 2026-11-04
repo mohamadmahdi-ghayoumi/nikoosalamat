@@ -28,7 +28,7 @@ export default function AboutPage({ navigate }) {
         title="همراه سلامت و بهره‌وری، از علم تا مزرعه"
         description="توسعه راهکارهای تخصصی برای دامپروری، پرورش اسب و کشاورزی با تکیه بر دانش، تجربه و تعهد."
       />
-      <section className="section about-intro">
+      <section className="section about-intro" id="company">
         <div className="about-copy">
           <span className="eyebrow">معرفی شرکت</span>
           <h2>سلامت و بهداشت، پایه‌ی بهره‌وری پایدار</h2>
@@ -41,7 +41,7 @@ export default function AboutPage({ navigate }) {
             ما همواره در کنار شما هستیم تا بهترین راهکارها و محصولات تخصصی را برای تضمین سلامت دام،
             اسب و رشد مطلوب گیاهان در اختیارتان قرار دهیم.
           </p>
-          <p>
+          <p id="pharmucare">
             ما به‌عنوان یک تولیدکننده ایرانی و توزیع‌کننده رسمی محصولات شرکت فارمیکِر (PharmuCare)،
             مجموعه‌ای متنوع و پیشرفته از محصولات را ارائه می‌کنیم؛ از مراقبت‌های تخصصی سلامت
             اندام‌های حرکتی دام تا راه‌حل‌های مقابله با تب برفکی و کنترل مگس، با هدف افزایش بهره‌وری
@@ -56,7 +56,7 @@ export default function AboutPage({ navigate }) {
           <div className="about-quote">«همراه دامداران در مسیر سلامت و بهره‌وری»</div>
         </div>
       </section>
-      <section className="values-section">
+      <section className="values-section" id="fields">
         <div className="section values-inner">
           <div className="section-heading center-heading">
             <div>
@@ -68,7 +68,16 @@ export default function AboutPage({ navigate }) {
           </div>
           <div className="values-grid">
             {values.map((value) => (
-              <article key={value.title}>
+              <article
+                key={value.title}
+                id={
+                  value.title === 'دامپروری'
+                    ? 'livestock'
+                    : value.title === 'پرورش اسب'
+                      ? 'horses'
+                      : 'agriculture'
+                }
+              >
                 <span>
                   <Icon name={value.icon} size={29} />
                 </span>

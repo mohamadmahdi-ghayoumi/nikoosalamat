@@ -37,11 +37,12 @@
   gap: 5px;
 }
 .benefits strong {
-  font-size: 13px;
+  font-size: 14px;
 }
 .benefits small {
-  color: var(--muted);
-  font-size: 10px;
+  color: #505b54;
+  font-size: 13px;
+  line-height: 1.8;
 }
 
 .section {
@@ -233,6 +234,13 @@
   height: auto;
   aspect-ratio: 1;
   object-fit: contain;
+}
+.category-artwork {
+  display: block;
+  overflow: hidden;
+}
+.category-card .category-caption {
+  display: none;
 }
 .category-card h3 {
   margin-top: 12px;

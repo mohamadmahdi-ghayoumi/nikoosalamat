@@ -3,7 +3,7 @@ import Icon from '../../../components/ui/Icon.jsx'
 
 export default function ContactDetails() {
   return (
-    <div className="contact-details">
+    <div className="contact-details" id="sales">
       <span className="eyebrow">راه‌های ارتباطی</span>
       <h2>پاسخ‌گوی شما هستیم</h2>
       <p>
@@ -13,7 +13,7 @@ export default function ContactDetails() {
       <div className="contact-cards">
         <a href="tel:+989124283834">
           <span>
-            <Icon name="user" />
+            <Icon name="phone" />
           </span>
           <div>
             <small>مدیر فروش</small>
@@ -22,7 +22,7 @@ export default function ContactDetails() {
         </a>
         <a href="mailto:info@nikoosalamat.ir">
           <span>
-            <Icon name="heart" />
+            <Icon name="mail" />
           </span>
           <div>
             <small>ایمیل</small>
@@ -31,7 +31,7 @@ export default function ContactDetails() {
         </a>
         <a href="https://t.me/nikoosalamat" target="_blank" rel="noreferrer">
           <span>
-            <Icon name="leaf" />
+            <Icon name="telegram" />
           </span>
           <div>
             <small>تلگرام</small>
@@ -40,7 +40,7 @@ export default function ContactDetails() {
         </a>
         <div>
           <span>
-            <Icon name="shield" />
+            <Icon name="map-pin" />
           </span>
           <div>
             <small>آدرس</small>
@@ -49,7 +49,7 @@ export default function ContactDetails() {
         </div>
         <div>
           <span>
-            <Icon name="bag" />
+            <Icon name="mailbox" />
           </span>
           <div>
             <small>کد پستی</small>

@@ -47,8 +47,8 @@
   gap: 5px;
 }
 .contact-cards small {
-  color: var(--muted);
-  font-size: 10px;
+  color: #505b54;
+  font-size: 13px;
 }
 .contact-cards strong {
   color: var(--ink);
@@ -71,7 +71,7 @@
 }
 .contact-note p {
   margin: 0;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.9;
 }
 .contact-form {
@@ -86,7 +86,7 @@
 }
 .form-heading span {
   color: var(--wine);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
 }
 .form-heading h2 {
@@ -99,12 +99,12 @@
   flex-direction: column;
   gap: 8px;
   color: var(--ink);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 650;
 }
 .contact-form label small {
-  color: var(--muted);
-  font-size: 9px;
+  color: #505b54;
+  font-size: 13px;
   font-weight: 400;
 }
 .contact-form input,
@@ -146,8 +146,9 @@
 }
 .form-privacy {
   margin: 13px 0 0;
-  color: #978b81;
-  font-size: 9px;
+  color: #505b54;
+  font-size: 13px;
+  line-height: 1.9;
 }
 .faq-section {
   background: #f7faf7;
@@ -222,7 +223,11 @@
 .faq-list details p {
   margin: 0;
   padding: 0 23px 23px;
-  color: var(--muted);
-  font-size: 12px;
+  color: #505b54;
+  font-size: 14px;
   line-height: 2.15;
+}
+.faq-more {
+  display: flex;
+  margin: 24px auto 0;
 }

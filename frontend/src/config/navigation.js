@@ -1,3 +1,5 @@
+import { solutionItems } from './solutions.js'
+
 export const navigationItems = [
   { label: 'خانه', path: '/' },
   {
@@ -8,57 +10,47 @@ export const navigationItems = [
         label: 'دام سنگین',
         path: '/products',
         children: [
-          { label: 'هوف ژل فارمیکِر', path: '/products' },
-          { label: 'پماد پستان فارمیکِر', path: '/products' },
-          { label: 'محلول ویروگاردیا', path: '/products' },
-          { label: 'اسپری سم فارمیکِر', path: '/products' },
-          { label: 'پاک‌کننده سم فارمیکِر', path: '/products' },
+          { label: 'هوف ژل فارمیکِر', path: '/products/1' },
+          { label: 'پماد پستان فارمیکِر', path: '/products/2' },
+          { label: 'محلول ویروگاردیا', path: '/products/3' },
+          { label: 'اسپری سم فارمیکِر', path: '/products/4' },
+          { label: 'پاک‌کننده سم فارمیکِر', path: '/products/6' },
         ],
       },
-      { label: 'اسب', path: '/products' },
-      { label: 'کشاورزی', path: '/products' },
+      { label: 'اسب', path: '/about#horses' },
+      { label: 'کشاورزی', path: '/about#agriculture' },
     ],
   },
   {
     label: 'مقالات',
     path: '/articles',
-    children: [
-      { label: 'سلامت دام', path: '/articles' },
-      { label: 'بیماری‌ها', path: '/articles' },
-      { label: 'آموزش', path: '/articles' },
-      { label: 'مقالات علمی', path: '/articles' },
-      { label: 'اخبار', path: '/articles' },
-    ],
   },
   {
     label: 'راهکارها',
-    path: '/about',
-    children: [
-      { label: 'تب برفکی', path: '/about' },
-      { label: 'درماتیت انگشتی', path: '/about' },
-      { label: 'ورم پستان', path: '/about' },
-      { label: 'مراقبت از سم', path: '/about' },
-      { label: 'زخم‌ها و آسیب‌ها', path: '/about' },
+    path: '/solutions',
+    activePaths: [
+      ...solutionItems.map((item) => item.path),
+      '/pages/farm-disinfection',
+      '/pages/animal-hygiene',
     ],
+    children: solutionItems,
   },
   {
     label: 'درباره ما',
     path: '/about',
     children: [
-      { label: 'معرفی شرکت', path: '/about' },
-      { label: 'تیم ما', path: '/about' },
-      { label: 'گواهینامه‌ها و افتخارات', path: '/about' },
-      { label: 'چرا فارمیکِر', path: '/about' },
-      { label: 'دانلود کاتالوگ', path: '/about' },
+      { label: 'معرفی شرکت', path: '/about#company' },
+      { label: 'حوزه‌های فعالیت', path: '/about#fields' },
+      { label: 'همکاری با فارمیکِر', path: '/about#pharmucare' },
     ],
   },
   {
     label: 'ارتباط با ما',
     path: '/contact',
     children: [
-      { label: 'تماس با ما', path: '/contact' },
-      { label: 'سؤالات متداول', path: '/contact' },
-      { label: 'نمایندگی فروش', path: '/contact' },
+      { label: 'تماس با ما', path: '/contact#contact-form' },
+      { label: 'سؤالات متداول', path: '/contact#faq' },
+      { label: 'همکاری در فروش', path: '/contact#sales' },
     ],
   },
 ]

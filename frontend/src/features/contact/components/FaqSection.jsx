@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { faqItems } from '../data/faq.js'
 
 export default function FaqSection() {
+  const [showAll, setShowAll] = useState(false)
   return (
     <section className="faq-section" id="faq">
       <div className="section faq-inner">
@@ -14,8 +15,8 @@ export default function FaqSection() {
             <p>پاسخ پرسش‌های رایج درباره محصولات، نحوه مصرف، سفارش و همکاری</p>
           </div>
         </div>
-        <div className="faq-list">
-          {faqItems.map(([question, answer], index) => (
+        <div className="faq-list" id="faq-list">
+          {(showAll ? faqItems : faqItems.slice(0, 5)).map(([question, answer], index) => (
             <details key={question} open={index === 0}>
               <summary>
                 {question}
@@ -25,6 +26,17 @@ export default function FaqSection() {
             </details>
           ))}
         </div>
+        {faqItems.length > 5 && (
+          <button
+            className="button outline faq-more"
+            type="button"
+            aria-expanded={showAll}
+            aria-controls="faq-list"
+            onClick={() => setShowAll((value) => !value)}
+          >
+            {showAll ? 'نمایش سؤالات کمتر' : 'سؤالات بیشتر'}
+          </button>
+        )}
       </div>
     </section>
   )

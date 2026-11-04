@@ -2,6 +2,23 @@ import React from 'react'
 
 const Icon = ({ name, size = 22 }) => {
   const paths = {
+    mail: (
+      <>
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="m3 7 9 6 9-6" />
+      </>
+    ),
+    'map-pin': (
+      <>
+        <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z" />
+        <circle cx="12" cy="10" r="2.5" />
+      </>
+    ),
+    mailbox: (
+      <>
+        <path d="M5 16h15V9a5 5 0 0 0-10 0v7H3V9a5 5 0 0 1 5-5h7M7 16v6M16 16v6M13 9h4" />
+      </>
+    ),
     'badge-check': (
       <>
         <path d="m12 2 3 2 3.6.4.5 3.6 1.9 3-1.9 3-.5 3.6-3.6.4-3 2-3-2-3.6-.4-.5-3.6-1.9-3 1.9-3 .5-3.6L9 4l3-2Z" />

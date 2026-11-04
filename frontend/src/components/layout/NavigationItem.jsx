@@ -12,7 +12,12 @@ export default function NavigationItem({
   depth = 0,
 }) {
   const hasChildren = Boolean(item.children?.length)
-  const isActive = currentPath === item.path && (item.path === '/' || depth === 0)
+  const itemPath = item.path.split(/[?#]/)[0]
+  const isActive =
+    depth === 0 &&
+    (currentPath === itemPath ||
+      (itemPath !== '/' && currentPath.startsWith(`${itemPath}/`)) ||
+      item.activePaths?.includes(currentPath))
   const submenuId = useId()
   const path = [...parentPath, item.label]
   const expanded = hasChildren && path.every((label, index) => openPath[index] === label)
@@ -30,6 +35,7 @@ export default function NavigationItem({
         <a
           className={`nav-link ${isActive ? 'active' : ''}`}
           href={item.path}
+          aria-current={isActive ? 'page' : undefined}
           onClick={(event) => navigate(event, item.path)}
         >
           <span>{item.label}</span>

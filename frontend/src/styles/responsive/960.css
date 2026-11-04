@@ -1,10 +1,14 @@
 @media (max-width: 960px) {
   .hero-slides {
-    height: calc(min(53.333333vw, 400px) + 350px);
+    height: auto;
+    display: grid;
   }
   .hero-slide {
+    position: relative;
+    inset: auto;
+    grid-area: 1 / 1;
     grid-template-columns: 1fr;
-    grid-template-rows: min(53.333333vw, 400px) 1fr;
+    grid-template-rows: min(53.333333vw, 400px) auto;
   }
   .hero-scene {
     grid-row: 1;
@@ -26,7 +30,7 @@
     position: relative;
     inset: auto;
     width: 100%;
-    padding: 18px 28px 68px;
+    padding: 16px 28px 64px;
     background: #163c25;
     text-shadow: none;
   }
@@ -35,7 +39,8 @@
   }
   .hero-copy {
     grid-row: 2;
-    padding: 18px 28px 68px;
+    min-height: 280px;
+    padding: 16px 28px 64px;
     justify-content: center;
   }
   .hero-copy h1 {

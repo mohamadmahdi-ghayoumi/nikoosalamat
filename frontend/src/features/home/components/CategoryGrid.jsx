@@ -2,6 +2,7 @@ import React from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import { categoryPageSlugs } from '../data/homeContent.js'
 import CategoryArtwork from './CategoryArtwork.jsx'
+import { categoryImages } from '../data/categoryImages.js'
 
 export default function CategoryGrid({ categories, navigate }) {
   return (
@@ -23,9 +24,11 @@ export default function CategoryGrid({ categories, navigate }) {
             href={`/pages/${categoryPageSlugs[index]}`}
             onClick={(event) => navigate(event, `/pages/${categoryPageSlugs[index]}`)}
             className="category-card category-card--image"
+            aria-label={categoryImages[index].alt.split('؛')[0]}
             key={category.name}
           >
             <CategoryArtwork index={index} />
+            <h3 className="category-caption">{categoryImages[index].alt.split('؛')[0]}</h3>
           </a>
         ))}
       </div>
