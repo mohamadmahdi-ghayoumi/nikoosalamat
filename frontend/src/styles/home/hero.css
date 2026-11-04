@@ -70,7 +70,7 @@
   font-weight: 500;
   line-height: 2;
 }
-.hero-slide:not(.hero-slide--panoramic) .hero-copy p {
+.hero-slide:first-child .hero-copy p {
   font-size: clamp(18px, 1.65vw, 22px);
   font-weight: 600;
 }

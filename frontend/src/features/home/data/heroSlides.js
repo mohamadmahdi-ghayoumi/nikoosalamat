@@ -1,12 +1,11 @@
-// The introduction excludes its original printed copy. Product backgrounds are
-// text-free, edge-to-edge photographs with live HTML text layered above them.
-const scene = { viewBox: '0 0 1536 960', width: 2400, height: 960 }
+// All slides use text-free, edge-to-edge photography with live HTML copy.
 const panorama = { viewBox: '0 0 2400 960', width: 2400, height: 960, align: 'xMinYMid slice' }
 
 export const heroSlides = [
   {
-    image: '/images/slides/hns-introduction.webp',
-    scene,
+    image: '/images/slides/hns-introduction-panoramic.webp',
+    scene: panorama,
+    layout: 'panoramic',
     eyebrow: 'از علم تا مزرعه',
     title: 'حال نیکو سلامت',
     text: 'از علم تا مزرعه، با حالِ نیک',
