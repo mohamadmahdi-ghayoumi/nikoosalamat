@@ -1,15 +1,14 @@
 import React from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
+import PharmucareBrand from '../../../components/ui/PharmucareBrand.jsx'
 
 export default function AboutExcerpt({ navigate }) {
   return (
     <section className="home-about" aria-labelledby="home-about-title">
       <div className="home-about-inner">
-        <div>
+        <div className="home-about-copy">
           <span className="eyebrow">درباره ما</span>
           <h2 id="home-about-title">حال نیکو سلامت و فارمیوکِر</h2>
-        </div>
-        <div className="home-about-copy">
           <p>
             ما به‌عنوان یک تولیدکننده ایرانی و توزیع‌کننده رسمی محصولات شرکت فارمیوکِر (PharmuCare)،
             مجموعه‌ای متنوع و پیشرفته از محصولات را ارائه می‌کنیم؛ از مراقبت‌های تخصصی سلامت
@@ -23,6 +22,7 @@ export default function AboutExcerpt({ navigate }) {
             ادامه مطلب درباره ما <Icon name="arrow" size={18} />
           </a>
         </div>
+        <PharmucareBrand />
       </div>
     </section>
   )

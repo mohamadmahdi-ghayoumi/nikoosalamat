@@ -18,9 +18,9 @@ export default function HomePage({ homeData, navigate, showNotice, onApiOnline }
       <BenefitsBar benefits={benefits} />
       <CategoryGrid navigate={navigate} />
       <FeaturedProducts products={products} navigate={navigate} />
+      <AboutExcerpt navigate={navigate} />
       <StorySection navigate={navigate} />
       <NewsletterSection showNotice={showNotice} onApiOnline={onApiOnline} />
-      <AboutExcerpt navigate={navigate} />
     </main>
   )
 }

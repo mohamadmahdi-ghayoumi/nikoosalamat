@@ -1,6 +1,7 @@
 import React from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import PageHero from '../../../components/ui/PageHero.jsx'
+import PharmucareBrand from '../../../components/ui/PharmucareBrand.jsx'
 
 export default function AboutPage({ navigate }) {
   const values = [
@@ -41,12 +42,6 @@ export default function AboutPage({ navigate }) {
             ما همواره در کنار شما هستیم تا بهترین راهکارها و محصولات تخصصی را برای تضمین سلامت دام،
             اسب و رشد مطلوب گیاهان در اختیارتان قرار دهیم.
           </p>
-          <p id="pharmucare">
-            ما به‌عنوان یک تولیدکننده ایرانی و توزیع‌کننده رسمی محصولات شرکت فارمیوکِر (PharmuCare)،
-            مجموعه‌ای متنوع و پیشرفته از محصولات را ارائه می‌کنیم؛ از مراقبت‌های تخصصی سلامت
-            اندام‌های حرکتی دام تا راه‌حل‌های مقابله با تب برفکی و کنترل مگس، با هدف افزایش بهره‌وری
-            و حفظ بهداشت محیط زیست.
-          </p>
           <button className="button primary" onClick={(event) => navigate(event, '/contact')}>
             ارتباط با حال نیکو سلامت <Icon name="arrow" size={18} />
           </button>
@@ -54,6 +49,32 @@ export default function AboutPage({ navigate }) {
         <div className="about-visual">
           <div className="about-image" role="img" aria-label="دام سالم در محیط دامداری" />
           <div className="about-quote">«همراه دامداران در مسیر سلامت و بهره‌وری»</div>
+        </div>
+      </section>
+      <section
+        className="section pharmucare-section"
+        id="pharmucare"
+        aria-labelledby="pharmucare-title"
+      >
+        <div className="pharmucare-intro">
+          <div className="about-copy">
+            <span className="eyebrow">فارمیوکِر</span>
+            <h2 id="pharmucare-title">همراه سلامت و بهداشت دام</h2>
+            <p>
+              ما به‌عنوان یک تولیدکننده ایرانی و توزیع‌کننده رسمی محصولات شرکت فارمیوکِر
+              (PharmuCare)، مجموعه‌ای متنوع و پیشرفته از محصولات را ارائه می‌کنیم؛ از مراقبت‌های
+              تخصصی سلامت اندام‌های حرکتی دام تا راه‌حل‌های مقابله با تب برفکی و کنترل مگس، با هدف
+              افزایش بهره‌وری و حفظ بهداشت محیط زیست.
+            </p>
+            <a
+              className="button primary"
+              href="/products"
+              onClick={(event) => navigate(event, '/products')}
+            >
+              مشاهده محصولات <Icon name="arrow" size={18} />
+            </a>
+          </div>
+          <PharmucareBrand />
         </div>
       </section>
       <section className="values-section" id="fields">
@@ -92,8 +113,14 @@ export default function AboutPage({ navigate }) {
         <div className="about-copy">
           <span className="eyebrow">انسانی</span>
           <h2>محصولات حوزه انسانی</h2>
-          <p>برای دریافت اطلاعات محصولات حوزه انسانی، با کارشناسان حال نیکو سلامت در ارتباط باشید.</p>
-          <a className="button primary" href="/contact" onClick={(event) => navigate(event, '/contact')}>
+          <p>
+            برای دریافت اطلاعات محصولات حوزه انسانی، با کارشناسان حال نیکو سلامت در ارتباط باشید.
+          </p>
+          <a
+            className="button primary"
+            href="/contact"
+            onClick={(event) => navigate(event, '/contact')}
+          >
             ارتباط با ما <Icon name="arrow" size={18} />
           </a>
         </div>
@@ -103,7 +130,11 @@ export default function AboutPage({ navigate }) {
           <span className="eyebrow">گواهینامه ها و افتخارات</span>
           <h2>گواهینامه ها و افتخارات حال نیکو سلامت</h2>
           <p>برای دریافت اطلاعات گواهینامه‌ها و افتخارات شرکت، با ما در ارتباط باشید.</p>
-          <a className="button primary" href="/contact" onClick={(event) => navigate(event, '/contact')}>
+          <a
+            className="button primary"
+            href="/contact"
+            onClick={(event) => navigate(event, '/contact')}
+          >
             ارتباط با ما <Icon name="arrow" size={18} />
           </a>
         </div>
