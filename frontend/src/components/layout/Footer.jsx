@@ -84,7 +84,7 @@ export default function Footer({ navigate }) {
         </div>
         <div className="footer-group footer-contact">
           <h3>ارتباط با ما</h3>
-          <a href="tel:+989124283834">۰۹۱۲۴۲۸۳۸۳۴</a>
+          <a href="tel:+989124283834">مدیر فروش: <bdi>۰۹۱۲۴۲۸۳۸۳۴</bdi></a>
           <a href="mailto:info@nikoosalamat.ir">info@nikoosalamat.ir</a>
           <span>شهر قدس، کوی صنعت، پلاک ۵</span>
         </div>
