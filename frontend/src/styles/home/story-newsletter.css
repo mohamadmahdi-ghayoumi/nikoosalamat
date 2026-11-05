@@ -64,3 +64,41 @@
   outline: 0;
   background: transparent;
 }
+
+.home-about {
+  background: #e9f5ec;
+  border-top: 1px solid var(--line);
+}
+.home-about-inner {
+  width: min(1240px, calc(100% - 64px));
+  margin: 0 auto;
+  padding: 56px 0;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  align-items: start;
+  gap: 48px;
+}
+.home-about h2 {
+  margin: 12px 0 0;
+  color: var(--ink);
+  font-size: clamp(24px, 2.7vw, 36px);
+  line-height: 1.6;
+}
+.home-about-copy p {
+  margin: 0 0 24px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 2.2;
+}
+@media (max-width: 760px) {
+  .home-about-inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 36px 0;
+  }
+}
+@media (max-width: 560px) {
+  .home-about-inner {
+    width: calc(100% - 32px);
+  }
+}

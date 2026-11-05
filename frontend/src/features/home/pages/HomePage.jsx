@@ -7,6 +7,7 @@ import CategoryGrid from '../components/CategoryGrid.jsx'
 import FeaturedProducts from '../components/FeaturedProducts.jsx'
 import StorySection from '../components/StorySection.jsx'
 import NewsletterSection from '../components/NewsletterSection.jsx'
+import AboutExcerpt from '../components/AboutExcerpt.jsx'
 
 export default function HomePage({ homeData, navigate, showNotice, onApiOnline }) {
   const categories = homeData?.categories ?? fallbackCategories
@@ -20,6 +21,7 @@ export default function HomePage({ homeData, navigate, showNotice, onApiOnline }
       <FeaturedProducts products={products} navigate={navigate} />
       <StorySection navigate={navigate} />
       <NewsletterSection showNotice={showNotice} onApiOnline={onApiOnline} />
+      <AboutExcerpt navigate={navigate} />
     </main>
   )
 }
