@@ -42,7 +42,7 @@
 }
 .newsletter h2 {
   margin: 10px 0 8px;
-  font-size: clamp(28px, 3vw, 40px);
+  font-size: clamp(24px, 2.55vw, 34px);
 }
 .newsletter p {
   margin: 0;
@@ -81,7 +81,7 @@
 .home-about h2 {
   margin: 12px 0 0;
   color: var(--ink);
-  font-size: clamp(24px, 2.7vw, 36px);
+  font-size: clamp(21px, 2.3vw, 30px);
   line-height: 1.6;
 }
 .home-about-copy p {

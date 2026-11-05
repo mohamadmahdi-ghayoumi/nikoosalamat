@@ -59,9 +59,9 @@
 }
 .section-heading h2 {
   margin: 12px 0 0;
-  font-size: clamp(32px, 3.4vw, 48px);
+  font-size: clamp(27px, 2.9vw, 40px);
   line-height: 1.35;
-  letter-spacing: -2px;
+  letter-spacing: -1px;
 }
 .view-all {
   padding-bottom: 7px;
