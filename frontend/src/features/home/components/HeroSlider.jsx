@@ -22,7 +22,7 @@ export default function HeroSlider({ navigate }) {
   }, [])
   return (
     <section
-      className={`hero-slider ${heroSlides[active].layout === 'panoramic' ? 'hero-slider--panoramic' : ''}`}
+      className={`hero-slider ${['panoramic', 'poster'].includes(heroSlides[active].layout) ? 'hero-slider--panoramic' : ''}`}
       role="region"
       aria-roledescription="اسلایدر"
       aria-label="معرفی حال نیکو سلامت"
@@ -49,7 +49,7 @@ export default function HeroSlider({ navigate }) {
       <div className="hero-slides" aria-live={paused ? 'polite' : 'off'}>
         {heroSlides.map((slide, index) => (
           <div
-            className={`hero-slide ${slide.layout === 'panoramic' ? 'hero-slide--panoramic' : ''} ${active === index ? 'is-active' : ''}`}
+            className={`hero-slide ${slide.layout === 'panoramic' ? 'hero-slide--panoramic' : ''} ${slide.layout === 'poster' ? 'hero-slide--poster' : ''} ${active === index ? 'is-active' : ''}`}
             key={slide.image}
             role="group"
             aria-roledescription="اسلاید"
@@ -60,7 +60,7 @@ export default function HeroSlider({ navigate }) {
             <div className="hero-copy">
               <span className="eyebrow">{slide.eyebrow}</span>
               <h1>{slide.title}</h1>
-              <p >{slide.text}</p>
+              <p>{slide.text}</p>
               <a
                 className="button primary"
                 href={slide.path}
@@ -70,20 +70,35 @@ export default function HeroSlider({ navigate }) {
                 <Icon name="arrow" size={18} />
               </a>
             </div>
-            <div className="hero-scene">
-              {slide.scene ? (
-                <svg
-                  viewBox={slide.scene.viewBox}
-                  preserveAspectRatio={slide.scene.align ?? 'xMidYMid slice'}
-                  role="img"
-                  aria-label={slide.alt}
-                >
-                  <image href={slide.image} width={slide.scene.width} height={slide.scene.height} />
-                </svg>
-              ) : (
-                <img src={slide.image} alt={slide.alt} loading={index === 0 ? 'eager' : 'lazy'} />
-              )}
-            </div>
+            {slide.layout === 'poster' ? (
+              <a
+                className="hero-poster-slide-link"
+                href={slide.path}
+                onClick={(event) => navigate(event, slide.path)}
+                aria-label="درباره حال نیکو سلامت و فارمیوکِر بیشتر بخوانید"
+              >
+                <img src={slide.image} alt={slide.alt} width="1984" height="793" loading="lazy" />
+              </a>
+            ) : (
+              <div className="hero-scene">
+                {slide.scene ? (
+                  <svg
+                    viewBox={slide.scene.viewBox}
+                    preserveAspectRatio={slide.scene.align ?? 'xMidYMid slice'}
+                    role="img"
+                    aria-label={slide.alt}
+                  >
+                    <image
+                      href={slide.image}
+                      width={slide.scene.width}
+                      height={slide.scene.height}
+                    />
+                  </svg>
+                ) : (
+                  <img src={slide.image} alt={slide.alt} loading={index === 0 ? 'eager' : 'lazy'} />
+                )}
+              </div>
+            )}
           </div>
         ))}
       </div>

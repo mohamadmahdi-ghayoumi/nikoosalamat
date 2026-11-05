@@ -1,4 +1,4 @@
-// All slides use text-free, edge-to-edge photography with live HTML copy.
+// Photographic slides use live HTML copy; supplied posters retain their original artwork.
 const panorama = { viewBox: '0 0 2400 960', width: 2400, height: 960, align: 'xMinYMid slice' }
 
 export const heroSlides = [
@@ -56,5 +56,15 @@ export const heroSlides = [
     action: 'مشاهده محصول',
     path: '/products/2',
     alt: 'پماد پستان فارمیوکِر در کنار گاو شیری در دامداری',
+  },
+  {
+    image: '/images/slides/pharmucare-sunset-poster.png',
+    layout: 'poster',
+    eyebrow: 'درباره ما',
+    title: 'حال نیکو سلامت و فارمیوکِر',
+    text: 'از علم تا مزرعه؛ همراه سلامت و بهره‌وری',
+    action: 'درباره ما بیشتر بخوانید',
+    path: '/about',
+    alt: 'پوستر حال نیکو سلامت و فارمیوکِر؛ نمای مزرعه، دامداری و کشاورزی در غروب',
   },
 ]
