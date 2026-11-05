@@ -8,8 +8,6 @@ export default function CategoryGrid({ navigate }) {
   const [paused, setPaused] = useState(
     () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   )
-  const [hovered, setHovered] = useState(false)
-  const [focused, setFocused] = useState(false)
   const [inView, setInView] = useState(false)
   const [visible, setVisible] = useState(!document.hidden)
   const [visibleCount, setVisibleCount] = useState(() =>
@@ -17,7 +15,7 @@ export default function CategoryGrid({ navigate }) {
   )
   const sectionRef = useRef(null)
   const count = categoryImages.length
-  const playing = !paused && !hovered && !focused && inView && visible
+  const playing = !paused && inView && visible
 
   useEffect(() => {
     const media = window.matchMedia('(max-width: 960px)')
@@ -45,6 +43,14 @@ export default function CategoryGrid({ navigate }) {
     return () => window.clearInterval(timer)
   }, [playing, count])
 
+  useEffect(() => {
+    if (position !== count) return
+    // Recover the loop even if the browser skips transitionend (for example,
+    // when the tab is backgrounded during the animation).
+    const timer = window.setTimeout(() => setPosition(0), 650)
+    return () => window.clearTimeout(timer)
+  }, [position, count])
+
   return (
     <section
       className="section categories-section category-carousel"
@@ -52,12 +58,6 @@ export default function CategoryGrid({ navigate }) {
       ref={sectionRef}
       aria-label="دسته‌بندی محصولات"
       aria-roledescription="اسلایدر"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onFocusCapture={() => setFocused(true)}
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false)
-      }}
     >
       <div className="section-heading">
         <div>
