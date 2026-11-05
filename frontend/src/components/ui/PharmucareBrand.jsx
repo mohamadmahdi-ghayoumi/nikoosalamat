@@ -12,10 +12,11 @@ export default function PharmucareBrand() {
         loading="lazy"
       />
       <p>مراقبت سبز، سلامت پایدار</p>
-      <div className="pharmucare-brand-tags" aria-label="زمینه‌های محصولات فارمیوکِر">
-        <span>دامپروری</span>
-        <span>کشاورزی</span>
-        <span>پرورش اسب</span>
+      <div className="pharmucare-brand-tags" aria-label="ویژگی‌های فارمیوکِر">
+        <span>شیمی سبز</span>
+        <span>بدون آنتی بیوتیک</span>
+        <span>ایمن و غیرسمی</span>
+        <span>دوست دار محیط زیست</span>
       </div>
     </div>
   )
