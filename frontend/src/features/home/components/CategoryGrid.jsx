@@ -63,7 +63,7 @@ export default function CategoryGrid({ navigate }) {
         <div>
           <span className="eyebrow">از علم تا مزرعه، با حال نیکو سلامت</span>
           <h2>
-            هر آنچه برای <em>سلامت دام</em> لازم است
+            راهکارهای تخصصی برای دامپروری، پرورش اسب و کشاورزی
           </h2>
         </div>
         <a className="view-all" href="/products" onClick={(event) => navigate(event, '/products')}>
