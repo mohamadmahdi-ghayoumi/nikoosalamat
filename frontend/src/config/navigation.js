@@ -7,7 +7,7 @@ export const navigationItems = [
     path: '/products',
     children: [
       {
-        label: 'دام سنگین',
+        label: 'دام',
         path: '/products',
         children: [
           { label: 'هوف ژل فارمیوکِر', path: '/products/1' },
@@ -19,6 +19,7 @@ export const navigationItems = [
       },
       { label: 'اسب', path: '/about#horses' },
       { label: 'کشاورزی', path: '/about#agriculture' },
+      { label: 'انسانی', path: '/about#human' },
     ],
   },
   {
@@ -39,9 +40,10 @@ export const navigationItems = [
     label: 'درباره ما',
     path: '/about',
     children: [
-      { label: 'معرفی شرکت', path: '/about#company' },
-      { label: 'حوزه‌های فعالیت', path: '/about#fields' },
-      { label: 'همکاری با فارمیوکِر', path: '/about#pharmucare' },
+      { label: 'حال نیکو سلامت', path: '/about#company' },
+      { label: 'فارمیوکِر', path: '/about#pharmucare' },
+      { label: 'حوزه های فعالیت', path: '/about#fields' },
+      { label: 'گواهینامه ها و افتخارات', path: '/about#certificates' },
     ],
   },
   {

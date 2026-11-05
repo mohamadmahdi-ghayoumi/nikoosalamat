@@ -88,6 +88,26 @@ export default function AboutPage({ navigate }) {
           </div>
         </div>
       </section>
+      <section className="section" id="human">
+        <div className="about-copy">
+          <span className="eyebrow">انسانی</span>
+          <h2>محصولات حوزه انسانی</h2>
+          <p>برای دریافت اطلاعات محصولات حوزه انسانی، با کارشناسان حال نیکو سلامت در ارتباط باشید.</p>
+          <a className="button primary" href="/contact" onClick={(event) => navigate(event, '/contact')}>
+            ارتباط با ما <Icon name="arrow" size={18} />
+          </a>
+        </div>
+      </section>
+      <section className="section" id="certificates">
+        <div className="about-copy">
+          <span className="eyebrow">گواهینامه ها و افتخارات</span>
+          <h2>گواهینامه ها و افتخارات حال نیکو سلامت</h2>
+          <p>برای دریافت اطلاعات گواهینامه‌ها و افتخارات شرکت، با ما در ارتباط باشید.</p>
+          <a className="button primary" href="/contact" onClick={(event) => navigate(event, '/contact')}>
+            ارتباط با ما <Icon name="arrow" size={18} />
+          </a>
+        </div>
+      </section>
       <section className="section about-stats">
         <div>
           <strong>+۳ سال</strong>
