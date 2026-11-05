@@ -27,9 +27,6 @@
     min-height: 46px;
     font-size: 13px;
   }
-  .hero-controls {
-    right: 50%;
-  }
   .product-overview {
     grid-template-columns: 1fr;
     gap: 24px;

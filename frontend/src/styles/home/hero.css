@@ -72,6 +72,9 @@
   font-weight: 500;
   line-height: 2;
 }
+.hero-copy .button {
+  align-self: center;
+}
 .hero-slide:first-child .hero-copy p {
   font-size: clamp(18px, 1.65vw, 22px);
   font-weight: 600;
@@ -144,10 +147,14 @@
 .hero-controls {
   position: absolute;
   z-index: 3;
-  right: max(32px, calc((100vw - 1240px) / 2));
+  right: 50%;
+  transform: translateX(50%);
+  width: max-content;
+  max-width: calc(100% - 32px);
   bottom: 14px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
 }
 .hero-controls button {

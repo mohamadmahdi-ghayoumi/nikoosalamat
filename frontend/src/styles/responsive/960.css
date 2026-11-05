@@ -55,14 +55,6 @@
     max-width: 620px;
     font-size: 16px;
   }
-  .hero-controls {
-    right: 50%;
-    transform: translateX(50%);
-    width: max-content;
-    max-width: calc(100% - 32px);
-    justify-content: center;
-    bottom: 14px;
-  }
   .product-overview {
     grid-template-columns: 1fr 1fr;
     gap: 24px;
