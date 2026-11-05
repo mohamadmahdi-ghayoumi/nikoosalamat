@@ -42,6 +42,8 @@
     min-height: 280px;
     padding: 16px 28px 64px;
     justify-content: center;
+    align-items: center;
+    text-align: center;
   }
   .hero-copy h1 {
     margin: 10px 0;
@@ -54,7 +56,11 @@
     font-size: 16px;
   }
   .hero-controls {
-    right: 28px;
+    right: 50%;
+    transform: translateX(50%);
+    width: max-content;
+    max-width: calc(100% - 32px);
+    justify-content: center;
     bottom: 14px;
   }
   .product-overview {

@@ -28,7 +28,7 @@
     font-size: 13px;
   }
   .hero-controls {
-    right: 20px;
+    right: 50%;
   }
   .product-overview {
     grid-template-columns: 1fr;
