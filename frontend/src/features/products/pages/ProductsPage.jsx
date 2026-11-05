@@ -9,11 +9,10 @@ export default function ProductsPage({ products, navigate }) {
     useProductFilters(products)
 
   return (
-    <main className="inner-page" id="top">
+    <main className="inner-page products-page" id="top">
       <PageHero
-        eyebrow="محصولات نیکو سلامت"
-        title="راهکارهای تخصصی برای سلامت دام و اسب"
-        description="مجموعه محصولات مراقبت از سُم، سلامت پستان، ضدعفونی و بهداشت جایگاه؛ برای انتخابی مطمئن و کاربردی."
+        title="حال نیکو سلامت"
+        description="راهکار های تخصصی به منظور ارتقاء بهره وری دام پروری ، کشاورزی و پرورش اسب"
       />
       <section className="section catalog-section">
         <div className="catalog-toolbar">

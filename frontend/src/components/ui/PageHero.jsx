@@ -7,7 +7,7 @@ export default function PageHero({ eyebrow, title, description }) {
         ♞
       </div>
       <div className="page-hero-inner">
-        <span className="eyebrow light">{eyebrow}</span>
+        {eyebrow && <span className="eyebrow light">{eyebrow}</span>}
         <h1>{title}</h1>
         <p>{description}</p>
       </div>

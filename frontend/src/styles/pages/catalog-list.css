@@ -1,3 +1,15 @@
+.products-page .page-hero-inner {
+  width: min(1200px, 100%);
+}
+.products-page .page-hero p {
+  max-width: none;
+}
+@media (min-width: 960px) {
+  .products-page .page-hero p {
+    white-space: nowrap;
+  }
+}
+
 .catalog-section {
   padding-top: 44px;
 }
