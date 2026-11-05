@@ -142,8 +142,12 @@
   white-space: nowrap;
 }
 @media (min-width: 961px) {
+  .hero-slide--panoramic .hero-copy {
+    width: calc(33% + 36px);
+    padding-inline-start: calc(clamp(24px, 4vw, 64px) + 36px);
+  }
   .hero-slide--panoramic.hero-slide--single-line-title .hero-copy {
-    width: 45%;
+    width: calc(45% + 36px);
   }
 }
 .hero-slider--panoramic .slider-dots span {
