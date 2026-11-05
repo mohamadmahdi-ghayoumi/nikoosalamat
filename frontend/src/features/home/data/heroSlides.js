@@ -3,8 +3,8 @@ const panorama = { viewBox: '0 0 2400 960', width: 2400, height: 960, align: 'xM
 
 export const heroSlides = [
   {
-    image: '/images/slides/hns-introduction-panoramic.webp',
-    preview: '/images/slides/hns-introduction-panoramic-preview.webp',
+    image: '/images/slides/hns-sunlit-farm.webp',
+    preview: '/images/slides/hns-sunlit-farm-preview.webp',
     scene: panorama,
     layout: 'panoramic',
     eyebrow: 'محصولات',
