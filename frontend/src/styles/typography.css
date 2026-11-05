@@ -1,38 +1,21 @@
-/* Shared scale for page and section titles, matching the approved home heading. */
+/* All public headings share one scale: 3px below the approved hero title. */
 :root {
-  --heading-size: clamp(27px, 2.9vw, 40px);
+  --heading-size: clamp(24px, calc(2.9vw - 3px), 37px);
 }
 
-main:not(.admin-page) h1,
-.hero-copy h1,
-.hero-slide--panoramic .hero-copy h1,
-.hero-mobile-copy h1,
-.page-hero h1,
-.product-overview-copy h1,
-.magazine-heading h1,
-.article-heading h1,
-.search-content h1,
-.not-found h1,
-.section-heading h2,
-.newsletter h2,
-.home-about h2,
-.about-copy h2,
-.contact-details > h2,
-.form-heading h2,
-.product-editorial h2,
-.editorial-body h2,
-.article-featured h2 {
-  font-size: var(--heading-size);
+:where(main:not([class*='admin']), .footer) :is(h1, h2, h3, h4, h5, h6) {
+  /* This site-wide policy overrides component and editable-content sizes. */
+  font-size: var(--heading-size) !important;
 }
 
 @media (max-width: 560px) {
   :root {
-    --heading-size: 27px;
+    --heading-size: 24px;
   }
 }
 
 @media (max-width: 360px) {
-  .hero-slide--single-line-title .hero-copy h1 {
-    font-size: 24px;
+  :root {
+    --heading-size: 21px;
   }
 }
