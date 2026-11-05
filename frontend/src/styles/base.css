@@ -1,5 +1,6 @@
 :root {
-  font-family: 'Vazirmatn Variable', 'Vazirmatn', Tahoma, Arial, sans-serif;
+  --font-family: 'Digikala', Tahoma, Arial, sans-serif;
+  font-family: var(--font-family);
   color: #3d3f44;
   background: #f7faf7;
   font-synthesis: none;
