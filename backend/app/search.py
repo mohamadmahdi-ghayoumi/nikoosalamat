@@ -9,7 +9,7 @@ def search_public_content(query: str) -> dict:
     if not normalized:
         return {"query": query, "total": 0, "results": []}
     candidates = [
-        {"kind": "page", "title": "درباره حال نیکو سلامت", "excerpt": "معرفی شرکت، حوزه‌های فعالیت و همکاری با فارمیکِر", "path": "/about"},
+        {"kind": "page", "title": "درباره حال نیکو سلامت", "excerpt": "معرفی شرکت، حوزه‌های فعالیت و همکاری با فارمیوکِر", "path": "/about"},
         {"kind": "page", "title": "ارتباط با ما", "excerpt": "تماس با مدیر فروش، آدرس، فرم تماس و سؤالات متداول", "path": "/contact"},
         {"kind": "page", "title": "راهکارهای مراقبت از سلامت دام", "excerpt": "موضوعات مراقبت از سُم، سلامت پستان و بهداشت دام", "path": "/solutions"},
     ]

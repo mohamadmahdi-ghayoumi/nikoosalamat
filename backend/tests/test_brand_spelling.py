@@ -20,11 +20,11 @@ def test_brand_spelling_migration_preserves_content(tmp_path, monkeypatch):
     database.init_database()
     with database.connect() as connection:
         product = connection.execute("SELECT * FROM products WHERE id = 1").fetchone()
-        assert product["name"] == "هوف ژل فارمیکِر ویژه"
+        assert product["name"] == "هوف ژل فارمیوکِر ویژه"
         assert product["price"] == 385_000
-        assert json.loads(product["catalog"]) == {"summary": "معرفی فارمیکِر", "gallery": ["/uploads/keep.png"]}
+        assert json.loads(product["catalog"]) == {"summary": "معرفی فارمیوکِر", "gallery": ["/uploads/keep.png"]}
         page = connection.execute("SELECT body FROM content_pages WHERE slug = 'hoof-care'").fetchone()
-        assert page["body"] == "متن اختصاصی فارمیکِر و فارمیکِر"
+        assert page["body"] == "متن اختصاصی فارمیوکِر و فارمیوکِر"
     database.init_database()
     with database.connect() as connection:
-        assert connection.execute("SELECT name FROM products WHERE id = 1").fetchone()[0] == "هوف ژل فارمیکِر ویژه"
+        assert connection.execute("SELECT name FROM products WHERE id = 1").fetchone()[0] == "هوف ژل فارمیوکِر ویژه"

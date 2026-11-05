@@ -16,7 +16,7 @@ def client(tmp_path, monkeypatch):
 
 def test_search_normalizes_persian_and_only_returns_public_content(client):
     with database.connect() as connection:
-        connection.execute("UPDATE products SET name = ? WHERE id = 1", ("ژل کیفیت فارمیکِر",))
+        connection.execute("UPDATE products SET name = ? WHERE id = 1", ("ژل کیفیت فارمیوکِر",))
         connection.execute("INSERT INTO articles (slug,title,excerpt,body,published) VALUES (?,?,?,?,?)", ("public-care", "آموزش مراقبت از سُم", "خلاصه آموزشی", "نکته ویژه مقاله", 1))
         connection.execute("INSERT INTO articles (slug,title,excerpt,body,published) VALUES (?,?,?,?,?)", ("private-draft", "محرمانهپیش‌نویس", "محرمانهپیش‌نویس", "محرمانهپیش‌نویس", 0))
         connection.execute("UPDATE content_pages SET published = 0, body = ? WHERE slug = 'wounds-injuries'", ("محرمانهپیش‌نویس",))

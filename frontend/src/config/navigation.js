@@ -10,11 +10,11 @@ export const navigationItems = [
         label: 'دام سنگین',
         path: '/products',
         children: [
-          { label: 'هوف ژل فارمیکِر', path: '/products/1' },
-          { label: 'پماد پستان فارمیکِر', path: '/products/2' },
+          { label: 'هوف ژل فارمیوکِر', path: '/products/1' },
+          { label: 'پماد پستان فارمیوکِر', path: '/products/2' },
           { label: 'محلول ویروگاردیا', path: '/products/3' },
-          { label: 'اسپری سم فارمیکِر', path: '/products/4' },
-          { label: 'پاک‌کننده سم فارمیکِر', path: '/products/6' },
+          { label: 'اسپری سم فارمیوکِر', path: '/products/4' },
+          { label: 'پاک‌کننده سم فارمیوکِر', path: '/products/6' },
         ],
       },
       { label: 'اسب', path: '/about#horses' },
@@ -41,7 +41,7 @@ export const navigationItems = [
     children: [
       { label: 'معرفی شرکت', path: '/about#company' },
       { label: 'حوزه‌های فعالیت', path: '/about#fields' },
-      { label: 'همکاری با فارمیکِر', path: '/about#pharmucare' },
+      { label: 'همکاری با فارمیوکِر', path: '/about#pharmucare' },
     ],
   },
   {

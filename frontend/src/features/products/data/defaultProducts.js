@@ -1,7 +1,7 @@
 export const fallbackProducts = [
   {
     id: 1,
-    name: 'هوف ژل فارمیکِر',
+    name: 'هوف ژل فارمیوکِر',
     category: 'مراقبت از سُم',
     price: 385000,
     tone: 'amber',
@@ -11,7 +11,7 @@ export const fallbackProducts = [
   },
   {
     id: 2,
-    name: 'پماد پستان فارمیکِر',
+    name: 'پماد پستان فارمیوکِر',
     category: 'سلامت پستان',
     price: 460000,
     tone: 'wine',
@@ -30,7 +30,7 @@ export const fallbackProducts = [
   },
   {
     id: 4,
-    name: 'اسپری سُم فارمیکِر',
+    name: 'اسپری سُم فارمیوکِر',
     category: 'مراقبت از سُم',
     price: 515000,
     tone: 'cream',

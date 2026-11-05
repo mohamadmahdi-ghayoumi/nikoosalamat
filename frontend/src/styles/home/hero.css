@@ -26,7 +26,9 @@
   height: 40vw;
 }
 .hero-slide {
+  
   position: absolute;
+  padding : 10px;
   inset: 0;
   display: grid;
   grid-template-columns: 44% 56%;
