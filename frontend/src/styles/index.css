@@ -3,6 +3,7 @@
 @import './layout/header.css';
 @import './home/hero.css';
 @import './home/hero-poster-slide.css';
+@import './home/hero-loading.css';
 @import './ui/controls.css';
 @import './home/categories.css';
 @import './home/category-carousel.css';

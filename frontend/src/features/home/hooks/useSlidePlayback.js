@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-export default function useSlidePlayback({ slideCount, playing, duration = 6000 }) {
+export default function useSlidePlayback({ slideCount, playing, readySlides, duration = 6000 }) {
   const [active, setActive] = useState(0)
   const elapsed = useRef(0)
   const progressRef = useRef(null)
@@ -27,7 +27,7 @@ export default function useSlidePlayback({ slideCount, playing, duration = 6000 
   )
 
   useEffect(() => {
-    if (!playing || slideCount < 2) return
+    if (!playing || slideCount < 2 || readySlides?.[active] === false) return
     let frame
     let previousTime = performance.now()
 
@@ -48,7 +48,7 @@ export default function useSlidePlayback({ slideCount, playing, duration = 6000 
 
     frame = window.requestAnimationFrame(tick)
     return () => window.cancelAnimationFrame(frame)
-  }, [playing, slideCount, duration])
+  }, [playing, slideCount, duration, active, readySlides])
 
   return { active, select, move, progressRef }
 }

@@ -6,9 +6,21 @@
   display: none;
 }
 .hero-poster-slide-link {
+  position: relative;
+  overflow: hidden;
   display: block;
   width: 100%;
   height: 100%;
+}
+.hero-poster-cta {
+  position: absolute;
+  z-index: 3;
+  bottom: 80px;
+  right: 0;
+  left: 0;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  margin-inline: auto;
 }
 .hero-poster-slide-link img {
   display: block;
@@ -21,7 +33,10 @@
   outline-offset: -4px;
 }
 @media (max-width: 960px) {
-  .hero-slide--poster {
+  .hero-slide--poster .hero-poster-cta {
+    display: none;
+  }
+  .hero-slide.hero-slide--poster {
     display: grid;
     grid-template-rows: auto 1fr;
   }

@@ -4,6 +4,7 @@ const panorama = { viewBox: '0 0 2400 960', width: 2400, height: 960, align: 'xM
 export const heroSlides = [
   {
     image: '/images/slides/hns-introduction-panoramic.webp',
+    preview: '/images/slides/hns-introduction-panoramic-preview.webp',
     scene: panorama,
     layout: 'panoramic',
     eyebrow: 'محصولات',
@@ -15,6 +16,7 @@ export const heroSlides = [
   },
   {
     image: '/images/slides/viroguardia-panoramic.webp',
+    preview: '/images/slides/viroguardia-panoramic-preview.webp',
     scene: panorama,
     layout: 'panoramic',
     eyebrow: 'مراقبت از سلامت دام',
@@ -26,6 +28,7 @@ export const heroSlides = [
   },
   {
     image: '/images/slides/farm-disinfection-panoramic.webp',
+    preview: '/images/slides/farm-disinfection-panoramic-preview.webp',
     singleLineTitle: true,
     scene: panorama,
     layout: 'panoramic',
@@ -38,6 +41,7 @@ export const heroSlides = [
   },
   {
     image: '/images/slides/hoof-gel-panoramic.webp',
+    preview: '/images/slides/hoof-gel-panoramic-preview.webp',
     scene: panorama,
     layout: 'panoramic',
     eyebrow: 'مراقبت از سُم',
@@ -49,6 +53,7 @@ export const heroSlides = [
   },
   {
     image: '/images/slides/udder-balm-panoramic.webp',
+    preview: '/images/slides/udder-balm-panoramic-preview.webp',
     scene: panorama,
     layout: 'panoramic',
     eyebrow: 'سلامت پستان',
@@ -59,7 +64,8 @@ export const heroSlides = [
     alt: 'پماد پستان فارمیوکِر در کنار گاو شیری در دامداری',
   },
   {
-    image: '/images/slides/pharmucare-sunset-poster.png',
+    image: '/images/slides/pharmucare-sunset-poster.webp',
+    preview: '/images/slides/pharmucare-sunset-poster-preview.webp',
     layout: 'poster',
     eyebrow: 'درباره ما',
     title: 'حال نیکو سلامت و فارمیوکِر',

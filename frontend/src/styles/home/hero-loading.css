@@ -1,0 +1,64 @@
+.hero-image-placeholder {
+  position: absolute;
+  inset: 0;
+  background-color: #dcebdd;
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(10px);
+  transform: scale(1.04);
+}
+.hero-image-placeholder--poster {
+  background-position: center;
+  background-size: contain;
+}
+.hero-slide-media {
+  position: relative;
+  animation: hero-image-reveal 350ms ease both;
+}
+.hero-loading-state {
+  position: absolute;
+  z-index: 5;
+  top: 24px;
+  left: 24px;
+  max-width: calc(100% - 48px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--wine-dark);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 6px 24px rgba(24, 91, 46, 0.08);
+  font-size: 13px;
+}
+.hero-loading-state button {
+  border: 0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: white;
+  background: var(--wine);
+}
+.hero-loading-spinner {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  border: 2px solid #cee5d3;
+  border-top-color: var(--wine);
+  border-radius: 50%;
+  animation: hero-loading-spin 800ms linear infinite;
+}
+@keyframes hero-image-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes hero-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

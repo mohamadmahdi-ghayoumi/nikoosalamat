@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import { heroSlides } from '../data/heroSlides.js'
 import useSlidePlayback from '../hooks/useSlidePlayback.js'
+import useHeroImages from '../hooks/useHeroImages.js'
+import HeroMedia from './HeroMedia.jsx'
 
 export default function HeroSlider({ navigate }) {
   const [paused, setPaused] = useState(
@@ -11,10 +13,17 @@ export default function HeroSlider({ navigate }) {
   const [focused, setFocused] = useState(false)
   const [visible, setVisible] = useState(!document.hidden)
   const playing = !paused && !hovered && !focused && visible
+  const { statuses, requestImage } = useHeroImages(heroSlides)
+  const readySlides = useMemo(() => statuses.map((status) => status === 'ready'), [statuses])
   const { active, select, move, progressRef } = useSlidePlayback({
     slideCount: heroSlides.length,
     playing,
+    readySlides,
   })
+  useEffect(() => {
+    requestImage(active, false, 'high')
+    requestImage((active + 1) % heroSlides.length)
+  }, [active, requestImage])
   useEffect(() => {
     const onVisibility = () => setVisible(!document.hidden)
     document.addEventListener('visibilitychange', onVisibility)
@@ -43,7 +52,7 @@ export default function HeroSlider({ navigate }) {
         }
       }}
     >
-      <div className="hero-progress" aria-hidden="true" data-playing={playing}>
+      <div className="hero-progress" aria-hidden="true" data-playing={playing && readySlides[active]}>
         <span className="hero-progress-fill" ref={progressRef} />
       </div>
       <div className="hero-slides" aria-live={paused ? 'polite' : 'off'}>
@@ -55,6 +64,7 @@ export default function HeroSlider({ navigate }) {
             aria-roledescription="اسلاید"
             aria-label={`${index + 1} از ${heroSlides.length}`}
             aria-hidden={active !== index}
+            data-image-status={statuses[index]}
             inert={active !== index ? true : undefined}
           >
             <div className="hero-copy">
@@ -77,31 +87,41 @@ export default function HeroSlider({ navigate }) {
                 onClick={(event) => navigate(event, slide.path)}
                 aria-label="درباره حال نیکو سلامت و فارمیوکِر بیشتر بخوانید"
               >
-                <img src={slide.image} alt={slide.alt} width="1984" height="793" loading="lazy" />
+                <HeroMedia slide={slide} ready={readySlides[index]} />
               </a>
             ) : (
               <div className="hero-scene">
-                {slide.scene ? (
-                  <svg
-                    viewBox={slide.scene.viewBox}
-                    preserveAspectRatio={slide.scene.align ?? 'xMidYMid slice'}
-                    role="img"
-                    aria-label={slide.alt}
-                  >
-                    <image
-                      href={slide.image}
-                      width={slide.scene.width}
-                      height={slide.scene.height}
-                    />
-                  </svg>
-                ) : (
-                  <img src={slide.image} alt={slide.alt} loading={index === 0 ? 'eager' : 'lazy'} />
-                )}
+                <HeroMedia slide={slide} ready={readySlides[index]} />
               </div>
+            )}
+            {slide.layout === 'poster' && (
+              <a
+                className="button primary hero-poster-cta"
+                href={slide.path}
+                onClick={(event) => navigate(event, slide.path)}
+              >
+                درباره ما <Icon name="arrow" size={18} />
+              </a>
             )}
           </div>
         ))}
       </div>
+      {!readySlides[active] && (
+        <div className="hero-loading-state" role="status" aria-live="polite">
+          {statuses[active] === 'error' ? (
+            <>
+              <span>تصویر بارگذاری نشد</span>
+              <button type="button" onClick={() => requestImage(active, true, 'high')}>
+                تلاش دوباره
+              </button>
+            </>
+          ) : (
+            <>
+              <span className="hero-loading-spinner" aria-hidden="true" /> در حال آماده‌سازی تصویر…
+            </>
+          )}
+        </div>
+      )}
       <div className="hero-controls">
         <button
           className="slider-arrow slider-previous"
