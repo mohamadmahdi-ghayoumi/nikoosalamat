@@ -7,21 +7,37 @@ export default function Footer({ navigate }) {
       <div className="footer-main">
         <div className="footer-brand">
           <div className="footer-identity">
-            <a
-              href="/"
-              onClick={(event) => navigate(event, '/')}
-              className="brand"
-              aria-label="صفحه اصلی حال نیکو سلامت"
-            >
-              <svg
-                className="brand-logo footer-logo"
-                viewBox="80 80 305 315"
-                aria-hidden="true"
-                focusable="false"
+            <div className="footer-logos">
+              <a
+                href="/"
+                onClick={(event) => navigate(event, '/')}
+                className="brand"
+                aria-label="صفحه اصلی حال نیکو سلامت"
               >
-                <image href="/images/hns-logo.png" width="461" height="526" />
-              </svg>
-            </a>
+                <svg
+                  className="brand-logo footer-logo"
+                  viewBox="80 80 305 315"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <image href="/images/hns-logo.png" width="461" height="526" />
+                </svg>
+              </a>
+              <a
+                className="footer-pharmucare-logo"
+                href="/about#pharmucare"
+                onClick={(event) => navigate(event, '/about#pharmucare')}
+                aria-label="درباره فارمیوکِر"
+              >
+                <img
+                  src="/images/pharmucare-logo.png"
+                  alt="لوگوی فارمیوکِر — PharmuCare"
+                  width="1952"
+                  height="319"
+                  loading="lazy"
+                />
+              </a>
+            </div>
             <div>
               <strong>حال نیکو سلامت</strong>
               <p>از علم تا مزرعه، با حال نیک</p>

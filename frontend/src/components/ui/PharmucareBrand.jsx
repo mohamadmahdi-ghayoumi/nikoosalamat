@@ -3,7 +3,7 @@ import React from 'react'
 export default function PharmucareBrand() {
   return (
     <div className="pharmucare-brand">
-      <span className="eyebrow">همکاری با فارمیوکِر</span>
+      <span className="eyebrow">فارمیوکِر</span>
       <img
         src="/images/pharmucare-logo.png"
         alt="لوگوی فارمیوکِر — PharmuCare"
@@ -11,11 +11,11 @@ export default function PharmucareBrand() {
         height="319"
         loading="lazy"
       />
-      <p>محصولات تخصصی برای سلامت و بهداشت دام</p>
+      <p>مراقبت سبز، سلامت پایدار</p>
       <div className="pharmucare-brand-tags" aria-label="زمینه‌های محصولات فارمیوکِر">
-        <span>مراقبت از سُم</span>
-        <span>سلامت پستان</span>
-        <span>بهداشت دامداری</span>
+        <span>دامپروری</span>
+        <span>کشاورزی</span>
+        <span>پرورش اسب</span>
       </div>
     </div>
   )

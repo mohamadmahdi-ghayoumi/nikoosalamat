@@ -2,6 +2,7 @@ import React from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import PageHero from '../../../components/ui/PageHero.jsx'
 import PharmucareBrand from '../../../components/ui/PharmucareBrand.jsx'
+import { pharmucareContent } from '../data/pharmucareContent.js'
 
 export default function AboutPage({ navigate }) {
   const values = [
@@ -58,14 +59,11 @@ export default function AboutPage({ navigate }) {
       >
         <div className="pharmucare-intro">
           <div className="about-copy">
-            <span className="eyebrow">فارمیوکِر</span>
-            <h2 id="pharmucare-title">همراه سلامت و بهداشت دام</h2>
-            <p>
-              ما به‌عنوان یک تولیدکننده ایرانی و توزیع‌کننده رسمی محصولات شرکت فارمیوکِر
-              (PharmuCare)، مجموعه‌ای متنوع و پیشرفته از محصولات را ارائه می‌کنیم؛ از مراقبت‌های
-              تخصصی سلامت اندام‌های حرکتی دام تا راه‌حل‌های مقابله با تب برفکی و کنترل مگس، با هدف
-              افزایش بهره‌وری و حفظ بهداشت محیط زیست.
-            </p>
+            <span className="eyebrow">{pharmucareContent.tagline}</span>
+            <h2 id="pharmucare-title">{pharmucareContent.title}</h2>
+            {pharmucareContent.introduction.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
             <a
               className="button primary"
               href="/products"
@@ -75,6 +73,17 @@ export default function AboutPage({ navigate }) {
             </a>
           </div>
           <PharmucareBrand />
+          <div className="pharmucare-principles">
+            <h3>{pharmucareContent.principlesTitle}</h3>
+            <ul>
+              {pharmucareContent.principles.map((principle) => (
+                <li key={principle.title}>
+                  <strong>{principle.title}</strong>
+                  <span>{principle.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
       <section className="values-section" id="fields">
