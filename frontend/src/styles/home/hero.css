@@ -138,6 +138,14 @@
 .hero-slide--panoramic .hero-copy .button {
   text-shadow: none;
 }
+.hero-slide--single-line-title .hero-copy h1 {
+  white-space: nowrap;
+}
+@media (min-width: 961px) {
+  .hero-slide--panoramic.hero-slide--single-line-title .hero-copy {
+    width: 45%;
+  }
+}
 .hero-slider--panoramic .slider-dots span {
   background: rgba(255, 255, 255, 0.45);
 }

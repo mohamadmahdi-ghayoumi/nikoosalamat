@@ -30,3 +30,9 @@ main:not(.admin-page) h1,
     --heading-size: 27px;
   }
 }
+
+@media (max-width: 360px) {
+  .hero-slide--single-line-title .hero-copy h1 {
+    font-size: 24px;
+  }
+}

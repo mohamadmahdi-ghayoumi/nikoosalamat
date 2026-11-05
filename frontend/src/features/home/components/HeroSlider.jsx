@@ -49,7 +49,7 @@ export default function HeroSlider({ navigate }) {
       <div className="hero-slides" aria-live={paused ? 'polite' : 'off'}>
         {heroSlides.map((slide, index) => (
           <div
-            className={`hero-slide ${slide.layout === 'panoramic' ? 'hero-slide--panoramic' : ''} ${slide.layout === 'poster' ? 'hero-slide--poster' : ''} ${active === index ? 'is-active' : ''}`}
+            className={`hero-slide ${slide.layout === 'panoramic' ? 'hero-slide--panoramic' : ''} ${slide.layout === 'poster' ? 'hero-slide--poster' : ''} ${slide.singleLineTitle ? 'hero-slide--single-line-title' : ''} ${active === index ? 'is-active' : ''}`}
             key={slide.image}
             role="group"
             aria-roledescription="اسلاید"

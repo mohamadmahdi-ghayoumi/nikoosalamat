@@ -26,6 +26,7 @@ export const heroSlides = [
   },
   {
     image: '/images/slides/farm-disinfection-panoramic.webp',
+    singleLineTitle: true,
     scene: panorama,
     layout: 'panoramic',
     eyebrow: 'بهداشت دامداری',

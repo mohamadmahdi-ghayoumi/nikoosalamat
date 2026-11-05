@@ -2,12 +2,14 @@
   .hero-slides {
     height: auto;
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
   }
   .hero-slide {
+    min-width: 0;
     position: relative;
     inset: auto;
     grid-area: 1 / 1;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     grid-template-rows: min(53.333333vw, 400px) auto;
   }
   .hero-scene {
@@ -38,6 +40,7 @@
     font-size: 32px;
   }
   .hero-copy {
+    min-width: 0;
     grid-row: 2;
     min-height: 280px;
     padding: 16px 28px 64px;
