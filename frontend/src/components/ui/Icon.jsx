@@ -2,6 +2,8 @@ import React from 'react'
 
 const Icon = ({ name, size = 22 }) => {
   const paths = {
+    play: <path d="m8 5 11 7-11 7Z" fill="currentColor" stroke="none" />,
+    pause: <path d="M8 5v14M16 5v14" strokeWidth="3" />,
     mail: (
       <>
         <rect x="3" y="5" width="18" height="14" rx="2" />

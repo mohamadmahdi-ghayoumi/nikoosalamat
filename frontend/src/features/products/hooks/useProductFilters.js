@@ -28,7 +28,10 @@ const categoryAliases = new Map(
 
 export default function useProductFilters(products) {
   const [query, setQuery] = useState('')
-  const [activeCategory, setActiveCategory] = useState('همه محصولات')
+  const [activeCategory, setActiveCategory] = useState(() => {
+    const requestedCategory = new URLSearchParams(window.location.search).get('category')
+    return categories.includes(requestedCategory) ? requestedCategory : 'همه محصولات'
+  })
   const visibleProducts = products.filter((product) => {
     const category = categoryAliases.get(normalize(product.category)) || product.category
     const matchesCategory =
