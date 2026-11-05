@@ -8,6 +8,7 @@ const categories = [
   'مقابله با مگس',
   'بهداشت و سلامت اسب',
   'کودهای سبز',
+  'تب برفکی',
 ]
 
 const normalize = (value) =>
@@ -35,7 +36,9 @@ export default function useProductFilters(products) {
   const visibleProducts = products.filter((product) => {
     const category = categoryAliases.get(normalize(product.category)) || product.category
     const matchesCategory =
-      activeCategory === 'همه محصولات' || normalize(category) === normalize(activeCategory)
+      activeCategory === 'همه محصولات' ||
+      normalize(category) === normalize(activeCategory) ||
+      (activeCategory === 'تب برفکی' && normalize(product.name).includes('ویروگاردیا'))
     const matchesQuery = normalize(`${product.name} ${product.category} ${category}`).includes(
       normalize(query),
     )
