@@ -29,4 +29,9 @@ export const categoryImages = [
     alt: 'بهداشت و سلامت اسب؛ محصولات کاربردی برای مراقبت حرفه‌ای',
     path: '/pages/animal-hygiene',
   },
+  {
+    image: '/images/categories/foot-and-mouth-solution.webp',
+    alt: 'محلول تب برفکی؛ کنترل بیماری و بهبود زخم‌های دهانی',
+    path: `/products?category=${encodeURIComponent('محلول تب برفکی')}`,
+  },
 ]
