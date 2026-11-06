@@ -46,17 +46,31 @@ export default function useAdminController(showNotice) {
       setChecking(false)
       return
     }
+    let active = true
     getAdminProfile(token)
       .then((profile) => {
+        if (!active) return
         setAdmin(profile)
         return loadAdminData(token)
       })
-      .catch(() => {
-        window.sessionStorage.removeItem('sovara_admin_token')
-        setToken('')
-        setAdmin(null)
+      .catch((error) => {
+        if (!active) return
+        // Only an expired/invalid session should clear the stored login.
+        // Network failures (including an interrupted reload) are not logout.
+        if (error.status === 401) {
+          window.sessionStorage.removeItem('sovara_admin_token')
+          setToken('')
+          setAdmin(null)
+        } else {
+          showNotice('بررسی دسترسی انجام نشد؛ اتصال را بررسی و صفحه را دوباره بارگذاری کنید.')
+        }
       })
-      .finally(() => setChecking(false))
+      .finally(() => {
+        if (active) setChecking(false)
+      })
+    return () => {
+      active = false
+    }
   }, [token])
 
   const login = async (event) => {

@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { ADMIN_PATH } from '../app/adminRoute.js'
 
 export default function usePageTitle(currentPath) {
   useEffect(() => {
@@ -10,7 +11,7 @@ export default function usePageTitle(currentPath) {
       '/search': 'نتایج جست‌وجو | نیکو سلامت',
       '/about': 'درباره ما | نیکو سلامت',
       '/contact': 'تماس با ما | نیکو سلامت',
-      '/admin': 'داشبورد مدیریت | نیکو سلامت',
+      [ADMIN_PATH]: 'داشبورد مدیریت | نیکو سلامت',
     }
     document.title =
       titles[currentPath] ||

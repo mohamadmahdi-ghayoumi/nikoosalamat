@@ -3,9 +3,10 @@ import Header from './Header.jsx'
 import Footer from './Footer.jsx'
 import SocialLinks from './SocialLinks.jsx'
 import Toast from '../ui/Toast.jsx'
+import { ADMIN_PATH } from '../../app/adminRoute.js'
 
 export default function SiteLayout({ currentPath, navigate, cartCount, notice, children }) {
-  const isAdmin = currentPath === '/admin'
+  const isAdmin = currentPath === ADMIN_PATH
   return (
     <div className="site-shell">
       <Header currentPath={currentPath} navigate={navigate} cartCount={cartCount} />

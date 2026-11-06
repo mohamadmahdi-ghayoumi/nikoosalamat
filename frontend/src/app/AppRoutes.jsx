@@ -11,6 +11,7 @@ import AboutPage from '../features/about/pages/AboutPage.jsx'
 import ContactPage from '../features/contact/pages/ContactPage.jsx'
 import AdminPage from '../features/admin/pages/AdminPage.jsx'
 import NotFoundPage from '../components/ui/NotFoundPage.jsx'
+import { ADMIN_PATH } from './adminRoute.js'
 
 export default function AppRoutes({
   currentPath,
@@ -53,6 +54,6 @@ export default function AppRoutes({
     return <ContentPageView slug={currentPath.slice('/pages/'.length)} navigate={navigate} />
   if (currentPath === '/about') return <AboutPage navigate={navigate} />
   if (currentPath === '/contact') return <ContactPage showNotice={showNotice} />
-  if (currentPath === '/admin') return <AdminPage showNotice={showNotice} />
+  if (currentPath === ADMIN_PATH) return <AdminPage showNotice={showNotice} />
   return <NotFoundPage navigate={navigate} />
 }

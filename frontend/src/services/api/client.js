@@ -18,7 +18,9 @@ export async function request(path, options = {}) {
     const payload = await response.json().catch(() => null)
     if (!response.ok) {
       const message = payload?.detail || 'خطایی در ارتباط با سرور رخ داد'
-      throw new Error(message)
+      const error = new Error(message)
+      error.status = response.status
+      throw error
     }
     return payload
   } finally {
