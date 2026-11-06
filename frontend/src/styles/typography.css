@@ -1,4 +1,4 @@
-/* All public headings share one scale: 3px below the approved hero title. */
+/* Public headings scale down on phones; cards and banners have local scales. */
 :root {
   --heading-size: clamp(24px, calc(2.9vw - 3px), 37px);
 }
@@ -10,12 +10,12 @@
 
 @media (max-width: 560px) {
   :root {
-    --heading-size: 24px;
+    --heading-size: 20px;
   }
 }
 
 @media (max-width: 360px) {
   :root {
-    --heading-size: 21px;
+    --heading-size: 18px;
   }
 }

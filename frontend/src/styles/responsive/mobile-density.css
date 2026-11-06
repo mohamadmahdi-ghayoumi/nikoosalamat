@@ -1,0 +1,188 @@
+@media (max-width: 560px) {
+  .section {
+    padding-block: 28px;
+  }
+  .products-section {
+    padding-top: 0;
+  }
+  .section-heading {
+    margin-bottom: 18px;
+    gap: 12px;
+  }
+  .section-heading h2 {
+    margin-top: 6px;
+    line-height: 1.7;
+    letter-spacing: -0.5px;
+  }
+  .eyebrow {
+    font-size: 11px;
+  }
+  .view-all {
+    min-height: 32px;
+    gap: 4px;
+    padding-bottom: 4px;
+    font-size: 11px;
+  }
+  .view-all svg {
+    width: 14px;
+    height: 14px;
+  }
+  .category-carousel-track {
+    --category-gap: 8px;
+  }
+  .category-carousel-controls {
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .category-carousel-controls .icon-button {
+    width: 32px;
+    height: 32px;
+  }
+  .benefits {
+    width: calc(100% - 24px);
+    min-height: 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: stretch;
+  }
+  .benefits > div:nth-child(n) {
+    min-width: 0;
+    min-height: 0;
+    padding: 12px 4px;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 0;
+    border-left: 1px solid var(--line);
+  }
+  .benefits > div:last-child {
+    border-left: 0;
+  }
+  .benefit-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .benefit-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .benefits p {
+    gap: 0;
+    text-align: center;
+  }
+  .benefits strong {
+    font-size: 10px;
+    line-height: 1.8;
+    font-weight: 650;
+  }
+  .benefits small {
+    display: none;
+  }
+  .newsletter {
+    padding-block: 24px;
+    gap: 14px;
+  }
+  .newsletter input {
+    height: 44px;
+  }
+  .newsletter .button {
+    min-height: 40px;
+    font-size: 12px;
+  }
+  .footer {
+    --heading-size: 14px;
+  }
+  .footer-main {
+    width: calc(100% - 28px);
+    padding-block: 24px 18px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px 12px;
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  .footer-identity {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+  }
+  .footer-logos {
+    gap: 8px;
+  }
+  .footer-logo {
+    width: 32px;
+    height: 34px;
+  }
+  .footer-pharmucare-logo {
+    max-width: 120px;
+  }
+  .footer-identity strong {
+    font-size: 13px;
+  }
+  .footer-identity p {
+    font-size: 10px;
+    line-height: 1.8;
+  }
+  .footer-brand > p {
+    margin: 0;
+    font-size: 11px;
+  }
+  .footer-brand .social-links {
+    grid-column: auto;
+    grid-row: auto;
+    gap: 8px;
+  }
+  .social-links-footer .social-link {
+    min-height: 32px;
+    padding: 5px 8px;
+    gap: 5px;
+  }
+  .social-links-footer .social-label {
+    font-size: 10px;
+  }
+  .social-links-footer svg {
+    width: 16px;
+    height: 16px;
+  }
+  .footer-main > .footer-contact {
+    grid-column: auto;
+    display: flex;
+    padding-top: 0;
+    border-top: 0;
+    gap: 4px;
+  }
+  .footer h3 {
+    margin-bottom: 6px;
+    line-height: 1.8;
+  }
+  .footer-group a,
+  .footer-group span {
+    font-size: 11px;
+    line-height: 1.9;
+  }
+  .footer-group a {
+    min-height: 34px;
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+  .footer-contact a[href^='tel:'] {
+    gap: 0 3px;
+  }
+  .footer-contact span {
+    margin-top: 0;
+  }
+  .footer-bottom {
+    width: calc(100% - 28px);
+    min-height: 0;
+    padding-block: 12px;
+    gap: 4px;
+  }
+  .footer-bottom span {
+    font-size: 9px;
+    line-height: 1.9;
+  }
+}

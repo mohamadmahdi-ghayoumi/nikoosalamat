@@ -31,4 +31,5 @@
 @import './responsive/390.css';
 @import './responsive/reduced-motion.css';
 @import './responsive/compact-commerce.css';
+@import './responsive/mobile-density.css';
 @import './typography.css';
