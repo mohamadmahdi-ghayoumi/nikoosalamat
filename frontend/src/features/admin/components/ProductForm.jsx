@@ -1,5 +1,6 @@
 import React from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
+import { productCategories } from '../../products/data/productCategories.js'
 
 export default function ProductForm({ busy, createProduct }) {
   return (
@@ -26,7 +27,12 @@ export default function ProductForm({ busy, createProduct }) {
         </label>
         <label>
           دسته‌بندی
-          <input name="category" type="text" placeholder="مراقبت از سُم" required />
+          <select name="category" defaultValue="" required>
+            <option value="" disabled>انتخاب دسته‌بندی</option>
+            {productCategories.map((category) => (
+              <option value={category} key={category}>{category}</option>
+            ))}
+          </select>
         </label>
       </div>
       <div className="form-row three">

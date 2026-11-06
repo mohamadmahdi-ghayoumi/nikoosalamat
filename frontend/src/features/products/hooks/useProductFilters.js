@@ -1,15 +1,7 @@
 import { useState } from 'react'
+import { productCategories } from '../data/productCategories.js'
 
-const categories = [
-  'همه محصولات',
-  'مراقبت از سم',
-  'سلامت پستان',
-  'ضدعفونی کننده ها',
-  'مقابله با مگس',
-  'بهداشت و سلامت اسب',
-  'کودهای سبز',
-  'محلول تب برفکی',
-]
+const categories = ['همه محصولات', ...productCategories]
 
 const normalize = (value) =>
   value
