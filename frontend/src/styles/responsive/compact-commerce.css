@@ -1,0 +1,185 @@
+/* Short, image-led banners on touch layouts; desktop styling is unchanged. */
+@media (max-width: 960px) {
+  .hero-slider .hero-slides {
+    display: block;
+    height: clamp(210px, 48vw, 340px);
+  }
+  .hero-slider .hero-slide {
+    position: absolute;
+    inset: 0;
+    display: block;
+    padding: 0;
+  }
+  .hero-slider .hero-scene {
+    position: absolute;
+    inset: 0;
+  }
+  .hero-slider .hero-scene::after {
+    background: linear-gradient(to left, rgba(5, 32, 20, 0.9), rgba(5, 32, 20, 0.6) 42%, transparent 78%);
+  }
+  .hero-slider .hero-copy {
+    --heading-size: clamp(18px, 3vw, 26px);
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 62%;
+    min-height: 0;
+    padding: 16px 20px 46px;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: right;
+    background: transparent;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+  }
+  .hero-slider .hero-copy .eyebrow {
+    font-size: 11px;
+  }
+  .hero-slider .hero-copy h1 {
+    margin: 6px 0;
+    line-height: 1.6;
+    letter-spacing: -0.5px;
+  }
+  .hero-slider .hero-slide .hero-copy p {
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .hero-slider .hero-copy .button,
+  .hero-slider .hero-poster-cta {
+    min-height: 34px;
+    padding: 0 12px;
+    gap: 6px;
+    font-size: 11px;
+  }
+  .hero-slider .hero-copy .button svg {
+    width: 14px;
+    height: 14px;
+  }
+  .hero-slider .hero-slide--poster .hero-copy {
+    display: none;
+  }
+  .hero-slider .hero-poster-slide-link {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    aspect-ratio: auto;
+    background: #e9f5ec;
+  }
+  .hero-slider .hero-poster-cta {
+    display: inline-flex;
+    bottom: 46px;
+  }
+  .hero-slider .hero-controls {
+    bottom: 8px;
+    gap: 4px;
+  }
+  .hero-slider .hero-controls button {
+    width: 32px;
+    height: 32px;
+  }
+  .hero-slider .slider-dots button {
+    width: 20px;
+  }
+  .hero-slider .slider-dots span {
+    width: 5px;
+    height: 5px;
+  }
+  .hero-slider .slider-dots button[aria-pressed='true'] span {
+    width: 14px;
+  }
+  .hero-slider .hero-loading-state {
+    top: 8px;
+    left: 8px;
+    max-width: calc(100% - 16px);
+    padding: 6px 8px;
+    gap: 6px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-slider .hero-slides {
+    height: clamp(210px, 56vw, 250px);
+  }
+  .hero-slider .hero-copy {
+    --heading-size: clamp(14px, 4vw, 18px);
+    width: 66%;
+    padding: 12px 14px 44px;
+  }
+  .hero-slider .hero-slide--single-line-title .hero-copy {
+    width: 78%;
+  }
+  .hero-slider .hero-copy .eyebrow {
+    font-size: 10px;
+  }
+  .hero-slider .hero-slide .hero-copy p {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+  .hero-slider .hero-copy .button {
+    min-height: 32px;
+    font-size: 10px;
+  }
+  .product-grid,
+  .product-grid.catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .catalog-product-card {
+    --heading-size: 13px;
+  }
+  .catalog-product-card .product-art-wrap {
+    aspect-ratio: 1;
+    max-height: 160px;
+    flex-shrink: 0;
+  }
+  .catalog-product-card .product-visual.uploaded img {
+    padding: 8px;
+  }
+  .catalog-product-card .product-info {
+    padding: 10px;
+  }
+  .catalog-product-card .product-info > span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 10px;
+  }
+  .catalog-product-card h3 {
+    min-height: 3.6em;
+    margin: 4px 0 8px;
+    line-height: 1.8;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .catalog-product-card .product-summary {
+    display: none;
+  }
+  .catalog-product-card .product-price {
+    margin-bottom: 10px;
+    gap: 4px;
+    font-size: 9px;
+    flex-wrap: wrap;
+  }
+  .catalog-product-card .product-price strong {
+    font-size: 14px;
+  }
+  .catalog-product-card .product-view {
+    min-height: 36px;
+    padding: 0 8px;
+    gap: 4px;
+    font-size: 10px;
+  }
+  .catalog-product-card .product-view svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+  .catalog-product-card .product-badge {
+    top: 8px;
+    right: 8px;
+    padding: 4px 6px;
+    font-size: 8px;
+  }
+}
