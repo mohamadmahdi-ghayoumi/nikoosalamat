@@ -1,5 +1,5 @@
 /* Short, image-led banners on touch layouts; desktop styling is unchanged. */
-@media (max-width: 960px) {
+@media (max-width: 1100px), (max-width: 1366px) and (hover: none) and (pointer: coarse) {
   .hero-slider .hero-slides {
     display: block;
     height: clamp(210px, 48vw, 340px);

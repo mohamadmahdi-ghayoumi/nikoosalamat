@@ -11,14 +11,14 @@ export default function CategoryGrid({ navigate }) {
   const [inView, setInView] = useState(false)
   const [visible, setVisible] = useState(!document.hidden)
   const [visibleCount, setVisibleCount] = useState(() =>
-    window.matchMedia('(max-width: 960px)').matches ? 3 : 4,
+    window.matchMedia('(max-width: 1100px)').matches ? 3 : 4,
   )
   const sectionRef = useRef(null)
   const count = categoryImages.length
   const playing = !paused && inView && visible
 
   useEffect(() => {
-    const media = window.matchMedia('(max-width: 960px)')
+    const media = window.matchMedia('(max-width: 1100px)')
     const onResize = () => setVisibleCount(media.matches ? 3 : 4)
     const onVisibility = () => setVisible(!document.hidden)
     const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), {
