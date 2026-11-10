@@ -1,7 +1,11 @@
 import Image from '@tiptap/extension-image'
 import { imageAlignment, imageStyle, imageWidth } from '../../utils/articleFormatting.js'
+import { createArticleImageView } from './createArticleImageView.js'
 
 export const ArticleImage = Image.extend({
+  addNodeView() {
+    return createArticleImageView
+  },
   addAttributes() {
     return {
       ...this.parent?.(),

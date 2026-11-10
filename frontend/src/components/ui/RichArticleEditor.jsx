@@ -55,7 +55,7 @@ export default function RichArticleEditor({ initialValue = '', disabled = false,
   return (
     <div className="rich-article-field" ref={fieldRef}>
       <span id="article-body-label">متن کامل مقاله</span>
-      <p className="rich-editor-help">متن را بنویسید یا از Word کپی کنید. برای عکس، ابتدا محل دلخواه را در متن انتخاب کنید. عنوان اصلی مقاله خودکار H1 است.</p>
+      <p className="rich-editor-help">متن را بنویسید یا از Word کپی کنید. برای تغییر اندازهٔ عکس، روی آن کلیک کنید و یکی از گوشه‌هایش را بکشید. عنوان اصلی مقاله خودکار H1 است.</p>
       <div className={`rich-article-editor ${disabled ? 'is-disabled' : ''}`}>
         <div className="rich-editor-toolbar" role="toolbar" aria-label="قالب‌بندی متن مقاله">
           <label>نوع متن<select aria-label="نوع تیتر" disabled={!editor || disabled || uploading} value={editor?.isActive('heading') ? String(editor.getAttributes('heading').level) : 'p'} onChange={(event) => {
