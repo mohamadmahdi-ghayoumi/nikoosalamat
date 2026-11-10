@@ -21,6 +21,8 @@ export default function AdminPage({ showNotice }) {
           products={manager.products}
           busy={manager.busy}
           createProduct={manager.createProduct}
+          editingProduct={manager.editingProduct}
+          setEditingProduct={manager.setEditingProduct}
           removeProduct={manager.removeProduct}
           setEditingCatalog={manager.setEditingCatalog}
         />

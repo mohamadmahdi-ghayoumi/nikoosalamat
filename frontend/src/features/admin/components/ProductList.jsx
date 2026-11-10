@@ -2,7 +2,7 @@ import React from 'react'
 import ProductVisual from '../../products/components/ProductVisual.jsx'
 import { formatPrice } from '../../../utils/format.js'
 
-export default function ProductList({ products, removeProduct, setEditingCatalog }) {
+export default function ProductList({ products, removeProduct, setEditingCatalog, editProduct, busy }) {
   return (
     <section className="admin-products">
       <div className="admin-list-head">
@@ -21,8 +21,9 @@ export default function ProductList({ products, removeProduct, setEditingCatalog
               <p>{formatPrice(product.price)} تومان</p>
             </div>
             <div className="admin-row-actions">
-              <button onClick={() => setEditingCatalog(product)}>کاتالوگ</button>
-              <button className="danger" onClick={() => removeProduct(product)}>
+              <button onClick={() => editProduct(product)} disabled={busy}>ویرایش</button>
+              <button onClick={() => setEditingCatalog(product)} disabled={busy}>کاتالوگ</button>
+              <button className="danger" onClick={() => removeProduct(product)} disabled={busy}>
                 حذف
               </button>
             </div>

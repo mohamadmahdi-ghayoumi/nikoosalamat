@@ -5,7 +5,7 @@ export default function AdminTabs({ activeTab, setActiveTab }) {
     <div className="admin-tabs" role="tablist">
       {[
         ['products', 'محصولات'],
-        ['pages', 'صفحات دسته‌بندی'],
+        ['pages', 'راهکارها'],
         ['articles', 'مقالات'],
       ].map(([id, label]) => (
         <button

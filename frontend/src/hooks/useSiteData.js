@@ -23,7 +23,7 @@ export default function useSiteData(currentPath) {
     return () => {
       active = false
     }
-  }, [])
+  }, [currentPath])
 
   useEffect(() => {
     getProducts()

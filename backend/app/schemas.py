@@ -92,6 +92,11 @@ class ProductCreateIn(BaseModel):
     image_data: str | None = None
 
 
+class ProductUpdateIn(ProductCreateIn):
+    model_config = ConfigDict(str_strip_whitespace=True)
+    remove_image: bool = False
+
+
 class ContentPage(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

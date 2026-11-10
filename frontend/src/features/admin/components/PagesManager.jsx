@@ -1,15 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { resolveMediaUrl } from '../../../services/api/client.js'
 
 export default function PagesManager({ pages, busy, savePage }) {
+  const [selectedId, setSelectedId] = useState('')
+  const selectedPage = pages.find((page) => String(page.id) === selectedId) || pages[0]
   return (
     <section className="admin-content-list">
       <div className="admin-section-intro">
-        <span>صفحات چهار دسته اصلی</span>
-        <h2>ویرایش متن و تصویر صفحات</h2>
-        <p>تغییرات هر صفحه را جداگانه ذخیره کنید.</p>
+        <span>مدیریت راهکارها</span>
+        <h2>ویرایش راهکارها</h2>
+        <p>راهکار موردنظر را انتخاب کنید و عنوان، متن و تصویر آن را ویرایش و ذخیره کنید.</p>
       </div>
-      {pages.map((page) => (
+      {selectedPage && <label className="admin-solution-select">انتخاب راهکار
+        <select value={selectedPage.id} onChange={(event) => setSelectedId(event.target.value)} disabled={busy}>
+          {pages.map((page) => <option value={page.id} key={page.id}>{page.title}</option>)}
+        </select>
+      </label>}
+      {!selectedPage && <p>هنوز راهکاری ثبت نشده است.</p>}
+      {[selectedPage].filter(Boolean).map((page) => (
         <form
           className="admin-editor-form"
           onSubmit={(event) => savePage(event, page)}

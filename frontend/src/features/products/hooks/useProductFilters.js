@@ -1,34 +1,17 @@
 import { useState } from 'react'
-import { productCategories } from '../data/productCategories.js'
+import { productCategories, normalizeProductText as normalize, resolveProductCategory } from '../data/productCategories.js'
 
 const categories = ['همه محصولات', ...productCategories]
-
-const normalize = (value) =>
-  value
-    .replace(/[\u064B-\u065F\u0670]/g, '')
-    .replace(/ي/g, 'ی')
-    .replace(/ك/g, 'ک')
-    .replace(/[\s\u200c]+/g, '')
-
-const categoryAliases = new Map(
-  [
-    ['ضدعفونی دامداری', 'ضدعفونی کننده ها'],
-    ['بهداشت دامداری', 'ضدعفونی کننده ها'],
-    ['کنترل مگس', 'مقابله با مگس'],
-    ['بهداشت اسب', 'بهداشت و سلامت اسب'],
-    ['تب برفکی', 'محلول تب برفکی'],
-  ].map(([source, target]) => [normalize(source), target]),
-)
 
 export default function useProductFilters(products) {
   const [query, setQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState(() => {
     const requestedCategory = new URLSearchParams(window.location.search).get('category')
-    const category = categoryAliases.get(normalize(requestedCategory || '')) || requestedCategory
+    const category = resolveProductCategory(requestedCategory)
     return categories.includes(category) ? category : 'همه محصولات'
   })
   const visibleProducts = products.filter((product) => {
-    const category = categoryAliases.get(normalize(product.category)) || product.category
+    const category = resolveProductCategory(product.category)
     const matchesCategory =
       activeCategory === 'همه محصولات' ||
       normalize(category) === normalize(activeCategory) ||

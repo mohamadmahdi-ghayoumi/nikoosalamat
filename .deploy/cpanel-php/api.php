@@ -475,8 +475,18 @@ if ($method === 'POST' && $path === '/api/admin/logout') {
     respond(null, 204);
 }
 
-if ($method === 'POST' && $path === '/api/admin/products') {
+if (($method === 'POST' && $path === '/api/admin/products')
+    || ($method === 'PUT' && preg_match('#^/api/admin/products/(\d+)$#', $path, $matches))) {
     requireAdmin($db);
+    $current = null;
+    $productId = null;
+    if ($method === 'PUT') {
+        $productId = (int) $matches[1];
+        $statement = $db->prepare('SELECT * FROM products WHERE id = ?');
+        $statement->execute([$productId]);
+        $current = $statement->fetch();
+        if (!$current) { fail('محصول پیدا نشد', 404); }
+    }
     $payload = body();
     $slug = trim((string) ($payload['slug'] ?? ''));
     $name = trim((string) ($payload['name'] ?? ''));
@@ -486,20 +496,19 @@ if ($method === 'POST' && $path === '/api/admin/products') {
     $shape = (string) ($payload['shape'] ?? 'bottle');
     if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug)
         || stringLength($name) < 2 || stringLength($name) > 120
-        || stringLength($category) < 2 || $price === false || $price < 0
+        || strlen($slug) > 80 || stringLength($category) < 2 || stringLength($category) > 80
+        || stringLength((string) ($payload['badge'] ?? '')) > 30
+        || $price === false || $price < 0 || $price > 2000000000
         || !in_array($tone, ['amber', 'wine', 'olive', 'cream'], true)
         || !in_array($shape, ['tin', 'spray', 'bottle', 'jar'], true)) {
         fail('اطلاعات محصول معتبر نیست', 422);
     }
 
-    $imageUrl = saveImage(isset($payload['image_data']) ? (string) $payload['image_data'] : null, $uploadDir);
+    $newImage = saveImage(isset($payload['image_data']) ? (string) $payload['image_data'] : null, $uploadDir);
+    $imageUrl = $newImage ?: (!empty($payload['remove_image']) ? null : ($current['image_url'] ?? null));
 
     try {
-        $statement = $db->prepare(
-            'INSERT INTO products (slug, name, category, price, tone, shape, badge, featured, image_url)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        );
-        $statement->execute([
+        $values = [
             $slug,
             $name,
             $category,
@@ -509,16 +518,31 @@ if ($method === 'POST' && $path === '/api/admin/products') {
             trim((string) ($payload['badge'] ?? '')) ?: null,
             !empty($payload['featured']) ? 1 : 0,
             $imageUrl,
-        ]);
-    } catch (PDOException $error) {
-        if ($imageUrl) {
-            @unlink($uploadDir . '/' . basename($imageUrl));
+        ];
+        if ($current) {
+            $statement = $db->prepare(
+                'UPDATE products SET slug = ?, name = ?, category = ?, price = ?, tone = ?,
+                 shape = ?, badge = ?, featured = ?, image_url = ? WHERE id = ?'
+            );
+            $values[] = $productId;
+        } else {
+            $statement = $db->prepare(
+                'INSERT INTO products (slug, name, category, price, tone, shape, badge, featured, image_url)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+            );
         }
+        $statement->execute($values);
+        if (!$current) { $productId = (int) $db->lastInsertId(); }
+    } catch (PDOException $error) {
+        removeUploadedImage($newImage, $uploadDir);
         fail('این شناسه محصول قبلاً استفاده شده است', 409);
     }
+    if ($current && $current['image_url'] !== $imageUrl) {
+        removeUploadedImage($current['image_url'], $uploadDir);
+    }
     $statement = $db->prepare('SELECT * FROM products WHERE id = ?');
-    $statement->execute([(int) $db->lastInsertId()]);
-    respond(productRow($statement->fetch()), 201);
+    $statement->execute([$productId]);
+    respond(productRow($statement->fetch()), $current ? 200 : 201);
 }
 
 if ($method === 'PUT' && preg_match('#^/api/admin/products/(\d+)/catalog$#', $path, $matches)) {

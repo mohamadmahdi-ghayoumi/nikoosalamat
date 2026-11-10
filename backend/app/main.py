@@ -27,6 +27,7 @@ from .schemas import (
     NewsletterOut,
     Product,
     ProductCreateIn,
+    ProductUpdateIn,
     ProductCatalogUpdate,
     ContentPage,
     ContentPageUpdateIn,
@@ -240,6 +241,29 @@ def create_product(payload: ProductCreateIn, _: dict = Depends(require_admin)) -
         if image_url:
             (UPLOAD_DIR / Path(image_url).name).unlink(missing_ok=True)
         raise HTTPException(status_code=409, detail="این شناسه محصول قبلاً استفاده شده است") from None
+    return Product(**fetch_one("SELECT * FROM products WHERE id = ?", (product_id,)))
+
+
+@app.put("/api/admin/products/{product_id}", response_model=Product)
+def update_product(product_id: int, payload: ProductUpdateIn, _: dict = Depends(require_admin)) -> Product:
+    current = fetch_one("SELECT * FROM products WHERE id = ?", (product_id,))
+    if not current:
+        raise HTTPException(status_code=404, detail="محصول پیدا نشد")
+    new_image = save_image(payload.image_data)
+    image_url = new_image or (None if payload.remove_image else current["image_url"])
+    try:
+        execute(
+            """UPDATE products SET slug = ?, name = ?, category = ?, price = ?, tone = ?,
+               shape = ?, badge = ?, featured = ?, image_url = ? WHERE id = ?""",
+            (payload.slug, payload.name.strip(), payload.category.strip(), payload.price,
+             payload.tone, payload.shape, payload.badge.strip() if payload.badge else None,
+             int(payload.featured), image_url, product_id),
+        )
+    except sqlite3.IntegrityError:
+        delete_uploaded_image(new_image)
+        raise HTTPException(status_code=409, detail="این شناسه محصول قبلاً استفاده شده است") from None
+    if image_url != current["image_url"]:
+        delete_uploaded_image(current["image_url"])
     return Product(**fetch_one("SELECT * FROM products WHERE id = ?", (product_id,)))
 
 

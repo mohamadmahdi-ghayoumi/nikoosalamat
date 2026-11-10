@@ -8,14 +8,18 @@ export default function ProductsManager({
   createProduct,
   removeProduct,
   setEditingCatalog,
+  editingProduct,
+  setEditingProduct,
 }) {
   return (
     <div className="admin-layout">
-      <ProductForm busy={busy} createProduct={createProduct} />
+      <ProductForm key={editingProduct?.id || 'new'} busy={busy} createProduct={createProduct} product={editingProduct} onCancel={() => setEditingProduct(null)} />
       <ProductList
         products={products}
         removeProduct={removeProduct}
         setEditingCatalog={setEditingCatalog}
+        editProduct={setEditingProduct}
+        busy={busy}
       />
     </div>
   )

@@ -26,6 +26,13 @@ export const createAdminProduct = (token, product) =>
     body: JSON.stringify(product),
   })
 
+export const updateAdminProduct = (token, productId, product) =>
+  request(`/api/admin/products/${productId}`, {
+    method: 'PUT',
+    headers: adminHeaders(token),
+    body: JSON.stringify(product),
+  })
+
 export const deleteAdminProduct = (token, productId) =>
   request(`/api/admin/products/${productId}`, {
     method: 'DELETE',

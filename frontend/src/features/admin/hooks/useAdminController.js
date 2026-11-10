@@ -6,6 +6,7 @@ import {
   getAdminPages,
   getAdminArticles,
   createAdminProduct,
+  updateAdminProduct,
   deleteAdminProduct,
   updateProductCatalog,
   updateAdminPage,
@@ -29,6 +30,7 @@ export default function useAdminController(showNotice) {
   const [articles, setArticles] = useState([])
   const [editingArticle, setEditingArticle] = useState(null)
   const [editingCatalog, setEditingCatalog] = useState(null)
+  const [editingProduct, setEditingProduct] = useState(null)
 
   const loadAdminData = async (activeToken = token) => {
     const [nextProducts, nextPages, nextArticles] = await Promise.all([
@@ -98,6 +100,7 @@ export default function useAdminController(showNotice) {
     setPages([])
     setArticles([])
     setEditingCatalog(null)
+    setEditingProduct(null)
   }
 
   const createProduct = async (event) => {
@@ -106,7 +109,7 @@ export default function useAdminController(showNotice) {
     const form = event.currentTarget
     const data = new FormData(form)
     try {
-      await createAdminProduct(token, {
+      const payload = {
         slug: String(data.get('slug')).trim().toLowerCase(),
         name: String(data.get('name')).trim(),
         category: String(data.get('category')).trim(),
@@ -116,7 +119,19 @@ export default function useAdminController(showNotice) {
         badge: String(data.get('badge') || '').trim() || null,
         featured: data.get('featured') === 'on',
         image_data: await readImageFile(data.get('image')),
-      })
+      }
+      if (editingProduct) {
+        const updated = await updateAdminProduct(token, editingProduct.id, {
+          ...payload,
+          remove_image: data.get('remove_image') === 'on',
+        })
+        setProducts((items) => items.map((item) => item.id === updated.id ? updated : item))
+        if (editingCatalog?.id === updated.id) setEditingCatalog(updated)
+        setEditingProduct(null)
+        showNotice('محصول با موفقیت ویرایش شد')
+        return
+      }
+      await createAdminProduct(token, payload)
       form.reset()
       await loadAdminData()
       showNotice('محصول با موفقیت ثبت شد')
@@ -137,6 +152,7 @@ export default function useAdminController(showNotice) {
       showNotice(error.message)
     }
     if (editingCatalog?.id === product.id) setEditingCatalog(null)
+    if (editingProduct?.id === product.id) setEditingProduct(null)
   }
 
   const saveCatalog = async (event, product) => {
@@ -251,6 +267,8 @@ export default function useAdminController(showNotice) {
     setEditingArticle,
     editingCatalog,
     setEditingCatalog,
+    editingProduct,
+    setEditingProduct,
     login,
     logout,
     createProduct,
