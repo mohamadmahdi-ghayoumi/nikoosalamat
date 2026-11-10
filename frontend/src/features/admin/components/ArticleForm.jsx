@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
+
+const RichArticleEditor = lazy(() => import('../../../components/ui/RichArticleEditor.jsx'))
 
 export default function ArticleForm({ busy, editingArticle, setEditingArticle, saveArticle }) {
   return (
@@ -30,10 +32,9 @@ export default function ArticleForm({ busy, editingArticle, setEditingArticle, s
         خلاصه مقاله
         <textarea name="excerpt" rows="3" defaultValue={editingArticle?.excerpt || ''} required />
       </label>
-      <label>
-        متن کامل مقاله
-        <textarea name="body" rows="10" defaultValue={editingArticle?.body || ''} required />
-      </label>
+      <Suspense fallback={<p>در حال آماده‌سازی ویرایشگر متن…</p>}>
+        <RichArticleEditor key={editingArticle?.id || 'new'} initialValue={editingArticle?.body || ''} disabled={busy} />
+      </Suspense>
       <label className="admin-file">
         تصویر شاخص <small>JPG، PNG یا WebP تا ۳ مگابایت</small>
         <input name="image" type="file" accept="image/jpeg,image/png,image/webp" />

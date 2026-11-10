@@ -3,7 +3,7 @@ import Icon from '../../../components/ui/Icon.jsx'
 import { resolveMediaUrl } from '../../../services/api/client.js'
 import { getArticle } from '../../../services/api/articles.js'
 import ArticleMeta from '../components/ArticleMeta.jsx'
-import ContentBody from '../../../components/ui/ContentBody.jsx'
+import ArticleBody from '../../../components/ui/ArticleBody.jsx'
 
 export default function ArticlePage({ slug, navigate }) {
   const [article, setArticle] = useState(null)
@@ -58,7 +58,7 @@ export default function ArticlePage({ slug, navigate }) {
         )}
         <div className="article-reading">
           <div className="editorial-body">
-            <ContentBody text={article.body} />
+            <ArticleBody text={article.body} />
           </div>
           <div className="article-ending">
             <a

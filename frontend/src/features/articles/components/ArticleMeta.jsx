@@ -1,10 +1,11 @@
 import React from 'react'
+import { articlePlainText } from '../../../utils/articleContent.js'
 
 export default function ArticleMeta({ article }) {
   const minutes = Math.max(
     1,
     Math.ceil(
-      String(article.body || article.excerpt || '')
+      articlePlainText(article.body || article.excerpt || '')
         .trim()
         .split(/\s+/)
         .filter(Boolean).length / 200,

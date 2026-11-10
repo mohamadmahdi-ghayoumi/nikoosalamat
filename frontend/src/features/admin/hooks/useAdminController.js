@@ -16,6 +16,7 @@ import {
 } from '../../../services/api/admin.js'
 import { getProducts } from '../../../services/api/products.js'
 import { readImageFile } from '../../../utils/files.js'
+import { articleHTML, articlePlainText } from '../../../utils/articleContent.js'
 
 export default function useAdminController(showNotice) {
   const [token, setToken] = useState(
@@ -225,11 +226,13 @@ export default function useAdminController(showNotice) {
         slug: String(data.get('slug')).trim().toLowerCase(),
         title: String(data.get('title')).trim(),
         excerpt: String(data.get('excerpt')).trim(),
-        body: String(data.get('body')).trim(),
+        body: articleHTML(String(data.get('body') || '').trim()),
         published: data.get('published') === 'on',
         image_data: await readImageFile(data.get('image')),
         remove_image: data.get('remove_image') === 'on',
       }
+      if (articlePlainText(payload.body).trim().length < 2) throw new Error('متن مقاله را وارد کنید')
+      if (payload.body.length > 30000) throw new Error('حجم متن مقاله با قالب‌بندی نباید بیشتر از ۳۰٬۰۰۰ کاراکتر باشد')
       if (editingArticle) await updateAdminArticle(token, editingArticle.id, payload)
       else await createAdminArticle(token, payload)
       setEditingArticle(null)

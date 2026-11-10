@@ -103,3 +103,22 @@ def test_solution_edits_survive_reload_and_protect_unpublished_pages(editor):
     assert cleared.status_code == 200
     assert cleared.json()["image_url"] is None
     assert not (uploads / Path(image).name).exists()
+
+
+def test_article_rich_text_roundtrip_keeps_markup_and_cover(editor):
+    client, headers, _ = editor
+    markup = '<h2>تیتر مقاله</h2><p>متن <strong>بولد</strong> و <em>کج</em></p><ul><li>مورد اول</li><li>مورد دوم</li></ul><ol start="3"><li>شماره‌دار</li></ol>'
+    payload = {"slug": "rich-text-test", "title": "مقاله قالب‌دار", "excerpt": "خلاصه مقاله", "body": markup, "published": True, "image_data": IMAGE}
+    created = client.post("/api/admin/articles", headers=headers, json=payload)
+    assert created.status_code == 201
+    article = created.json()
+    assert article["body"] == markup
+    assert client.get("/api/articles/rich-text-test").json()["body"] == markup
+    changed = markup + '<blockquote><p>نقل‌قول تازه</p></blockquote>'
+    endpoint = f"/api/admin/articles/{article['id']}"
+    assert client.put(endpoint, json={**payload, "body": changed}).status_code == 401
+    saved = client.put(endpoint, headers=headers, json={**payload, "body": changed, "image_data": None})
+    assert saved.status_code == 200
+    assert saved.json()["image_url"] == article["image_url"]
+    database.init_database()
+    assert client.get("/api/articles/rich-text-test").json()["body"] == changed
