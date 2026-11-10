@@ -10,7 +10,9 @@ import sqlite3
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Query, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
+from xml.etree.ElementTree import Element, SubElement, tostring
+from urllib.parse import quote
 from fastapi.staticfiles import StaticFiles
 
 from .content import BENEFITS, HERO, STORY
@@ -436,6 +438,28 @@ if (FRONTEND_DIST / "assets").exists():
     app.mount("/assets", StaticFiles(directory=FRONTEND_DIST / "assets"), name="frontend-assets")
 if (FRONTEND_DIST / "images").exists():
     app.mount("/images", StaticFiles(directory=FRONTEND_DIST / "images"), name="frontend-images")
+
+
+@app.get("/sitemap.xml", include_in_schema=False)
+@app.head("/sitemap.xml", include_in_schema=False)
+def sitemap() -> Response:
+    root = Element("urlset", xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
+    urls = [(path, None) for path in ["/", "/products", "/articles", "/solutions", "/about", "/contact"]]
+    urls.extend((f"/products/{row['id']}", None) for row in fetch_all("SELECT id FROM products ORDER BY id"))
+    for table, prefix in [("articles", "/articles/"), ("content_pages", "/pages/")]:
+        urls.extend((prefix + quote(row["slug"], safe=""), row["updated_at"]) for row in fetch_all(f"SELECT slug, updated_at FROM {table} WHERE published = 1 ORDER BY id"))
+    for path, updated in urls:
+        item = SubElement(root, "url")
+        SubElement(item, "loc").text = "https://nikoosalamat.ir" + path
+        if updated:
+            try:
+                date = datetime.fromisoformat(updated)
+                if date.tzinfo is None:
+                    date = date.replace(tzinfo=timezone.utc)
+                SubElement(item, "lastmod").text = date.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+            except ValueError:
+                pass
+    return Response(tostring(root, encoding="utf-8", xml_declaration=True), media_type="application/xml")
 
 
 @app.get("/{frontend_path:path}", include_in_schema=False)

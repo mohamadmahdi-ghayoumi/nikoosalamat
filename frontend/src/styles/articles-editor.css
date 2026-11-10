@@ -161,6 +161,27 @@
   color: #a12d32;
   font-size: 12px;
 }
+.article-seo-checklist {
+  margin-top: 20px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f3f8f4;
+  font-size: 12px;
+  line-height: 1.9;
+}
+.article-seo-checklist summary { cursor: pointer; color: var(--wine-dark); }
+.article-seo-checklist ul { padding: 0; list-style: none; }
+.article-seo-checklist li { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; }
+.article-seo-checklist .is-complete > span { color: var(--wine); }
+.article-seo-checklist p { color: var(--muted); font-size: 11px; }
+.article-breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+.article-breadcrumb a, .article-toc a { color: var(--wine-dark); }
+.article-toc { margin: 0 0 28px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 8px; background: #eff6f0; font-size: 14px; line-height: 2; }
+.article-toc summary { cursor: pointer; font-weight: 650; }
+.article-toc ol { padding-inline-start: 22px; }
+.article-toc .is-subheading { margin-inline-start: 16px; }
+.article-rich-text :is(h2,h3,h4,h5,h6) { scroll-margin-top: 100px; }
 .article-rich-text blockquote {
   margin: 20px 0;
   padding: 12px 18px;
@@ -201,6 +222,7 @@
 .rich-editor-toolbar {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 4px;
   padding: 8px;
   border-bottom: 1px solid var(--line);
@@ -209,12 +231,26 @@
 .rich-editor-toolbar button {
   min-width: 34px;
   min-height: 34px;
+  height: 34px;
+  flex: 0 0 auto;
   padding: 5px 8px;
   border: 1px solid var(--line);
   border-radius: 5px;
   background: white;
   color: var(--ink);
   font-size: 12px;
+}
+.rich-editor-advanced > summary,
+.article-image-address > summary,
+.article-image-custom > summary {
+  cursor: pointer;
+  padding: 10px;
+  color: var(--wine-dark);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.rich-editor-advanced {
+  border-bottom: 1px solid var(--line);
 }
 .rich-editor-toolbar button[aria-pressed='true'] {
   background: var(--wine);

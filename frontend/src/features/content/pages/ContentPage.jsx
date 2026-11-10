@@ -4,21 +4,29 @@ import { resolveMediaUrl } from '../../../services/api/client.js'
 import { getContentPage } from '../../../services/api/pages.js'
 import PageHero from '../../../components/ui/PageHero.jsx'
 import ContentBody from '../../../components/ui/ContentBody.jsx'
+import useNoIndex from '../../../hooks/useNoIndex.js'
+import useEntitySEO from '../../../hooks/useEntitySEO.js'
 
 export default function ContentPageView({ slug, navigate }) {
   const [page, setPage] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  useNoIndex(!loading && Boolean(error || !page))
+  useEntitySEO(!loading && !error ? page : null, 'page')
 
   useEffect(() => {
+    let active = true
     setLoading(true)
+    setPage(null)
     getContentPage(slug)
       .then((data) => {
+        if (!active) return
         setPage(data)
         setError('')
       })
-      .catch((requestError) => setError(requestError.message))
-      .finally(() => setLoading(false))
+      .catch((requestError) => { if (active) setError(requestError.message) })
+      .finally(() => { if (active) setLoading(false) })
+    return () => { active = false }
   }, [slug])
 
   if (loading) return <main className="content-loading">در حال دریافت صفحه…</main>

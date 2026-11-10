@@ -5,12 +5,14 @@ import { getArticle } from '../../../services/api/articles.js'
 import ArticleMeta from '../components/ArticleMeta.jsx'
 import ArticleBody from '../../../components/ui/ArticleBody.jsx'
 import useArticleSEO from '../hooks/useArticleSEO.js'
+import useNoIndex from '../../../hooks/useNoIndex.js'
 
 export default function ArticlePage({ slug, navigate }) {
   const [article, setArticle] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   useArticleSEO(!loading && !error ? article : null)
+  useNoIndex(!loading && Boolean(error || !article))
 
   useEffect(() => {
     let active = true
@@ -43,6 +45,7 @@ export default function ArticlePage({ slug, navigate }) {
   return (
     <main className="inner-page article-detail" id="top">
       <header className="article-heading">
+        <nav className="article-breadcrumb" aria-label="مسیر مقاله"><a href="/" onClick={(event) => navigate(event, '/')}>خانه</a><span aria-hidden="true">/</span><a href="/articles" onClick={(event) => navigate(event, '/articles')}>مقالات</a><span aria-hidden="true">/</span><span aria-current="page">{article.title}</span></nav>
         <a
           className="article-back"
           href="/articles"

@@ -4,11 +4,15 @@ import { getProduct } from '../../../services/api/products.js'
 import ProductGallery from '../components/ProductGallery.jsx'
 import ProductOverview from '../components/ProductOverview.jsx'
 import ProductEditorial from '../components/ProductEditorial.jsx'
+import useNoIndex from '../../../hooks/useNoIndex.js'
+import useEntitySEO from '../../../hooks/useEntitySEO.js'
 
 export default function ProductDetailPage({ id, navigate, onAddToCart }) {
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [failed, setFailed] = useState(false)
+  useNoIndex(!loading && Boolean(failed || !product))
+  useEntitySEO(!loading && !failed ? product : null, 'product')
   useEffect(() => {
     let active = true
     setLoading(true)
@@ -17,7 +21,6 @@ export default function ProductDetailPage({ id, navigate, onAddToCart }) {
       .then((data) => {
         if (active) {
           setProduct(data)
-          document.title = `${data.name} | نیکو سلامت`
         }
       })
       .catch(() => {

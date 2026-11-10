@@ -309,6 +309,29 @@ if ($db->query("SELECT meta_value FROM app_meta WHERE meta_key = 'brand_spelling
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
 
+// Only public, currently published URLs are included. Never include admin,
+// search results, filters or draft content in the discovery feed.
+if (in_array($method, ['GET', 'HEAD'], true) && $path === '/sitemap.xml') {
+    header('Content-Type: application/xml; charset=utf-8');
+    $origin = 'https://nikoosalamat.ir';
+    $urls = [];
+    foreach (['/', '/products', '/articles', '/solutions', '/about', '/contact'] as $url) { $urls[] = [$url, null]; }
+    foreach ($db->query('SELECT id FROM products ORDER BY id')->fetchAll() as $row) { $urls[] = ['/products/' . (int) $row['id'], null]; }
+    foreach (['articles' => '/articles/', 'content_pages' => '/pages/'] as $table => $prefix) {
+        foreach ($db->query("SELECT slug, updated_at FROM $table WHERE published = 1 ORDER BY id")->fetchAll() as $row) {
+            $urls[] = [$prefix . rawurlencode($row['slug']), $row['updated_at']];
+        }
+    }
+    echo '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+    foreach ($urls as [$url, $updated]) {
+        echo '<url><loc>' . htmlspecialchars($origin . $url, ENT_XML1 | ENT_QUOTES, 'UTF-8') . '</loc>';
+        if ($updated && ($time = strtotime($updated . ' UTC')) !== false) { echo '<lastmod>' . gmdate('Y-m-d\TH:i:s\Z', $time) . '</lastmod>'; }
+        echo '</url>';
+    }
+    echo '</urlset>';
+    exit;
+}
+
 if ($method === 'GET' && $path === '/api/health') {
     respond(['status' => 'ok']);
 }

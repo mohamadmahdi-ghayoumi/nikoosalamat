@@ -1,4 +1,5 @@
 from pathlib import Path
+from xml.etree import ElementTree
 
 import pytest
 from fastapi.testclient import TestClient
@@ -144,3 +145,26 @@ def test_inline_article_image_upload_requires_auth_and_survives_article_save(edi
     assert client.get("/api/articles/inline-image").json()["body"] == markup
     assert client.put(f"/api/admin/articles/{article.json()['id']}", headers=headers, json={**payload, "body": markup + '<p>ویرایش</p>'}).status_code == 200
     assert (uploads / Path(url).name).exists()
+
+
+def test_sitemap_only_contains_public_content_and_refreshes_after_edits(editor):
+    client, headers, _ = editor
+    payload = {"slug": "sitemap-visible", "title": "مقاله عمومی", "excerpt": "خلاصه آزمون", "body": "متن آزمون", "published": True}
+    visible = client.post("/api/admin/articles", headers=headers, json=payload).json()
+    draft = client.post("/api/admin/articles", headers=headers, json={**payload, "slug": "sitemap-draft", "published": False}).json()
+    response = client.get("/sitemap.xml")
+    assert response.status_code == 200
+    assert "application/xml" in response.headers["content-type"]
+    root = ElementTree.fromstring(response.content)
+    namespace = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+    urls = [element.text for element in root.findall("s:url/s:loc", namespace)]
+    assert "https://nikoosalamat.ir/articles/sitemap-visible" in urls
+    assert "https://nikoosalamat.ir/articles/sitemap-draft" not in urls
+    assert len(urls) == len(set(urls))
+    assert not any("control-" in url or "/api/" in url or "/search" in url for url in urls)
+    assert "https://nikoosalamat.ir/products/1" in urls
+    assert client.put(f"/api/admin/articles/{visible['id']}", headers=headers, json={**payload, "published": False}).status_code == 200
+    assert client.put(f"/api/admin/articles/{draft['id']}", headers=headers, json={**payload, "slug": "sitemap-now-visible"}).status_code == 200
+    refreshed = client.get("/sitemap.xml").text
+    assert "/articles/sitemap-visible" not in refreshed
+    assert "/articles/sitemap-now-visible" in refreshed

@@ -1,13 +1,19 @@
-import React, { lazy, Suspense, useState } from 'react'
+import React, { lazy, Suspense, useEffect, useState } from 'react'
+import ArticleSEOChecklist from '../../../components/ui/ArticleSEOChecklist.jsx'
 
 const RichArticleEditor = lazy(() => import('../../../components/ui/RichArticleEditor.jsx'))
 
 export default function ArticleForm({ busy, editingArticle, setEditingArticle, saveArticle, token }) {
   const [uploading, setUploading] = useState(false)
+  const [title, setTitle] = useState(editingArticle?.title || '')
+  const [excerpt, setExcerpt] = useState(editingArticle?.excerpt || '')
+  const [body, setBody] = useState(editingArticle?.body || '')
+  useEffect(() => { setTitle(editingArticle?.title || ''); setExcerpt(editingArticle?.excerpt || ''); setBody(editingArticle?.body || '') }, [editingArticle])
   return (
     <form
       className="admin-product-form admin-editor-form"
       onSubmit={(event) => { if (uploading) event.preventDefault(); else saveArticle(event) }}
+      onReset={() => { setTitle(''); setExcerpt(''); setBody('') }}
       key={editingArticle?.id || 'new'}
     >
       <div className="form-heading">
@@ -16,7 +22,7 @@ export default function ArticleForm({ busy, editingArticle, setEditingArticle, s
       </div>
       <label>
         عنوان مقاله (عنوان اصلی صفحه / H1)
-        <input name="title" defaultValue={editingArticle?.title || ''} required />
+        <input name="title" defaultValue={editingArticle?.title || ''} onChange={(event) => setTitle(event.target.value)} maxLength={180} required />
       </label>
       <label>
         شناسه انگلیسی
@@ -31,10 +37,10 @@ export default function ArticleForm({ busy, editingArticle, setEditingArticle, s
       </label>
       <label>
         خلاصه مقاله (توضیح صفحه برای موتورهای جست‌وجو)
-        <textarea name="excerpt" rows="3" defaultValue={editingArticle?.excerpt || ''} required />
+        <textarea name="excerpt" rows="3" defaultValue={editingArticle?.excerpt || ''} onChange={(event) => setExcerpt(event.target.value)} maxLength={500} required />
       </label>
       <Suspense fallback={<p>در حال آماده‌سازی ویرایشگر متن…</p>}>
-        <RichArticleEditor key={editingArticle?.id || 'new'} initialValue={editingArticle?.body || ''} disabled={busy} token={token} onPending={setUploading} />
+        <RichArticleEditor key={editingArticle?.id || 'new'} initialValue={editingArticle?.body || ''} disabled={busy} token={token} onPending={setUploading} onContentChange={setBody} />
       </Suspense>
       <label className="admin-file">
         تصویر شاخص <small>JPG، PNG یا WebP تا ۳ مگابایت</small>
@@ -65,6 +71,7 @@ export default function ArticleForm({ busy, editingArticle, setEditingArticle, s
           </button>
         )}
       </div>
+      <ArticleSEOChecklist title={title} excerpt={excerpt} body={body} />
     </form>
   )
 }

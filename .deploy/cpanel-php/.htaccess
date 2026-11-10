@@ -20,6 +20,7 @@ RewriteRule ^ - [L]
 
 # Route every API endpoint to the PHP front controller.
 RewriteRule ^api(?:/.*)?$ api.php [QSA,L,NC]
+RewriteRule ^sitemap\.xml$ api.php [L,NC]
 
 # React client-side routes, including the unlisted management page.
 RewriteRule ^ index.html [L]

@@ -27,7 +27,7 @@ export default function useArticleSEO(article) {
     document.title = title
     update('meta[name="description"]', 'meta', { name: 'description', content: description })
     update('link[rel="canonical"]', 'link', { rel: 'canonical', href: url })
-    for (const [property, content] of Object.entries({ 'og:title': title, 'og:description': description, 'og:type': 'article', 'og:url': url })) {
+    for (const [property, content] of Object.entries({ 'og:title': title, 'og:description': description, 'og:type': 'article', 'og:url': url, ...(article.image_url ? { 'og:image': new URL(resolveMediaUrl(article.image_url), window.location.origin).href } : {}) })) {
       update(`meta[property="${property}"]`, 'meta', { property, content })
     }
     const schema = document.createElement('script')
@@ -45,10 +45,15 @@ export default function useArticleSEO(article) {
       ...(article.image_url ? { image: new URL(resolveMediaUrl(article.image_url), window.location.origin).href } : {}),
     }).replace(/</g, '\\u003c')
     document.head.append(schema)
+    const breadcrumb = document.createElement('script')
+    breadcrumb.type = 'application/ld+json'
+    breadcrumb.textContent = JSON.stringify({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [['خانه', '/'], ['مقالات', '/articles'], [article.title, `/articles/${encodeURIComponent(article.slug)}`]].map(([name, path], index) => ({ '@type': 'ListItem', position: index + 1, name, item: new URL(path, window.location.origin).href })) }).replace(/</g, '\\u003c')
+    document.head.append(breadcrumb)
     return () => {
       document.title = previousTitle
       cleanups.reverse().forEach((cleanup) => cleanup())
       schema.remove()
+      breadcrumb.remove()
     }
   }, [article])
 }

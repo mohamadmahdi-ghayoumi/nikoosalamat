@@ -68,12 +68,18 @@ export default function ArticleMediaTools({ editor, token, disabled, onPending }
         <legend>{panel === 'image' ? 'تصویر در محل نشانگر متن' : 'لینک روی متن انتخاب‌شده'}</legend>
         {panel === 'link' ? <label>نشانی لینک (خالی برای حذف لینک)<input aria-label="نشانی لینک" value={link} dir="ltr" onChange={(event) => setLink(event.target.value)} placeholder="https://…" /></label> : <>
           <label>آپلود عکس از دستگاه<input aria-label="عکس داخل مقاله" type="file" accept="image/png,image/jpeg,image/webp" onChange={(event) => setFile(event.target.files?.[0] || null)} /><small>حداکثر ۳ مگابایت؛ JPG، PNG یا WebP</small></label>
-          <label>یا نشانی عکس<input aria-label="نشانی عکس" dir="ltr" value={image.src} onChange={(event) => setImage({ ...image, src: event.target.value })} placeholder="https://…" /></label>
+          <details className="article-image-address"><summary>استفاده از نشانی عکس به‌جای آپلود</summary><label>نشانی عکس<input aria-label="نشانی عکس" dir="ltr" value={image.src} onChange={(event) => setImage({ ...image, src: event.target.value })} placeholder="https://…" /></label></details>
           <label>متن جایگزین تصویر (Alt)<input aria-label="متن جایگزین تصویر" maxLength={300} value={image.alt} onChange={(event) => setImage({ ...image, alt: event.target.value })} /></label>
           <div className="article-media-size">
-            <label>عرض تصویر<input aria-label="عرض تصویر" dir="ltr" value={image.width} onChange={(event) => setImage({ ...image, width: event.target.value })} placeholder="50% یا 400px" /><small>۲۰ تا ۱۰۰٪ یا ۸۰ تا ۱۲۰۰px؛ ارتفاع متناسب حفظ می‌شود.</small></label>
+            <label>اندازهٔ عکس<select aria-label="اندازه عکس" value={['35%', '65%', '100%'].includes(image.width) ? image.width : 'custom'} onChange={(event) => {
+              if (event.target.value === 'custom') {
+                setImage({ ...image, width: '400px' })
+                event.target.closest('fieldset').querySelector('.article-image-custom').open = true
+              } else setImage({ ...image, width: event.target.value })
+            }}><option value="35%">کوچک</option><option value="65%">متوسط</option><option value="100%">تمام عرض متن</option><option value="custom">اندازهٔ دلخواه</option></select></label>
             <label>تراز تصویر<select aria-label="تراز تصویر" value={image.alignment} onChange={(event) => setImage({ ...image, alignment: event.target.value })}><option value="right">راست</option><option value="center">وسط</option><option value="left">چپ</option></select></label>
           </div>
+          <details className="article-image-custom"><summary>عرض دقیق تصویر (اختیاری)</summary><label>عرض تصویر<input aria-label="عرض تصویر" dir="ltr" value={image.width} onChange={(event) => setImage({ ...image, width: event.target.value })} placeholder="50% یا 400px" /><small>۲۰ تا ۱۰۰٪ یا ۸۰ تا ۱۲۰۰px؛ ارتفاع متناسب حفظ می‌شود.</small></label></details>
         </>}
         <div className="article-media-buttons">
           <button type="button" onClick={panel === 'link' ? applyLink : applyImage}>اعمال {panel === 'image' ? 'تصویر' : 'لینک'}</button>
