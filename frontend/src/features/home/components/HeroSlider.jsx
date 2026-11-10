@@ -68,7 +68,6 @@ export default function HeroSlider({ navigate }) {
             inert={active !== index ? true : undefined}
           >
             <div className="hero-copy">
-              <span className="eyebrow">{slide.eyebrow}</span>
               <h1>{slide.title}</h1>
               <p>{slide.text}</p>
               <a

@@ -33,4 +33,5 @@
 @import './responsive/compact-commerce.css';
 @import './responsive/tablet-density.css';
 @import './responsive/mobile-density.css';
+@import './responsive/homepage-review.css';
 @import './typography.css';

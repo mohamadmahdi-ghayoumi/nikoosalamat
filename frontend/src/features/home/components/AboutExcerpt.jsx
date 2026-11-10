@@ -19,7 +19,7 @@ export default function AboutExcerpt({ navigate }) {
             ادامه مطلب درباره فارمیوکِر <Icon name="arrow" size={18} />
           </a>
         </div>
-        <PharmucareBrand />
+        <PharmucareBrand language="en" />
       </div>
     </section>
   )

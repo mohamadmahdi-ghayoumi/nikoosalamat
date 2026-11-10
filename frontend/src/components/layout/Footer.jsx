@@ -1,5 +1,4 @@
 import React from 'react'
-import SocialLinks from './SocialLinks.jsx'
 
 export default function Footer({ navigate }) {
   return (
@@ -7,44 +6,24 @@ export default function Footer({ navigate }) {
       <div className="footer-main">
         <div className="footer-brand">
           <div className="footer-identity">
-            <div className="footer-logos">
-              <a
-                href="/"
-                onClick={(event) => navigate(event, '/')}
-                className="brand"
-                aria-label="صفحه اصلی حال نیکو سلامت"
+            <a
+              href="/"
+              onClick={(event) => navigate(event, '/')}
+              className="brand footer-brand-link"
+              aria-label="صفحه اصلی حال نیکو سلامت"
+            >
+              <svg
+                className="brand-logo footer-logo"
+                viewBox="80 80 305 315"
+                aria-hidden="true"
+                focusable="false"
               >
-                <svg
-                  className="brand-logo footer-logo"
-                  viewBox="80 80 305 315"
-                  aria-hidden="true"
-                  focusable="false"
-                >
-                  <image href="/images/hns-logo.png" width="461" height="526" />
-                </svg>
-              </a>
-              <a
-                className="footer-pharmucare-logo"
-                href="/about#pharmucare"
-                onClick={(event) => navigate(event, '/about#pharmucare')}
-                aria-label="درباره فارمیوکِر"
-              >
-                <img
-                  src="/images/pharmucare-logo.png"
-                  alt="لوگوی فارمیوکِر — PharmuCare"
-                  width="1952"
-                  height="319"
-                  loading="lazy"
-                />
-              </a>
-            </div>
-            <div>
-              <strong>حال نیکو سلامت</strong>
-              <p>از علم تا مزرعه، با حال نیک</p>
-            </div>
+                <image href="/images/hns-logo.png" width="461" height="526" />
+              </svg>
+              <span className="footer-brand-name">حال نیکو سلامت</span>
+            </a>
+            <p className="footer-tagline">از علم تا مزرعه، با حالِ نیک</p>
           </div>
-          <p>راهکارهای تخصصی برای سلامت پایدار دام.</p>
-          <SocialLinks placement="footer" />
         </div>
         <div className="footer-group">
           <h3>راهکارها</h3>
@@ -79,7 +58,7 @@ export default function Footer({ navigate }) {
             پرسش‌های متداول
           </a>
           <a href="/contact" onClick={(event) => navigate(event, '/contact')}>
-            ارسال و بازگشت سفارش
+            ثبت و پیگیری سفارش
           </a>
         </div>
         <div className="footer-group footer-contact">

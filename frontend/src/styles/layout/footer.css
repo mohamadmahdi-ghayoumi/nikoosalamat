@@ -1,7 +1,28 @@
 .footer {
+  --heading-size: 18px;
   color: var(--muted);
   background: #e9f5ec;
   border-top: 1px solid var(--line);
+}
+.footer-brand .footer-identity {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.footer-brand .footer-brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.footer .footer-brand-name {
+  font-size: 17px;
+  font-weight: 750;
+}
+.footer .footer-tagline {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.9;
 }
 .footer-main {
   width: min(1240px, calc(100% - 64px));

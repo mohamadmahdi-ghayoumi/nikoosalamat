@@ -1,0 +1,21 @@
+@media (max-width: 560px) {
+  /* A fixed minimum height left empty black space below the shorter video. */
+  .story-video-section {
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+  }
+  .story-video-section video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .footer .footer-brand-name {
+    font-size: 14px;
+  }
+  .footer .footer-tagline {
+    font-size: 10px;
+  }
+}
