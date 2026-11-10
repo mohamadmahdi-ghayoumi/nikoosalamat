@@ -7,6 +7,7 @@ import ProductsManager from '../components/ProductsManager.jsx'
 import PagesManager from '../components/PagesManager.jsx'
 import ArticlesManager from '../components/ArticlesManager.jsx'
 import CatalogEditor from '../components/CatalogEditor.jsx'
+import SupportInbox from '../../support/SupportInbox.jsx'
 
 export default function AdminPage({ showNotice }) {
   const manager = useAdminController(showNotice)
@@ -16,6 +17,7 @@ export default function AdminPage({ showNotice }) {
     <main className="admin-page">
       <AdminHeader admin={manager.admin} logout={manager.logout} />
       <AdminTabs activeTab={manager.activeTab} setActiveTab={manager.setActiveTab} />
+      {manager.activeTab === 'support' && <SupportInbox token={manager.token} />}
       {manager.activeTab === 'products' && (
         <ProductsManager
           products={manager.products}

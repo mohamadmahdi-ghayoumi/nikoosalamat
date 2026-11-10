@@ -7,6 +7,7 @@ export default function AdminTabs({ activeTab, setActiveTab }) {
         ['products', 'محصولات'],
         ['pages', 'راهکارها'],
         ['articles', 'مقالات'],
+        ['support', 'پشتیبانی'],
       ].map(([id, label]) => (
         <button
           className={activeTab === id ? 'active' : ''}

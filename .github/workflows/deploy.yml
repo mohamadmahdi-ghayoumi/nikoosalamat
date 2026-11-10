@@ -40,6 +40,11 @@ jobs:
           cp -a frontend/dist/. release/
           cp .deploy/cpanel-php/api.php release/api.php
           cp .deploy/cpanel-php/.htaccess release/.htaccess
+          mkdir -p release/app
+          cp .deploy/cpanel-php/app/support.php release/app/support.php
+          cp .deploy/cpanel-php/app/support-worker.php release/app/support-worker.php
+          cp .deploy/cpanel-php/app/support-identify.php release/app/support-identify.php
+          cp backend/app/support_schema.sql release/app/support-schema.sql
 
       - name: Package release
         run: |

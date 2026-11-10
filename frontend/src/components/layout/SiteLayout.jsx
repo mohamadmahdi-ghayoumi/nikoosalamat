@@ -4,6 +4,7 @@ import Footer from './Footer.jsx'
 import SocialLinks from './SocialLinks.jsx'
 import Toast from '../ui/Toast.jsx'
 import { ADMIN_PATH } from '../../app/adminRoute.js'
+import SupportChat from '../../features/support/SupportChat.jsx'
 
 export default function SiteLayout({ currentPath, navigate, cartCount, notice, children }) {
   const isAdmin = currentPath === ADMIN_PATH
@@ -13,6 +14,7 @@ export default function SiteLayout({ currentPath, navigate, cartCount, notice, c
       {children}
       {!isAdmin && <SocialLinks placement="dock" />}
       {!isAdmin && <Footer navigate={navigate} />}
+      {!isAdmin && <SupportChat />}
       <Toast message={notice} />
     </div>
   )

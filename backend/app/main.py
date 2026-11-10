@@ -462,6 +462,11 @@ def sitemap() -> Response:
     return Response(tostring(root, encoding="utf-8", xml_declaration=True), media_type="application/xml")
 
 
+from .support import install as install_support
+
+install_support(app, require_admin)
+
+
 @app.get("/{frontend_path:path}", include_in_schema=False)
 def frontend_app(frontend_path: str) -> FileResponse:
     index = FRONTEND_DIST / "index.html"

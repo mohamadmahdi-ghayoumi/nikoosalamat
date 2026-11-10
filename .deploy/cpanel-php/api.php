@@ -171,6 +171,18 @@ try {
     fail('دیتابیس در دسترس نیست؛ افزونه PDO_SQLite هاست را فعال کنید', 503);
 }
 
+// Chat polling must not re-run unrelated catalog migrations or password hashing.
+// Admin support routes still validate the normal, expiring database session.
+$path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+$method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
+require_once __DIR__ . '/app/support.php';
+try {
+    supportRoutes($db, $config, $path, $method);
+} catch (Throwable $error) {
+    // Do not leak message contents, credentials or SQL on storage/network errors.
+    fail('پشتیبانی موقتاً در دسترس نیست؛ کمی بعد دوباره تلاش کنید', 503);
+}
+
 $productColumns = $db->query('PRAGMA table_info(products)')->fetchAll(PDO::FETCH_COLUMN, 1);
 if (!in_array('catalog', $productColumns, true)) {
     try {
@@ -305,9 +317,6 @@ if ($db->query("SELECT meta_value FROM app_meta WHERE meta_key = 'brand_spelling
     $db->exec("INSERT OR REPLACE INTO app_meta (meta_key, meta_value) VALUES ('brand_spelling_v1', 'done')");
     $db->commit();
 }
-
-$path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
-$method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
 
 // Only public, currently published URLs are included. Never include admin,
 // search results, filters or draft content in the discovery feed.
