@@ -40,6 +40,7 @@ export default function AdminPage({ showNotice }) {
       )}
       {manager.activeTab === 'articles' && (
         <ArticlesManager
+          token={manager.token}
           busy={manager.busy}
           articles={manager.articles}
           editingArticle={manager.editingArticle}

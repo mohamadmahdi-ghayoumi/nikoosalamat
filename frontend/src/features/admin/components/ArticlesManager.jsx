@@ -9,6 +9,7 @@ export default function ArticlesManager({
   setEditingArticle,
   saveArticle,
   removeArticle,
+  token,
 }) {
   return (
     <div className="admin-layout admin-articles-layout">
@@ -17,6 +18,7 @@ export default function ArticlesManager({
         editingArticle={editingArticle}
         setEditingArticle={setEditingArticle}
         saveArticle={saveArticle}
+        token={token}
       />
       <ArticleList
         articles={articles}

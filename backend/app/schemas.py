@@ -135,6 +135,10 @@ class Article(BaseModel):
     updated_at: str
 
 
+class ArticleImageIn(BaseModel):
+    image_data: str = Field(min_length=30, max_length=4_194_400)
+
+
 class ArticleWriteIn(BaseModel):
     slug: str = Field(min_length=2, max_length=100, pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
     title: str = Field(min_length=2, max_length=180)

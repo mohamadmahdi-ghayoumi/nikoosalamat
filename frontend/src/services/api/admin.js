@@ -63,6 +63,13 @@ export const getAdminArticles = (token) =>
     headers: adminHeaders(token),
   })
 
+export const uploadArticleImage = (token, imageData) =>
+  request('/api/admin/article-images', {
+    method: 'POST',
+    headers: adminHeaders(token),
+    body: JSON.stringify({ image_data: imageData }),
+  })
+
 export const createAdminArticle = (token, article) =>
   request('/api/admin/articles', {
     method: 'POST',

@@ -1,12 +1,13 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useState } from 'react'
 
 const RichArticleEditor = lazy(() => import('../../../components/ui/RichArticleEditor.jsx'))
 
-export default function ArticleForm({ busy, editingArticle, setEditingArticle, saveArticle }) {
+export default function ArticleForm({ busy, editingArticle, setEditingArticle, saveArticle, token }) {
+  const [uploading, setUploading] = useState(false)
   return (
     <form
       className="admin-product-form admin-editor-form"
-      onSubmit={saveArticle}
+      onSubmit={(event) => { if (uploading) event.preventDefault(); else saveArticle(event) }}
       key={editingArticle?.id || 'new'}
     >
       <div className="form-heading">
@@ -14,7 +15,7 @@ export default function ArticleForm({ busy, editingArticle, setEditingArticle, s
         <h2>{editingArticle ? editingArticle.title : 'افزودن مقاله'}</h2>
       </div>
       <label>
-        عنوان مقاله
+        عنوان مقاله (عنوان اصلی صفحه / H1)
         <input name="title" defaultValue={editingArticle?.title || ''} required />
       </label>
       <label>
@@ -29,11 +30,11 @@ export default function ArticleForm({ busy, editingArticle, setEditingArticle, s
         />
       </label>
       <label>
-        خلاصه مقاله
+        خلاصه مقاله (توضیح صفحه برای موتورهای جست‌وجو)
         <textarea name="excerpt" rows="3" defaultValue={editingArticle?.excerpt || ''} required />
       </label>
       <Suspense fallback={<p>در حال آماده‌سازی ویرایشگر متن…</p>}>
-        <RichArticleEditor key={editingArticle?.id || 'new'} initialValue={editingArticle?.body || ''} disabled={busy} />
+        <RichArticleEditor key={editingArticle?.id || 'new'} initialValue={editingArticle?.body || ''} disabled={busy} token={token} onPending={setUploading} />
       </Suspense>
       <label className="admin-file">
         تصویر شاخص <small>JPG، PNG یا WebP تا ۳ مگابایت</small>
@@ -55,7 +56,7 @@ export default function ArticleForm({ busy, editingArticle, setEditingArticle, s
         )}
       </div>
       <div className="admin-form-actions">
-        <button className="button primary" type="submit" disabled={busy}>
+        <button className="button primary" type="submit" disabled={busy || uploading}>
           {editingArticle ? 'ذخیره مقاله' : 'انتشار مقاله'}
         </button>
         {editingArticle && (

@@ -4,21 +4,27 @@ import { resolveMediaUrl } from '../../../services/api/client.js'
 import { getArticle } from '../../../services/api/articles.js'
 import ArticleMeta from '../components/ArticleMeta.jsx'
 import ArticleBody from '../../../components/ui/ArticleBody.jsx'
+import useArticleSEO from '../hooks/useArticleSEO.js'
 
 export default function ArticlePage({ slug, navigate }) {
   const [article, setArticle] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  useArticleSEO(!loading && !error ? article : null)
 
   useEffect(() => {
+    let active = true
     setLoading(true)
+    setArticle(null)
     getArticle(slug)
       .then((data) => {
+        if (!active) return
         setArticle(data)
         setError('')
       })
-      .catch((requestError) => setError(requestError.message))
-      .finally(() => setLoading(false))
+      .catch((requestError) => { if (active) setError(requestError.message) })
+      .finally(() => { if (active) setLoading(false) })
+    return () => { active = false }
   }, [slug])
 
   if (loading) return <main className="content-loading">در حال دریافت مقاله…</main>

@@ -14,6 +14,9 @@ def editor(tmp_path, monkeypatch):
     monkeypatch.setattr(database, "DATA_DIR", tmp_path)
     monkeypatch.setattr(database, "DB_PATH", tmp_path / "test.db")
     monkeypatch.setattr(main, "UPLOAD_DIR", tmp_path / "uploads")
+    upload_mount = next(route for route in main.app.routes if getattr(route, "path", None) == "/uploads")
+    monkeypatch.setattr(upload_mount.app, "directory", str(tmp_path / "uploads"))
+    monkeypatch.setattr(upload_mount.app, "all_directories", [str(tmp_path / "uploads")])
     monkeypatch.setenv("SOVARA_ADMIN_USERNAME", "editor-test")
     monkeypatch.setenv("SOVARA_ADMIN_PASSWORD", "local-test-only-password")
     with TestClient(main.app) as client:
@@ -122,3 +125,22 @@ def test_article_rich_text_roundtrip_keeps_markup_and_cover(editor):
     assert saved.json()["image_url"] == article["image_url"]
     database.init_database()
     assert client.get("/api/articles/rich-text-test").json()["body"] == changed
+
+
+def test_inline_article_image_upload_requires_auth_and_survives_article_save(editor):
+    client, headers, uploads = editor
+    endpoint = "/api/admin/article-images"
+    assert client.post(endpoint, json={"image_data": IMAGE}).status_code == 401
+    assert client.post(endpoint, headers=headers, json={"image_data": "data:image/svg+xml;base64," + "a" * 40}).status_code == 422
+    uploaded = client.post(endpoint, headers=headers, json={"image_data": IMAGE})
+    assert uploaded.status_code == 201
+    url = uploaded.json()["url"]
+    assert (uploads / Path(url).name).exists()
+    assert client.get(url).status_code == 200
+    markup = f'<h2>تیتر</h2><p><span style="font-family: Tahoma; font-size: 20px">متن</span></p><img src="{url}" alt="تصویر آزمون" width="50%" data-align="left"><h6>زیرتیتر</h6>'
+    payload = {"slug": "inline-image", "title": "مقاله تصویری", "excerpt": "خلاصه آزمون", "body": markup}
+    article = client.post("/api/admin/articles", headers=headers, json=payload)
+    assert article.status_code == 201
+    assert client.get("/api/articles/inline-image").json()["body"] == markup
+    assert client.put(f"/api/admin/articles/{article.json()['id']}", headers=headers, json={**payload, "body": markup + '<p>ویرایش</p>'}).status_code == 200
+    assert (uploads / Path(url).name).exists()

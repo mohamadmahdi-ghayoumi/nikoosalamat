@@ -633,6 +633,14 @@ if ($method === 'PUT' && preg_match('#^/api/admin/pages/(\d+)$#', $path, $matche
     respond(contentRow($statement->fetch()));
 }
 
+if ($method === 'POST' && $path === '/api/admin/article-images') {
+    requireAdmin($db);
+    $payload = body();
+    $data = (string) ($payload['image_data'] ?? '');
+    if (!$data || strlen($data) > 4194400) { fail('تصویر معتبر تا ۳ مگابایت انتخاب کنید', 422); }
+    respond(['url' => saveImage($data, $uploadDir)], 201);
+}
+
 if ($method === 'GET' && $path === '/api/admin/articles') {
     requireAdmin($db);
     respond(array_map('contentRow', $db->query('SELECT * FROM articles ORDER BY created_at DESC, id DESC')->fetchAll()));

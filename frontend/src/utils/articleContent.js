@@ -1,8 +1,9 @@
 import DOMPurify from 'dompurify'
+import { cleanTextStyle, imageAlignment, imageStyle, imageWidth, safeImageSource } from './articleFormatting.js'
 
-const tags = ['p', 'br', 'strong', 'b', 'em', 'i', 'u', 's', 'ul', 'ol', 'li', 'h2', 'h3', 'h4', 'blockquote', 'a', 'pre', 'code', 'hr', 'sub', 'sup']
-const attributes = ['href', 'title', 'dir', 'start']
-const richPattern = /<\/?(?:html|body|div|p|span|h[1-6]|strong|b|em|i|u|s|ul|ol|li|blockquote|br|a|pre|code)\b/i
+const tags = ['p', 'br', 'span', 'strong', 'b', 'em', 'i', 'u', 's', 'ul', 'ol', 'li', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'a', 'img', 'pre', 'code', 'hr', 'sub', 'sup']
+const attributes = ['href', 'title', 'dir', 'start', 'src', 'alt', 'width', 'data-align', 'style', 'loading', 'decoding']
+const richPattern = /<\/?(?:html|body|div|p|span|h[1-6]|strong|b|em|i|u|s|ul|ol|li|blockquote|br|a|img|pre|code)\b/i
 const digits = (value) => value.replace(/[۰-۹٠-٩]/g, (digit) => '۰۱۲۳۴۵۶۷۸۹'.includes(digit) ? '۰۱۲۳۴۵۶۷۸۹'.indexOf(digit) : '٠١٢٣٤٥٦٧٨٩'.indexOf(digit))
 const bullet = /^\s*(?:[•●◦▪▫◆◇‣⁃\uf076\uf0b7]|[-*]|o(?=\s))\s+/
 const numbered = /^\s*([0-9۰-۹٠-٩]+)[.)]\s+/
@@ -104,22 +105,44 @@ export function articleHTML(value) {
   for (const paragraph of [...root.querySelectorAll('p')]) {
     const heading = paragraph.className.match(/MsoHeading([1-6])|MsoTitle/i)
     if (heading) {
-      const replacement = document.createElement(`h${Math.min(4, Math.max(2, Number(heading[1]) || 2))}`)
+      const replacement = document.createElement(`h${Math.min(6, Math.max(2, Number(heading[1]) || 2))}`)
       replacement.append(...paragraph.childNodes)
       paragraph.replaceWith(replacement)
     }
   }
-  for (const heading of [...root.querySelectorAll('h1,h5,h6')]) {
-    const replacement = document.createElement(heading.tagName === 'H1' ? 'h2' : 'h4')
+  for (const heading of [...root.querySelectorAll('h1')]) {
+    const replacement = document.createElement('h2')
     replacement.append(...heading.childNodes)
     heading.replaceWith(replacement)
   }
   for (const block of [...root.querySelectorAll('div')].reverse()) {
-    if ([...block.children].some((child) => /^(P|DIV|UL|OL|H[2-4]|BLOCKQUOTE)$/.test(child.tagName))) block.replaceWith(...block.childNodes)
+    if ([...block.children].some((child) => /^(P|DIV|UL|OL|H[2-6]|BLOCKQUOTE)$/.test(child.tagName))) block.replaceWith(...block.childNodes)
     else {
       const paragraph = document.createElement('p')
       paragraph.append(...block.childNodes)
       block.replaceWith(paragraph)
+    }
+  }
+  for (const element of [...root.querySelectorAll('*')]) {
+    const safeStyle = cleanTextStyle(element)
+    if (element.tagName !== 'IMG') {
+      element.removeAttribute('style')
+      if (safeStyle) element.setAttribute('style', safeStyle)
+    }
+    if (element.tagName === 'IMG') {
+      const src = safeImageSource(element.getAttribute('src'))
+      if (!src) { element.remove(); continue }
+      element.setAttribute('src', src)
+      const width = imageWidth(element.getAttribute('width') || '100%')
+      const align = imageAlignment(element.getAttribute('data-align'))
+      element.setAttribute('width', width)
+      element.setAttribute('data-align', align)
+      element.setAttribute('alt', (element.getAttribute('alt') || '').slice(0, 300))
+      element.setAttribute('style', imageStyle(width, align))
+      element.setAttribute('loading', 'lazy')
+      element.setAttribute('decoding', 'async')
+    } else {
+      for (const attribute of ['src', 'width', 'data-align', 'loading', 'decoding']) element.removeAttribute(attribute)
     }
   }
   return DOMPurify.sanitize(root.innerHTML, { ALLOWED_TAGS: tags, ALLOWED_ATTR: attributes, ALLOW_DATA_ATTR: false, ALLOW_ARIA_ATTR: false })
@@ -128,6 +151,6 @@ export function articleHTML(value) {
 export function articlePlainText(value) {
   const html = articleHTML(value)
   const container = document.createElement('div')
-  container.innerHTML = html.replace(/<\/(?:p|li|h[2-4]|blockquote)>/g, '$& ')
+  container.innerHTML = html.replace(/<\/(?:p|li|h[2-6]|blockquote)>/g, '$& ')
   return container.textContent || ''
 }

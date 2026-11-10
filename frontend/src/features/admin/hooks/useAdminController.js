@@ -258,6 +258,7 @@ export default function useAdminController(showNotice) {
     }
   }
   return {
+    token,
     checking,
     admin,
     busy,

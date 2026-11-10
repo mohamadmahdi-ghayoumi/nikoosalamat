@@ -33,6 +33,7 @@ from .schemas import (
     ContentPageUpdateIn,
     Article,
     ArticleWriteIn,
+    ArticleImageIn,
     AdminLoginIn,
     AdminMeOut,
     AdminSessionOut,
@@ -314,6 +315,11 @@ def update_page(page_id: int, payload: ContentPageUpdateIn, _: dict = Depends(re
     if (new_image or payload.remove_image) and current["image_url"] != image_url:
         delete_uploaded_image(current["image_url"])
     return ContentPage(**fetch_one("SELECT * FROM content_pages WHERE id = ?", (page_id,)))
+
+
+@app.post("/api/admin/article-images", status_code=status.HTTP_201_CREATED)
+def upload_article_image(payload: ArticleImageIn, _: dict = Depends(require_admin)) -> dict:
+    return {"url": save_image(payload.image_data)}
 
 
 @app.get("/api/admin/articles", response_model=list[Article])
