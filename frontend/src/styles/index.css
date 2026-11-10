@@ -35,4 +35,5 @@
 @import './responsive/mobile-density.css';
 @import './responsive/homepage-review.css';
 @import './articles-editor.css';
+@import './pages/header-artwork.css';
 @import './typography.css';

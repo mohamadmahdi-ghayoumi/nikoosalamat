@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import { getArticles } from '../../../services/api/articles.js'
 import ArticleCard from '../components/ArticleCard.jsx'
+import PageHero from '../../../components/ui/PageHero.jsx'
 
 export default function ArticlesPage({ navigate }) {
   const [articles, setArticles] = useState([])
@@ -16,11 +17,7 @@ export default function ArticlesPage({ navigate }) {
 
   return (
     <main className="inner-page magazine-page" id="top">
-      <header className="magazine-heading section">
-        <span className="eyebrow">دانش و تجربه، از علم تا مزرعه</span>
-        <h1>مجله نیکو سلامت</h1>
-        <p>مطالب آموزشی و علمی درباره سلامت دام، مراقبت، بهداشت و بهره‌وری پایدار.</p>
-      </header>
+      <PageHero artwork="articles" eyebrow="دانش و تجربه، از علم تا مزرعه" title="مجله نیکو سلامت" description="مطالب آموزشی و علمی درباره سلامت دام، مراقبت، بهداشت و بهره‌وری پایدار." />
       <section className="section articles-section">
         {loading ? (
           <div className="content-loading">در حال دریافت مقالات…</div>

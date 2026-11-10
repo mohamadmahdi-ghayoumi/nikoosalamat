@@ -7,6 +7,7 @@ export default function SolutionsPage({ navigate }) {
   return (
     <main className="inner-page" id="top">
       <PageHero
+        artwork="solutions"
         eyebrow="از علم تا مزرعه"
         title="راهکارهای مراقبت از سلامت دام"
         description="موضوع موردنظر را انتخاب کنید تا به معرفی راهکارها و اطلاعات مرتبط برسید."

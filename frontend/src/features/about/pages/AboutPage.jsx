@@ -26,6 +26,7 @@ export default function AboutPage({ navigate }) {
   return (
     <main className="inner-page" id="top">
       <PageHero
+        artwork="about"
         eyebrow="درباره شرکت حال نیکو سلامت"
         title="همراه سلامت و بهره‌وری، از علم تا مزرعه"
         description="توسعه راهکارهای تخصصی برای دامپروری، پرورش اسب و کشاورزی با تکیه بر دانش، تجربه و تعهد."

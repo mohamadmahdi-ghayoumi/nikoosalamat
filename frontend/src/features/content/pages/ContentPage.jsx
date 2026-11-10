@@ -44,7 +44,7 @@ export default function ContentPageView({ slug, navigate }) {
 
   return (
     <main className="inner-page content-page" id="top">
-      <PageHero eyebrow={page.eyebrow} title={page.title} description={page.summary} />
+      <PageHero artwork="solutions" eyebrow={page.eyebrow} title={page.title} description={page.summary} />
       <article className="section editorial-content">
         {page.image_url && (
           <img className="editorial-cover" src={resolveMediaUrl(page.image_url)} alt={page.title} />

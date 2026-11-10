@@ -11,6 +11,7 @@ export default function ProductsPage({ products, navigate }) {
   return (
     <main className="inner-page products-page" id="top">
       <PageHero
+        artwork="products"
         title="حال نیکو سلامت"
         description="راهکار های تخصصی به منظور ارتقاء بهره وری دام پروری ، کشاورزی و پرورش اسب"
       />

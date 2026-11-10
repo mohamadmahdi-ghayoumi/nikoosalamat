@@ -8,6 +8,7 @@ export default function ContactPage({ showNotice }) {
   return (
     <main className="inner-page" id="top">
       <PageHero
+        artwork="contact"
         eyebrow="ارتباط با ما"
         title="با حال نیکو سلامت در تماس باشید"
         description="برای دریافت اطلاعات محصولات، استعلام قیمت، ثبت سفارش یا همکاری در توزیع با ما ارتباط بگیرید."
