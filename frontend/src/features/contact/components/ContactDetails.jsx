@@ -16,7 +16,7 @@ export default function ContactDetails() {
             <Icon name="phone" />
           </span>
           <div>
-            <small>مدیر فروش</small>
+            <small>مهندس محمدباقر</small>
             <strong>۰۹۱۲۴۲۸۳۸۳۴</strong>
           </div>
         </a>

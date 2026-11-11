@@ -82,7 +82,7 @@ export default function ContactForm({ showNotice }) {
       </label>
       <div className="form-row">
         <label>
-          شماره موبایل
+          <span className="contact-field-label">شماره موبایل</span>
           <input
             name="mobile"
             type="tel"
@@ -104,7 +104,9 @@ export default function ContactForm({ showNotice }) {
           {errorFor('mobile')}
         </label>
         <label>
-          ایمیل <small>(اختیاری)</small>
+          <span className="contact-field-label">
+            ایمیل <small>(اختیاری)</small>
+          </span>
           <input
             name="email"
             type="email"

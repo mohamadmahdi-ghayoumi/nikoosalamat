@@ -45,6 +45,9 @@ jobs:
           cp .deploy/cpanel-php/app/support-worker.php release/app/support-worker.php
           cp .deploy/cpanel-php/app/support-identify.php release/app/support-identify.php
           cp backend/app/support_schema.sql release/app/support-schema.sql
+          cp .deploy/cpanel-php/app/faqs.php release/app/faqs.php
+          cp backend/app/faq_schema.sql release/app/faq-schema.sql
+          cp backend/app/faq_seed.json release/app/faq-seed.json
 
       - name: Package release
         run: |

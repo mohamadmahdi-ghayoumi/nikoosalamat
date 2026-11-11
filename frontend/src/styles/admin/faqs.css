@@ -1,0 +1,63 @@
+.faq-admin > .admin-layout {
+  margin-top: 24px;
+}
+.faq-admin .admin-section-intro p {
+  font-size: 13px;
+  line-height: 2;
+  margin-bottom: 0;
+}
+.faq-admin-notice {
+  padding: 14px;
+  background: #edf6ef;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  line-height: 1.9;
+  font-size: 13px;
+}
+.faq-admin-list {
+  display: grid;
+  gap: 16px;
+}
+.faq-admin-list article {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+  min-width: 0;
+}
+.faq-admin-list small {
+  color: var(--wine);
+  font-size: 11px;
+}
+.faq-admin-list h3 {
+  font-size: 16px;
+  margin: 8px 0;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.faq-admin-list p {
+  font-size: 13px;
+  line-height: 2;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.faq-admin .admin-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.faq-admin .admin-check input {
+  width: 18px;
+  min-height: 18px;
+}
+.faq-admin .admin-list-head {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.faq-admin .admin-list-head .button {
+  font-size: 12px;
+  padding: 8px 12px;
+  min-height: 40px;
+}
+.faq-admin button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -107,6 +107,16 @@
   font-size: 13px;
   font-weight: 400;
 }
+.contact-form .contact-field-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 5px;
+  min-height: 23px;
+}
+.contact-form .form-row {
+  align-items: start;
+}
 .contact-form input,
 .contact-form textarea {
   width: 100%;
@@ -215,12 +225,29 @@
   border-radius: 50%;
   font-size: 20px;
   font-weight: 400;
-  transition: transform 0.2s;
+  font-family: Arial, sans-serif;
+  font-style: normal;
+  line-height: 1;
+  direction: ltr;
 }
-.faq-list details[open] summary span {
-  transform: rotate(45deg);
+.faq-list .faq-toggle::before {
+  content: '+';
+}
+.faq-list details[open] .faq-toggle::before {
+  content: '−';
+}
+.faq-list .faq-toggle {
+  transform: none;
+}
+.faq-section h2 em {
+  font-style: normal;
+}
+.faq-list summary:focus-visible {
+  outline: 2px solid var(--wine);
+  outline-offset: -4px;
 }
 .faq-list details p {
+  white-space: pre-wrap;
   margin: 0;
   padding: 0 23px 23px;
   color: #505b54;

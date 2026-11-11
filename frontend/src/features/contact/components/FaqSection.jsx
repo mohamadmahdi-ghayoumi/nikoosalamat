@@ -1,8 +1,30 @@
-import React, { useState } from 'react'
-import { faqItems } from '../data/faq.js'
+import React, { useEffect, useState } from 'react'
+import { getFaqs } from '../../../services/api/faqs.js'
 
 export default function FaqSection() {
   const [showAll, setShowAll] = useState(false)
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [retry, setRetry] = useState(0)
+  useEffect(() => {
+    let active = true
+    setLoading(true)
+    setError('')
+    getFaqs()
+      .then((data) => {
+        if (active) setItems(data)
+      })
+      .catch(() => {
+        if (active) setError('دریافت سؤالات انجام نشد؛ دوباره تلاش کنید.')
+      })
+      .finally(() => {
+        if (active) setLoading(false)
+      })
+    return () => {
+      active = false
+    }
+  }, [retry])
   return (
     <section className="faq-section" id="faq">
       <div className="section faq-inner">
@@ -16,17 +38,30 @@ export default function FaqSection() {
           </div>
         </div>
         <div className="faq-list" id="faq-list">
-          {(showAll ? faqItems : faqItems.slice(0, 5)).map(([question, answer], index) => (
-            <details key={question} open={index === 0}>
-              <summary>
-                {question}
-                <span aria-hidden="true">+</span>
-              </summary>
-              <p>{answer}</p>
-            </details>
-          ))}
+          {loading ? (
+            <p role="status">در حال دریافت سؤالات…</p>
+          ) : error ? (
+            <div role="alert">
+              <p>{error}</p>
+              <button className="button outline" onClick={() => setRetry((value) => value + 1)}>
+                تلاش دوباره
+              </button>
+            </div>
+          ) : !items.length ? (
+            <p>هنوز سؤالی در این بخش منتشر نشده است؛ از فرم تماس برای ما پیام بفرستید.</p>
+          ) : (
+            (showAll ? items : items.slice(0, 5)).map(({ id, question, answer }, index) => (
+              <details key={id} open={index === 0}>
+                <summary>
+                  {question}
+                  <span className="faq-toggle" aria-hidden="true" />
+                </summary>
+                <p>{answer}</p>
+              </details>
+            ))
+          )}
         </div>
-        {faqItems.length > 5 && (
+        {!loading && !error && items.length > 5 && (
           <button
             className="button outline faq-more"
             type="button"

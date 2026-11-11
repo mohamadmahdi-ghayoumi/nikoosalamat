@@ -465,6 +465,9 @@ def sitemap() -> Response:
 from .support import install as install_support
 
 install_support(app, require_admin)
+from .faqs import install as install_faqs
+
+install_faqs(app, require_admin)
 
 
 @app.get("/{frontend_path:path}", include_in_schema=False)

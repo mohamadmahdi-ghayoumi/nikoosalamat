@@ -176,11 +176,13 @@ try {
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
 require_once __DIR__ . '/app/support.php';
+require_once __DIR__ . '/app/faqs.php';
 try {
+    faqRoutes($db, $path, $method);
     supportRoutes($db, $config, $path, $method);
 } catch (Throwable $error) {
     // Do not leak message contents, credentials or SQL on storage/network errors.
-    fail('پشتیبانی موقتاً در دسترس نیست؛ کمی بعد دوباره تلاش کنید', 503);
+    fail('سرویس موقتاً در دسترس نیست؛ کمی بعد دوباره تلاش کنید', 503);
 }
 
 $productColumns = $db->query('PRAGMA table_info(products)')->fetchAll(PDO::FETCH_COLUMN, 1);

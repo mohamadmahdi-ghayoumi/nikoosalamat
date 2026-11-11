@@ -41,6 +41,9 @@ def php_site(tmp_path, monkeypatch):
     database.execute('UPDATE admins SET password_hash=?', (fixture_hash,))
     shutil.copyfile(root / ".deploy/cpanel-php/api.php", site / "api.php")
     shutil.copyfile(root / ".deploy/cpanel-php/app/support.php", app_dir / "support.php")
+    shutil.copyfile(root / '.deploy/cpanel-php/app/faqs.php', app_dir / 'faqs.php')
+    shutil.copyfile(root / 'backend/app/faq_schema.sql', app_dir / 'faq-schema.sql')
+    shutil.copyfile(root / 'backend/app/faq_seed.json', app_dir / 'faq-seed.json')
     shutil.copyfile(root / "backend/app/support_schema.sql", app_dir / "support-schema.sql")
     secret = "local_php_webhook_secret_" + "a" * 32
     # Test-generated fixture, never copied from private server config.
