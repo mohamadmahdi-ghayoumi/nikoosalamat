@@ -70,7 +70,7 @@ export default function ArticlesPage({ navigate, currentSearch = '' }) {
         artwork="articles"
         eyebrow="دانش و تجربه، از علم تا مزرعه"
         title="مجله نیکو سلامت"
-        description="مطالب آموزشی و علمی درباره سلامت دام، مراقبت، بهداشت و بهره‌وری پایدار."
+        description="نگاه علمی به سلامت، بهداشت، مراقبت و توسعه پایدار"
       />
       <div className="magazine-navigation section">
         <a

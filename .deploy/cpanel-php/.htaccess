@@ -4,6 +4,11 @@ RewriteEngine On
 # Temporary: prevent search engines from indexing the site before launch.
 <IfModule mod_headers.c>
   Header set X-Robots-Tag "noindex, nofollow, noarchive, nosnippet, noimageindex"
+  # SPA entry pages must revalidate after a release, including rewritten routes.
+  # Versioned JS/CSS and images keep their normal caching behavior.
+  <Files "index.html">
+    Header always set Cache-Control "no-cache, max-age=0, must-revalidate"
+  </Files>
 </IfModule>
 
 # Never expose application data or configuration files.
