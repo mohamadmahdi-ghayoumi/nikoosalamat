@@ -13,6 +13,9 @@ RewriteRule ^config\.php$ - [F,L,NC]
 # Retire the predictable login URL without revealing the replacement.
 RewriteRule ^admin(?:/|$) - [R=404,L,NC]
 
+# The magazine index moved; preserve all existing article detail URLs.
+RewriteRule ^articles/?$ /mag/ [R=301,L,NC]
+
 # Serve real assets and uploaded images directly.
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d

@@ -334,9 +334,9 @@ def create_article(payload: ArticleWriteIn, _: dict = Depends(require_admin)) ->
     image_url = save_image(payload.image_data)
     try:
         article_id = execute(
-            """INSERT INTO articles (slug, title, excerpt, body, image_url, published)
-            VALUES (?, ?, ?, ?, ?, ?)""",
-            (payload.slug, payload.title.strip(), payload.excerpt.strip(), payload.body.strip(), image_url, int(payload.published)),
+            """INSERT INTO articles (slug, title, excerpt, body, image_url, published, category)
+            VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            (payload.slug, payload.title.strip(), payload.excerpt.strip(), payload.body.strip(), image_url, int(payload.published), payload.category or 'general'),
         )
     except sqlite3.IntegrityError:
         delete_uploaded_image(image_url)
@@ -354,8 +354,8 @@ def update_article(article_id: int, payload: ArticleWriteIn, _: dict = Depends(r
     try:
         execute(
             """UPDATE articles SET slug = ?, title = ?, excerpt = ?, body = ?, image_url = ?,
-            published = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?""",
-            (payload.slug, payload.title.strip(), payload.excerpt.strip(), payload.body.strip(), image_url, int(payload.published), article_id),
+            published = ?, category = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?""",
+            (payload.slug, payload.title.strip(), payload.excerpt.strip(), payload.body.strip(), image_url, int(payload.published), payload.category if payload.category is not None else current['category'], article_id),
         )
     except sqlite3.IntegrityError:
         delete_uploaded_image(new_image)
@@ -444,7 +444,7 @@ if (FRONTEND_DIST / "images").exists():
 @app.head("/sitemap.xml", include_in_schema=False)
 def sitemap() -> Response:
     root = Element("urlset", xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
-    urls = [(path, None) for path in ["/", "/products", "/articles", "/solutions", "/about", "/contact"]]
+    urls = [(path, None) for path in ["/", "/products", "/mag/", "/solutions", "/about", "/contact"]]
     urls.extend((f"/products/{row['id']}", None) for row in fetch_all("SELECT id FROM products ORDER BY id"))
     for table, prefix in [("articles", "/articles/"), ("content_pages", "/pages/")]:
         urls.extend((prefix + quote(row["slug"], safe=""), row["updated_at"]) for row in fetch_all(f"SELECT slug, updated_at FROM {table} WHERE published = 1 ORDER BY id"))
@@ -469,6 +469,9 @@ install_support(app, require_admin)
 
 @app.get("/{frontend_path:path}", include_in_schema=False)
 def frontend_app(frontend_path: str) -> FileResponse:
+    if frontend_path in ('articles', 'articles/'):
+        from fastapi.responses import RedirectResponse
+        return RedirectResponse('/mag/', status_code=301)
     index = FRONTEND_DIST / "index.html"
     if not index.exists():
         raise HTTPException(status_code=404, detail="ابتدا فرانت‌اند را build کنید")

@@ -227,6 +227,7 @@ export default function useAdminController(showNotice) {
         title: String(data.get('title')).trim(),
         excerpt: String(data.get('excerpt')).trim(),
         body: articleHTML(String(data.get('body') || '').trim()),
+        category: String(data.get('category') || 'general'),
         published: data.get('published') === 'on',
         image_data: await readImageFile(data.get('image')),
         remove_image: data.get('remove_image') === 'on',

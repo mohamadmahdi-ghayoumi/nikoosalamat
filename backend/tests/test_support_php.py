@@ -33,6 +33,12 @@ def php_site(tmp_path, monkeypatch):
     monkeypatch.setenv("SOVARA_ADMIN_USERNAME", "support-php-test")
     monkeypatch.setenv("SOVARA_ADMIN_PASSWORD", "local-php-only-password")
     database.init_database()
+    # Fast hash only in this disposable fixture; production hashing is unchanged.
+    # The PHP API verifies the configured password on every non-chat request.
+    fixture_hash = subprocess.check_output([
+        php, '-n', '-r', "echo password_hash('local-php-only-password', PASSWORD_BCRYPT, ['cost'=>4]);",
+    ], text=True, timeout=45).strip()
+    database.execute('UPDATE admins SET password_hash=?', (fixture_hash,))
     shutil.copyfile(root / ".deploy/cpanel-php/api.php", site / "api.php")
     shutil.copyfile(root / ".deploy/cpanel-php/app/support.php", app_dir / "support.php")
     shutil.copyfile(root / "backend/app/support_schema.sql", app_dir / "support-schema.sql")

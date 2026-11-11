@@ -1,6 +1,7 @@
 import React from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import { resolveMediaUrl } from '../../../services/api/client.js'
+import { magazineCategoryLabel } from '../../articles/data/magazineCategories.js'
 
 export default function ArticleList({ articles, setEditingArticle, removeArticle }) {
   return (
@@ -22,7 +23,7 @@ export default function ArticleList({ articles, setEditingArticle, removeArticle
               </span>
             )}
             <div>
-              <span>{article.published ? 'منتشرشده' : 'پیش‌نویس'}</span>
+              <span>{article.published ? 'منتشرشده' : 'پیش‌نویس'} · {magazineCategoryLabel(article.category)}</span>
               <h3>{article.title}</h3>
               <p>{article.excerpt}</p>
             </div>

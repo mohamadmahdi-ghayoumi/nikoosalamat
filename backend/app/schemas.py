@@ -1,4 +1,5 @@
 import json
+from typing import Literal
 from .text import normalize_mobile
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
@@ -121,6 +122,9 @@ class ContentPageUpdateIn(BaseModel):
     remove_image: bool = False
 
 
+MagazineCategory = Literal['general', 'hoof-trimming', 'diseases', 'scientific', 'sheep-goats', 'agriculture', 'horses', 'human']
+
+
 class Article(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -129,6 +133,7 @@ class Article(BaseModel):
     title: str
     excerpt: str
     body: str
+    category: MagazineCategory = 'general'
     image_url: str | None = None
     published: bool
     created_at: str
@@ -144,6 +149,7 @@ class ArticleWriteIn(BaseModel):
     title: str = Field(min_length=2, max_length=180)
     excerpt: str = Field(min_length=2, max_length=500)
     body: str = Field(min_length=2, max_length=30_000)
+    category: MagazineCategory | None = None
     published: bool = True
     image_data: str | None = None
     remove_image: bool = False

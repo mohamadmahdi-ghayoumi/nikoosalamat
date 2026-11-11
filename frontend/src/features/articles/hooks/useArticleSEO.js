@@ -7,7 +7,7 @@ export default function useArticleSEO(article) {
     if (!article) return
     const cleanups = []
     const previousTitle = document.title
-    const title = `${article.title} | مجله حال نیکو سلامت`
+    const title = `${article.title} | مجله نیکو سلامت`
     const description = articlePlainText(article.excerpt || '').trim()
     const url = new URL(`/articles/${encodeURIComponent(article.slug)}`, window.location.origin).href
     const update = (selector, tag, attributes) => {
@@ -47,7 +47,7 @@ export default function useArticleSEO(article) {
     document.head.append(schema)
     const breadcrumb = document.createElement('script')
     breadcrumb.type = 'application/ld+json'
-    breadcrumb.textContent = JSON.stringify({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [['خانه', '/'], ['مقالات', '/articles'], [article.title, `/articles/${encodeURIComponent(article.slug)}`]].map(([name, path], index) => ({ '@type': 'ListItem', position: index + 1, name, item: new URL(path, window.location.origin).href })) }).replace(/</g, '\\u003c')
+    breadcrumb.textContent = JSON.stringify({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [['خانه', '/'], ['مجله نیکو سلامت', '/mag/'], [article.title, `/articles/${encodeURIComponent(article.slug)}`]].map(([name, path], index) => ({ '@type': 'ListItem', position: index + 1, name, item: new URL(path, window.location.origin).href })) }).replace(/</g, '\\u003c')
     document.head.append(breadcrumb)
     return () => {
       document.title = previousTitle

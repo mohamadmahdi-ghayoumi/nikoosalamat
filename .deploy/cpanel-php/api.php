@@ -221,6 +221,24 @@ $db->exec(
     )'
 );
 
+$articleColumns = $db->query('PRAGMA table_info(articles)')->fetchAll(PDO::FETCH_COLUMN, 1);
+if (!in_array('category', $articleColumns, true)) {
+    try {
+        $db->exec("ALTER TABLE articles ADD COLUMN category TEXT NOT NULL DEFAULT 'general'");
+    } catch (PDOException $error) {
+        $articleColumns = $db->query('PRAGMA table_info(articles)')->fetchAll(PDO::FETCH_COLUMN, 1);
+        if (!in_array('category', $articleColumns, true)) throw $error;
+    }
+}
+
+function magazineCategory(mixed $category): string
+{
+    if (!is_string($category) || !in_array($category, ['general', 'hoof-trimming', 'diseases', 'scientific', 'sheep-goats', 'agriculture', 'horses', 'human'], true)) {
+        fail('دسته‌بندی مجله معتبر نیست', 422);
+    }
+    return $category;
+}
+
 $seedPages = [
     ['foot-and-mouth', 'راهکارهای مراقبت', 'تب برفکی و مراقبت دهانی دام', 'اطلاعات محصولات و ارتباط با تیم مشاوره', "این بخش به معرفی محصولات مراقبت دهانی دام و اطلاعات مرتبط با تب برفکی اختصاص دارد. برای دریافت مشخصات محصول و بررسی تناسب آن با نیاز دامداری، با تیم نیکو سلامت در تماس باشید.\n\nتشخیص بیماری و برنامه درمان باید توسط دامپزشک انجام شود؛ اطلاعات این صفحه جایگزین معاینه و توصیه دامپزشک نیست."],
     ['digital-dermatitis', 'مراقبت از سُم', 'درماتیت انگشتی', 'آشنایی با راهکارهای مراقبت از ناحیه انگشتان دام', "در این بخش با محصولات و اطلاعات مرتبط با مراقبت از پوست ناحیه انگشتان و سُم دام آشنا می‌شوید. برای دریافت مشخصات و راهنمای انتخاب محصولات، با تیم نیکو سلامت تماس بگیرید.\n\nبررسی علت ضایعات و انتخاب روش درمان به ارزیابی دامپزشک نیاز دارد."],
@@ -324,7 +342,7 @@ if (in_array($method, ['GET', 'HEAD'], true) && $path === '/sitemap.xml') {
     header('Content-Type: application/xml; charset=utf-8');
     $origin = 'https://nikoosalamat.ir';
     $urls = [];
-    foreach (['/', '/products', '/articles', '/solutions', '/about', '/contact'] as $url) { $urls[] = [$url, null]; }
+    foreach (['/', '/products', '/mag/', '/solutions', '/about', '/contact'] as $url) { $urls[] = [$url, null]; }
     foreach ($db->query('SELECT id FROM products ORDER BY id')->fetchAll() as $row) { $urls[] = ['/products/' . (int) $row['id'], null]; }
     foreach (['articles' => '/articles/', 'content_pages' => '/pages/'] as $table => $prefix) {
         foreach ($db->query("SELECT slug, updated_at FROM $table WHERE published = 1 ORDER BY id")->fetchAll() as $row) {
@@ -685,6 +703,7 @@ if ($method === 'POST' && $path === '/api/admin/articles') {
     $title = trim((string) ($payload['title'] ?? ''));
     $excerpt = trim((string) ($payload['excerpt'] ?? ''));
     $articleBody = trim((string) ($payload['body'] ?? ''));
+    $articleCategory = magazineCategory($payload['category'] ?? 'general');
     if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug)
         || stringLength($title) < 2 || stringLength($title) > 180
         || stringLength($excerpt) < 2 || stringLength($excerpt) > 500
@@ -693,8 +712,8 @@ if ($method === 'POST' && $path === '/api/admin/articles') {
     }
     $imageUrl = saveImage(isset($payload['image_data']) ? (string) $payload['image_data'] : null, $uploadDir);
     try {
-        $statement = $db->prepare('INSERT INTO articles (slug, title, excerpt, body, image_url, published) VALUES (?, ?, ?, ?, ?, ?)');
-        $statement->execute([$slug, $title, $excerpt, $articleBody, $imageUrl, !empty($payload['published']) ? 1 : 0]);
+        $statement = $db->prepare('INSERT INTO articles (slug, title, excerpt, body, image_url, published, category) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        $statement->execute([$slug, $title, $excerpt, $articleBody, $imageUrl, !empty($payload['published']) ? 1 : 0, $articleCategory]);
     } catch (PDOException $error) {
         removeUploadedImage($imageUrl, $uploadDir);
         fail('این شناسه مقاله قبلاً استفاده شده است', 409);
@@ -718,6 +737,7 @@ if ($method === 'PUT' && preg_match('#^/api/admin/articles/(\d+)$#', $path, $mat
     $title = trim((string) ($payload['title'] ?? ''));
     $excerpt = trim((string) ($payload['excerpt'] ?? ''));
     $articleBody = trim((string) ($payload['body'] ?? ''));
+    $articleCategory = magazineCategory($payload['category'] ?? $current['category']);
     if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug)
         || stringLength($title) < 2 || stringLength($title) > 180
         || stringLength($excerpt) < 2 || stringLength($excerpt) > 500
@@ -728,9 +748,9 @@ if ($method === 'PUT' && preg_match('#^/api/admin/articles/(\d+)$#', $path, $mat
     $imageUrl = $newImage ?: (!empty($payload['remove_image']) ? null : $current['image_url']);
     try {
         $statement = $db->prepare(
-            'UPDATE articles SET slug = ?, title = ?, excerpt = ?, body = ?, image_url = ?, published = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
+            'UPDATE articles SET slug = ?, title = ?, excerpt = ?, body = ?, image_url = ?, published = ?, category = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
         );
-        $statement->execute([$slug, $title, $excerpt, $articleBody, $imageUrl, !empty($payload['published']) ? 1 : 0, $articleId]);
+        $statement->execute([$slug, $title, $excerpt, $articleBody, $imageUrl, !empty($payload['published']) ? 1 : 0, $articleCategory, $articleId]);
     } catch (PDOException $error) {
         removeUploadedImage($newImage, $uploadDir);
         fail('این شناسه مقاله قبلاً استفاده شده است', 409);

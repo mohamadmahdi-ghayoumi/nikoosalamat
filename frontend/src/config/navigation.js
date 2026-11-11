@@ -23,8 +23,9 @@ export const navigationItems = [
     ],
   },
   {
-    label: 'مقالات',
-    path: '/articles',
+    label: 'مجله نیکو سلامت',
+    path: '/mag/',
+    activePaths: ['/mag', '/articles'],
   },
   {
     label: 'راهکارها',

@@ -12,12 +12,12 @@ export default function NavigationItem({
   depth = 0,
 }) {
   const hasChildren = Boolean(item.children?.length)
-  const itemPath = item.path.split(/[?#]/)[0]
+  const itemPath = item.path.split(/[?#]/)[0].replace(/\/$/, '') || '/'
   const isActive =
     depth === 0 &&
     (currentPath === itemPath ||
       (itemPath !== '/' && currentPath.startsWith(`${itemPath}/`)) ||
-      item.activePaths?.includes(currentPath))
+      item.activePaths?.some((path) => currentPath === path || currentPath.startsWith(`${path}/`)))
   const submenuId = useId()
   const path = [...parentPath, item.label]
   const expanded = hasChildren && path.every((label, index) => openPath[index] === label)

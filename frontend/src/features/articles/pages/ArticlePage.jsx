@@ -36,7 +36,7 @@ export default function ArticlePage({ slug, navigate }) {
         <span>۴۰۴</span>
         <h1>مقاله پیدا نشد</h1>
         <p>{error}</p>
-        <button className="button primary" onClick={(event) => navigate(event, '/articles')}>
+        <button className="button primary" onClick={(event) => navigate(event, '/mag/')}>
           بازگشت به مقالات
         </button>
       </main>
@@ -45,11 +45,11 @@ export default function ArticlePage({ slug, navigate }) {
   return (
     <main className="inner-page article-detail" id="top">
       <header className="article-heading">
-        <nav className="article-breadcrumb" aria-label="مسیر مقاله"><a href="/" onClick={(event) => navigate(event, '/')}>خانه</a><span aria-hidden="true">/</span><a href="/articles" onClick={(event) => navigate(event, '/articles')}>مقالات</a><span aria-hidden="true">/</span><span aria-current="page">{article.title}</span></nav>
+        <nav className="article-breadcrumb" aria-label="مسیر مقاله"><a href="/" onClick={(event) => navigate(event, '/')}>خانه</a><span aria-hidden="true">/</span><a href="/mag/" onClick={(event) => navigate(event, '/mag/')}>مجله نیکو سلامت</a><span aria-hidden="true">/</span><span aria-current="page">{article.title}</span></nav>
         <a
           className="article-back"
-          href="/articles"
-          onClick={(event) => navigate(event, '/articles')}
+          href="/mag/"
+          onClick={(event) => navigate(event, '/mag/')}
         >
           مجله نیکو سلامت <Icon name="arrow" size={16} />
         </a>
@@ -72,8 +72,8 @@ export default function ArticlePage({ slug, navigate }) {
           <div className="article-ending">
             <a
               className="button outline"
-              href="/articles"
-              onClick={(event) => navigate(event, '/articles')}
+              href="/mag/"
+              onClick={(event) => navigate(event, '/mag/')}
             >
               مقاله‌های بیشتر <Icon name="arrow" size={18} />
             </a>

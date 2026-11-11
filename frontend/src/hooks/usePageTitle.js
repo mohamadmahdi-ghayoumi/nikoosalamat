@@ -39,7 +39,7 @@ export default function usePageTitle(currentPath) {
     let canonical = document.head.querySelector('link[rel="canonical"]')
     if (isPublic) {
       if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.append(canonical) }
-      canonical.href = new URL(currentPath, window.location.origin).href
+      canonical.href = new URL(currentPath === '/mag' || currentPath === '/articles' ? '/mag/' : currentPath, window.location.origin).href
     } else canonical?.remove()
     for (const [property, content] of Object.entries({ 'og:title': document.title, 'og:description': description, 'og:type': 'website', 'og:url': new URL(currentPath, window.location.origin).href, 'og:image': new URL('/images/hns-logo.png', window.location.origin).href, 'og:locale': 'fa_IR', 'og:site_name': 'حال نیکو سلامت' })) setMeta(`meta[property="${property}"]`, { property, content })
   }, [currentPath])

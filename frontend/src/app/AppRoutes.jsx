@@ -47,7 +47,7 @@ export default function AppRoutes({
       <SearchPage query={new URLSearchParams(currentSearch).get('q') || ''} navigate={navigate} />
     )
   if (currentPath === '/solutions') return <SolutionsPage navigate={navigate} />
-  if (currentPath === '/articles') return <ArticlesPage navigate={navigate} />
+  if (currentPath === '/mag' || currentPath === '/articles') return <ArticlesPage navigate={navigate} currentSearch={currentSearch} />
   if (currentPath.startsWith('/articles/'))
     return <ArticlePage slug={currentPath.slice('/articles/'.length)} navigate={navigate} />
   if (currentPath.startsWith('/pages/'))

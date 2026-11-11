@@ -2,6 +2,7 @@ import React from 'react'
 
 const Icon = ({ name, size = 22 }) => {
   const paths = {
+    calendar: <><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M16 3v4M8 3v4M3 11h18" /></>,
     play: <path d="m8 5 11 7-11 7Z" fill="currentColor" stroke="none" />,
     pause: <path d="M8 5v14M16 5v14" strokeWidth="3" />,
     mail: (

@@ -151,6 +151,9 @@ def init_database() -> None:
         )
 
         columns = {row[1] for row in connection.execute("PRAGMA table_info(products)")}
+        article_columns = {row[1] for row in connection.execute("PRAGMA table_info(articles)")}
+        if "category" not in article_columns:
+            connection.execute("ALTER TABLE articles ADD COLUMN category TEXT NOT NULL DEFAULT 'general'")
         if "image_url" not in columns:
             connection.execute("ALTER TABLE products ADD COLUMN image_url TEXT")
         if "catalog" not in columns:

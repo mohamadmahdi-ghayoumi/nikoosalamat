@@ -51,7 +51,7 @@ export default function Footer({ navigate }) {
           <a href="/about" onClick={(event) => navigate(event, '/about')}>
             درباره نیکو سلامت
           </a>
-          <a href="/articles" onClick={(event) => navigate(event, '/articles')}>
+          <a href="/mag/" onClick={(event) => navigate(event, '/mag/')}>
             مجله نیکو سلامت
           </a>
           <a href="/contact#faq" onClick={(event) => navigate(event, '/contact#faq')}>
