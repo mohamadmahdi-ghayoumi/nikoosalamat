@@ -1,0 +1,17 @@
+{
+  "hero.0.title": 250, "hero.0.text": 600,
+  "hero.1.title": 250, "hero.1.text": 600,
+  "hero.2.title": 250, "hero.2.text": 600,
+  "hero.3.title": 250, "hero.3.text": 600,
+  "hero.4.title": 250, "hero.4.text": 600,
+  "benefits.0.title": 200, "benefits.0.description": 400,
+  "benefits.1.title": 200, "benefits.1.description": 400,
+  "benefits.2.title": 200, "benefits.2.description": 400,
+  "benefits.3.title": 200, "benefits.3.description": 400,
+  "categories.eyebrow": 200, "categories.title": 250,
+  "featured.eyebrow": 200, "featured.title": 150, "featured.highlight": 150,
+  "about.eyebrow": 200, "about.title": 250, "about.description": 6000,
+  "newsletter.eyebrow": 200, "newsletter.title": 250, "newsletter.description": 600,
+  "brand.tagline": 250,
+  "brand.trait.0": 100, "brand.trait.1": 100, "brand.trait.2": 100, "brand.trait.3": 100
+}

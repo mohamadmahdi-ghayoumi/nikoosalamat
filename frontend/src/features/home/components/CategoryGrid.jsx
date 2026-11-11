@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import CategoryArtwork from './CategoryArtwork.jsx'
+import { EditableText } from './HomeTextEditor.jsx'
 import { categoryImages } from '../data/categoryImages.js'
 
 export default function CategoryGrid({ navigate }) {
@@ -61,9 +62,13 @@ export default function CategoryGrid({ navigate }) {
     >
       <div className="section-heading">
         <div>
-          <span className="eyebrow">از علم تا مزرعه، با حال نیکو سلامت</span>
+          <span className="eyebrow">
+            <EditableText field="categories.eyebrow">
+              از علم تا مزرعه، با حال نیکو سلامت
+            </EditableText>
+          </span>
           <h2>
-            راهکارهای تخصصی در حوزه های مختلف
+            <EditableText field="categories.title">راهکارهای تخصصی در حوزه های مختلف</EditableText>
           </h2>
         </div>
         <a className="view-all" href="/products" onClick={(event) => navigate(event, '/products')}>

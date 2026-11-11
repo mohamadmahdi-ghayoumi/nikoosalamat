@@ -48,6 +48,9 @@ jobs:
           cp .deploy/cpanel-php/app/faqs.php release/app/faqs.php
           cp backend/app/faq_schema.sql release/app/faq-schema.sql
           cp backend/app/faq_seed.json release/app/faq-seed.json
+          cp .deploy/cpanel-php/app/home-text.php release/app/home-text.php
+          cp backend/app/home_text_schema.sql release/app/home-text-schema.sql
+          cp backend/app/home_text_fields.json release/app/home-text-fields.json
 
       - name: Package release
         run: |

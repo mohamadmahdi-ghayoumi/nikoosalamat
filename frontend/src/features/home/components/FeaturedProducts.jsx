@@ -1,15 +1,21 @@
 import React from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import ProductCard from '../../products/components/ProductCard.jsx'
+import { EditableText } from './HomeTextEditor.jsx'
 
 export default function FeaturedProducts({ products, navigate }) {
   return (
     <section className="section products-section" id="products">
       <div className="section-heading center-heading">
         <div>
-          <span className="eyebrow">انتخاب تخصصی دامداران</span>
+          <span className="eyebrow">
+            <EditableText field="featured.eyebrow">انتخاب تخصصی دامداران</EditableText>
+          </span>
           <h2>
-            محصولات <em>پیشنهادی</em>
+            <EditableText field="featured.title">محصولات</EditableText>{' '}
+            <em>
+              <EditableText field="featured.highlight">پیشنهادی</EditableText>
+            </em>
           </h2>
         </div>
       </div>

@@ -8,19 +8,23 @@ import FeaturedProducts from '../components/FeaturedProducts.jsx'
 import StorySection from '../components/StorySection.jsx'
 import NewsletterSection from '../components/NewsletterSection.jsx'
 import AboutExcerpt from '../components/AboutExcerpt.jsx'
+import HomeTextEditor, { HomeEditingBar } from '../components/HomeTextEditor.jsx'
 
 export default function HomePage({ homeData, navigate, showNotice, onApiOnline }) {
   const products = homeData?.featured_products ?? fallbackProducts
   const benefits = homeData?.benefits ?? fallbackBenefits
   return (
-    <main id="top">
-      <HeroSlider navigate={navigate} />
-      <BenefitsBar benefits={benefits} />
-      <CategoryGrid navigate={navigate} />
-      <FeaturedProducts products={products} navigate={navigate} />
-      <AboutExcerpt navigate={navigate} />
-      <StorySection navigate={navigate} />
-      <NewsletterSection showNotice={showNotice} onApiOnline={onApiOnline} />
-    </main>
+    <HomeTextEditor showNotice={showNotice}>
+      <main id="top">
+        <HomeEditingBar />
+        <HeroSlider navigate={navigate} />
+        <BenefitsBar benefits={benefits} />
+        <CategoryGrid navigate={navigate} />
+        <FeaturedProducts products={products} navigate={navigate} />
+        <AboutExcerpt navigate={navigate} />
+        <StorySection navigate={navigate} />
+        <NewsletterSection showNotice={showNotice} onApiOnline={onApiOnline} />
+      </main>
+    </HomeTextEditor>
   )
 }

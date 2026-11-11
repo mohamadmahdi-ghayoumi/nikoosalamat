@@ -4,15 +4,17 @@ import { heroSlides } from '../data/heroSlides.js'
 import useSlidePlayback from '../hooks/useSlidePlayback.js'
 import useHeroImages from '../hooks/useHeroImages.js'
 import HeroMedia from './HeroMedia.jsx'
+import { EditableText, useHomeTextDialogOpen } from './HomeTextEditor.jsx'
 
 export default function HeroSlider({ navigate }) {
+  const editingText = useHomeTextDialogOpen()
   const [paused, setPaused] = useState(
     () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   )
   const [hovered, setHovered] = useState(false)
   const [focused, setFocused] = useState(false)
   const [visible, setVisible] = useState(!document.hidden)
-  const playing = !paused && !hovered && !focused && visible
+  const playing = !paused && !hovered && !focused && visible && !editingText
   const { statuses, requestImage } = useHeroImages(heroSlides)
   const readySlides = useMemo(() => statuses.map((status) => status === 'ready'), [statuses])
   const { active, select, move, progressRef } = useSlidePlayback({
@@ -42,6 +44,7 @@ export default function HeroSlider({ navigate }) {
         if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false)
       }}
       onKeyDown={(event) => {
+        if (event.target.closest('.home-edit-pencil')) return
         if (event.key === 'ArrowLeft') {
           event.preventDefault()
           move(1)
@@ -52,7 +55,11 @@ export default function HeroSlider({ navigate }) {
         }
       }}
     >
-      <div className="hero-progress" aria-hidden="true" data-playing={playing && readySlides[active]}>
+      <div
+        className="hero-progress"
+        aria-hidden="true"
+        data-playing={playing && readySlides[active]}
+      >
         <span className="hero-progress-fill" ref={progressRef} />
       </div>
       <div className="hero-slides" aria-live={paused ? 'polite' : 'off'}>
@@ -68,8 +75,20 @@ export default function HeroSlider({ navigate }) {
             inert={active !== index ? true : undefined}
           >
             <div className="hero-copy">
-              <h1>{slide.title}</h1>
-              <p>{slide.text}</p>
+              <h1>
+                {slide.layout === 'poster' ? (
+                  slide.title
+                ) : (
+                  <EditableText field={`hero.${index}.title`}>{slide.title}</EditableText>
+                )}
+              </h1>
+              <p>
+                {slide.layout === 'poster' ? (
+                  slide.text
+                ) : (
+                  <EditableText field={`hero.${index}.text`}>{slide.text}</EditableText>
+                )}
+              </p>
               <a
                 className="button primary"
                 href={slide.path}

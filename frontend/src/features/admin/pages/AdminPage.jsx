@@ -17,6 +17,10 @@ export default function AdminPage({ showNotice }) {
   return (
     <main className="admin-page">
       <AdminHeader admin={manager.admin} logout={manager.logout} />
+      <p className="admin-home-edit-hint">
+        <a href="/">ویرایش متن‌های صفحه اصلی ←</a> — پس از رفتن به صفحه اصلی، مداد کنار هر متن را
+        بزنید.
+      </p>
       <AdminTabs activeTab={manager.activeTab} setActiveTab={manager.setActiveTab} />
       {manager.activeTab === 'support' && <SupportInbox token={manager.token} />}
       {manager.activeTab === 'faqs' && <FaqManager token={manager.token} />}

@@ -1,6 +1,7 @@
 import React from 'react'
+import { EditableText } from '../../features/home/components/HomeTextEditor.jsx'
 
-export default function PharmucareBrand({ language = 'fa' }) {
+export default function PharmucareBrand({ language = 'fa', editable = false }) {
   const english = language === 'en'
   const traits = english
     ? ['Green Chemistry', 'Non-Antibiotic', 'Eco-Friendly', 'Safe and Non-Toxic']
@@ -16,10 +17,27 @@ export default function PharmucareBrand({ language = 'fa' }) {
         loading="lazy"
       />
       <p lang={english ? 'en' : 'fa'} dir={english ? 'ltr' : 'rtl'}>
-        {english ? 'Green Care, Sustainable Health' : 'مراقبت سبز، سلامت پایدار'}
+        {editable ? (
+          <EditableText field="brand.tagline">
+            {english ? 'Green Care, Sustainable Health' : 'مراقبت سبز، سلامت پایدار'}
+          </EditableText>
+        ) : english ? (
+          'Green Care, Sustainable Health'
+        ) : (
+          'مراقبت سبز، سلامت پایدار'
+        )}
       </p>
-      <div className="pharmucare-brand-tags" aria-label="ویژگی‌های فارمیوکِر" lang={english ? 'en' : 'fa'} dir={english ? 'ltr' : 'rtl'}>
-        {traits.map((trait) => <span key={trait}>{trait}</span>)}
+      <div
+        className="pharmucare-brand-tags"
+        aria-label="ویژگی‌های فارمیوکِر"
+        lang={english ? 'en' : 'fa'}
+        dir={english ? 'ltr' : 'rtl'}
+      >
+        {traits.map((trait, index) => (
+          <span key={trait}>
+            {editable ? <EditableText field={`brand.trait.${index}`}>{trait}</EditableText> : trait}
+          </span>
+        ))}
       </div>
     </div>
   )

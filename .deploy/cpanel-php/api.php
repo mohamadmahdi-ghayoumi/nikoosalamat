@@ -177,7 +177,9 @@ $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
 require_once __DIR__ . '/app/support.php';
 require_once __DIR__ . '/app/faqs.php';
+require_once __DIR__ . '/app/home-text.php';
 try {
+    homeTextRoutes($db, $path, $method);
     faqRoutes($db, $path, $method);
     supportRoutes($db, $config, $path, $method);
 } catch (Throwable $error) {

@@ -1,6 +1,7 @@
 import React from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import { subscribeNewsletter } from '../../../services/api/contact.js'
+import { EditableText } from './HomeTextEditor.jsx'
 
 export default function NewsletterSection({ showNotice, onApiOnline }) {
   const handleNewsletterSubmit = async (event) => {
@@ -23,9 +24,17 @@ export default function NewsletterSection({ showNotice, onApiOnline }) {
   return (
     <section className="newsletter" id="contact">
       <div>
-        <span className="eyebrow">باشگاه نیکو سلامت</span>
-        <h2>نکته‌های مراقبتی و خبرهای تازه</h2>
-        <p>ماهی دو بار؛ کوتاه، کاربردی و بدون پیام‌های اضافه.</p>
+        <span className="eyebrow">
+          <EditableText field="newsletter.eyebrow">باشگاه نیکو سلامت</EditableText>
+        </span>
+        <h2>
+          <EditableText field="newsletter.title">نکته‌های مراقبتی و خبرهای تازه</EditableText>
+        </h2>
+        <p>
+          <EditableText field="newsletter.description">
+            ماهی دو بار؛ کوتاه، کاربردی و بدون پیام‌های اضافه.
+          </EditableText>
+        </p>
       </div>
       <form onSubmit={handleNewsletterSubmit}>
         <input

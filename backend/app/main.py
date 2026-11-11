@@ -468,6 +468,9 @@ install_support(app, require_admin)
 from .faqs import install as install_faqs
 
 install_faqs(app, require_admin)
+from .home_text import install as install_home_text
+
+install_home_text(app, require_admin)
 
 
 @app.get("/{frontend_path:path}", include_in_schema=False)
