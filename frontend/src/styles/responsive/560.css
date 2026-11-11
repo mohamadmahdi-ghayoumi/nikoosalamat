@@ -246,23 +246,21 @@
     font-size: 32px;
     letter-spacing: -1.2px;
   }
-  .about-visual {
-    padding: 0 0 44px 16px;
-  }
   .about-image {
     min-height: 400px;
     border-radius: 70px 6px 6px 6px;
   }
-  .about-quote {
-    width: min(220px, calc(100% - 28px));
-    padding: 18px;
-    font-size: 13px;
-  }
   .values-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
   .values-grid article {
     min-height: auto;
+  }
+  .values-grid p {
+    padding: 10px 12px 14px;
+    font-size: 11px;
+    line-height: 1.9;
   }
   .about-stats {
     display: grid;

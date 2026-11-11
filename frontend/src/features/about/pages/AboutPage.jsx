@@ -7,19 +7,32 @@ import { pharmucareContent } from '../data/pharmucareContent.js'
 export default function AboutPage({ navigate }) {
   const values = [
     {
-      icon: 'heart',
+      id: 'livestock',
+      image: '/images/about-fields/livestock.png',
+      imageWidth: 494,
       title: 'دامپروری',
       text: 'راهکارهای تخصصی برای ارتقای سلامت و بهداشت دام و افزایش بهره‌وری پایدار دامداری.',
     },
     {
-      icon: 'shield',
+      id: 'horses',
+      image: '/images/about-fields/horses.png',
+      imageWidth: 492,
       title: 'پرورش اسب',
       text: 'محصولات و راهکارهای مراقبتی متناسب با نیازهای سلامت و بهداشت اسب.',
     },
     {
-      icon: 'leaf',
+      id: 'agriculture',
+      image: '/images/about-fields/agriculture.png',
+      imageWidth: 496,
       title: 'کشاورزی',
       text: 'راهکارهای نوین برای رشد مطلوب گیاهان و کمک به توسعه پایدار کشاورزی.',
+    },
+    {
+      id: 'human',
+      image: '/images/about-fields/human.png',
+      imageWidth: 491,
+      title: 'انسانی',
+      text: 'برای آشنایی با فعالیت‌های حوزه انسانی، با کارشناسان حال نیکو سلامت در ارتباط باشید.',
     },
   ]
 
@@ -29,20 +42,21 @@ export default function AboutPage({ navigate }) {
         artwork="about"
         eyebrow="درباره شرکت حال نیکو سلامت"
         title="همراه سلامت و بهره‌وری، از علم تا مزرعه"
-        description="توسعه راهکارهای تخصصی برای دامپروری، پرورش اسب و کشاورزی با تکیه بر دانش، تجربه و تعهد."
+        description="توسعه راهکارهای تخصصی برای دامپروری، پرورش اسب، کشاورزی و حوزه انسانی با تکیه بر دانش، تجربه و تعهد."
       />
       <section className="section about-intro" id="company">
         <div className="about-copy">
           <span className="eyebrow">معرفی شرکت</span>
-          <h2>سلامت و بهداشت، پایه‌ی بهره‌وری پایدار</h2>
+          <h2>راهکارهای نوین برای سلامت و رشد پایدار</h2>
           <p>
-            در شرکت حال نیکو سلامت، هدف ما روشن است: ارتقای بهداشت و سلامت در سه حوزه دامپروری،
-            پرورش اسب و کشاورزی. با بیش از سه سال تلاش پیوسته و بهره‌گیری از دانش و تجربه متخصصان
-            این حوزه، موفق به توسعه فرمولاسیون‌های نوین و منطبق با استانداردهای جهانی شده‌ایم.
+            در شرکت حال نیکو سلامت، هدف ما روشن است: ارتقای بهداشت و سلامت در چهار حوزه دامپروری،
+            پرورش اسب، کشاورزی و انسانی. با بیش از سه سال تلاش پیوسته و بهره‌گیری از دانش و تجربه
+            متخصصان این حوزه، موفق به توسعه فرمولاسیون‌های نوین و منطبق با استانداردهای جهانی
+            شده‌ایم.
           </p>
           <p>
-            ما همواره در کنار شما هستیم تا بهترین راهکارها و محصولات تخصصی را برای تضمین سلامت دام،
-            اسب و رشد مطلوب گیاهان در اختیارتان قرار دهیم.
+            ما همواره در کنار شما هستیم تا بهترین راهکارها و محصولات تخصصی را متناسب با نیازهای این
+            چهار حوزه در اختیارتان قرار دهیم.
           </p>
           <button className="button primary" onClick={(event) => navigate(event, '/contact')}>
             ارتباط با حال نیکو سلامت <Icon name="arrow" size={18} />
@@ -50,7 +64,6 @@ export default function AboutPage({ navigate }) {
         </div>
         <div className="about-visual">
           <div className="about-image" role="img" aria-label="دام سالم در محیط دامداری" />
-          <div className="about-quote">«همراه دامداران در مسیر سلامت و بهره‌وری»</div>
         </div>
       </section>
       <section
@@ -73,7 +86,7 @@ export default function AboutPage({ navigate }) {
               مشاهده محصولات <Icon name="arrow" size={18} />
             </a>
           </div>
-          <PharmucareBrand />
+          <PharmucareBrand language="en" />
           <div className="pharmucare-principles">
             <h3>{pharmucareContent.principlesTitle}</h3>
             <ul>
@@ -93,46 +106,28 @@ export default function AboutPage({ navigate }) {
             <div>
               <span className="eyebrow light">حوزه‌های فعالیت</span>
               <h2>
-                سه مسیر، یک <em>تعهد</em>
+                چهار مسیر، یک <em>تعهد</em>
               </h2>
             </div>
           </div>
           <div className="values-grid">
             {values.map((value) => (
-              <article
-                key={value.title}
-                id={
-                  value.title === 'دامپروری'
-                    ? 'livestock'
-                    : value.title === 'پرورش اسب'
-                      ? 'horses'
-                      : 'agriculture'
-                }
-              >
-                <span>
-                  <Icon name={value.icon} size={29} />
-                </span>
-                <h3>{value.title}</h3>
+              <article key={value.title} id={value.id} aria-labelledby={`about-field-${value.id}`}>
+                <div className="about-field-artwork">
+                  <img
+                    src={value.image}
+                    alt=""
+                    width={value.imageWidth}
+                    height="471"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <h3 id={`about-field-${value.id}`}>{value.title}</h3>
+                </div>
                 <p>{value.text}</p>
               </article>
             ))}
           </div>
-        </div>
-      </section>
-      <section className="section" id="human">
-        <div className="about-copy">
-          <span className="eyebrow">انسانی</span>
-          <h2>محصولات حوزه انسانی</h2>
-          <p>
-            برای دریافت اطلاعات محصولات حوزه انسانی، با کارشناسان حال نیکو سلامت در ارتباط باشید.
-          </p>
-          <a
-            className="button primary"
-            href="/contact"
-            onClick={(event) => navigate(event, '/contact')}
-          >
-            ارتباط با ما <Icon name="arrow" size={18} />
-          </a>
         </div>
       </section>
       <section className="section" id="certificates">
@@ -156,7 +151,7 @@ export default function AboutPage({ navigate }) {
         </div>
         <i />
         <div>
-          <strong>۳</strong>
+          <strong>۴</strong>
           <span>حوزه تخصصی</span>
         </div>
         <i />
