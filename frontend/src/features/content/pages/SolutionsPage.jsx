@@ -1,7 +1,8 @@
 import React from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import PageHero from '../../../components/ui/PageHero.jsx'
-import { solutionItems } from '../../../config/solutions.js'
+import { solutionItems, solutionTopics } from '../../../config/solutions.js'
+import { SiteImage, SiteText } from '../../site/SiteConfig.jsx'
 
 export default function SolutionsPage({ navigate }) {
   return (
@@ -12,6 +13,26 @@ export default function SolutionsPage({ navigate }) {
         title="راهکارهای مراقبت از سلامت دام"
         description="موضوع موردنظر را انتخاب کنید تا به معرفی راهکارها و اطلاعات مرتبط برسید."
       />
+      <nav className="section solution-topics" aria-label="دسته‌بندی راهکارها">
+        {solutionTopics.map((item) => (
+          <a
+            className="solution-topic"
+            key={item.id}
+            href={item.path}
+            onClick={(event) => navigate(event, item.path)}
+          >
+            <SiteImage
+              field={`solution.icon.${item.id}`}
+              src={item.image}
+              alt=""
+              width={120}
+              height={120}
+              decoding="async"
+            />
+            <span><SiteText field={`solution.topic.${item.id}`}>{item.label}</SiteText></span>
+          </a>
+        ))}
+      </nav>
       <section className="section solutions-grid" aria-label="موضوعات راهکارها">
         {solutionItems.map((item) => (
           <a

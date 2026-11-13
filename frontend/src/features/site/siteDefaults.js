@@ -1,5 +1,6 @@
 import generatedFields from './copyFields.json'
 import { socialUrls } from '../../config/socials.js'
+import { solutionTopics } from '../../config/solutions.js'
 import { heroSlides } from '../home/data/heroSlides.js'
 import { categoryImages } from '../home/data/categoryImages.js'
 import { fallbackBenefits } from '../home/data/homeContent.js'
@@ -9,6 +10,7 @@ import { aboutValues } from '../about/data/aboutValues.js'
 const field = (field, group, label, value) => ({ field, group, label, value })
 export const textFields = [
   ...generatedFields,
+  ...solutionTopics.map((item) => field(`solution.topic.${item.id}`, 'راهکارها', item.label, item.label)),
   ...Object.entries({
     'home.about.action': 'ادامه مطلب درباره فارمیوکِر',
     'home.featured.action': 'دیدن همه محصولات',
@@ -122,6 +124,12 @@ export const imageFields = [
     field: `about.field.${item.id}`,
     group: 'درباره ما',
     label: item.title,
+    url: item.image,
+  })),
+  ...solutionTopics.map((item) => ({
+    field: `solution.icon.${item.id}`,
+    group: 'آیکون‌های راهکارها',
+    label: item.label,
     url: item.image,
   })),
   ...categoryImages.map((item, index) => ({
