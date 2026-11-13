@@ -69,7 +69,7 @@ export default function CategoryGrid({ navigate }) {
             </EditableText>
           </span>
           <h2>
-            <EditableText field="categories.title">محصولات تخصصی در حوزه‌های مختلف</EditableText>
+            <EditableText field="categories.title">راهکارهای تخصصی در حوزه‌های مختلف</EditableText>
           </h2>
         </div>
         <a className="view-all" href="/products" onClick={(event) => navigate(event, '/products')}>

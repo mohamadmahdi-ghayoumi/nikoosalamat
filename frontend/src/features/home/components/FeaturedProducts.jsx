@@ -10,7 +10,7 @@ export default function FeaturedProducts({ products, navigate }) {
       <div className="section-heading center-heading">
         <div>
           <span className="eyebrow">
-            <EditableText field="featured.eyebrow">انتخاب تخصصی دامداران</EditableText>
+            <EditableText field="featured.eyebrow">انتخاب تخصصی برای نیاز شما</EditableText>
           </span>
           <h2>
             <EditableText field="featured.title">محصولات</EditableText>{' '}

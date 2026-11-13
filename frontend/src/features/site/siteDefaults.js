@@ -47,8 +47,8 @@ export const textFields = [
   ),
   ...Object.entries({
     'categories.eyebrow': 'از علم تا مزرعه، با حال نیکو سلامت',
-    'categories.title': 'محصولات تخصصی در حوزه‌های مختلف',
-    'featured.eyebrow': 'انتخاب تخصصی دامداران',
+    'categories.title': 'راهکارهای تخصصی در حوزه‌های مختلف',
+    'featured.eyebrow': 'انتخاب تخصصی برای نیاز شما',
     'featured.title': 'محصولات',
     'featured.highlight': 'پیشنهادی',
     'about.eyebrow': pharmucareContent.tagline,
