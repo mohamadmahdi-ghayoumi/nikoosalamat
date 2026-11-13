@@ -4,6 +4,7 @@ export default function AdminTabs({ activeTab, setActiveTab }) {
   return (
     <div className="admin-tabs" role="tablist">
       {[
+        ['site', 'مدیریت سایت و ظاهر'],
         ['products', 'محصولات'],
         ['pages', 'راهکارها'],
         ['articles', 'مقالات'],

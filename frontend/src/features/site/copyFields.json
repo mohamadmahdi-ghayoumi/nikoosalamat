@@ -1,0 +1,524 @@
+[
+  {
+    "field": "copy.header.0",
+    "group": "سربرگ",
+    "label": "ارتباط با مدیر فروش:",
+    "value": "ارتباط با مدیر فروش:"
+  },
+  {
+    "field": "copy.header.1",
+    "group": "سربرگ",
+    "label": "۰۹۱۲۴۲۸۳۸۳۴",
+    "value": "۰۹۱۲۴۲۸۳۸۳۴"
+  },
+  {
+    "field": "copy.header.2",
+    "group": "سربرگ",
+    "label": "حال نیکو سلامت",
+    "value": "حال نیکو سلامت"
+  },
+  {
+    "field": "copy.footer.0",
+    "group": "فوتر",
+    "label": "حال نیکو سلامت",
+    "value": "حال نیکو سلامت"
+  },
+  {
+    "field": "copy.footer.1",
+    "group": "فوتر",
+    "label": "از علم تا مزرعه، با حالِ نیک",
+    "value": "از علم تا مزرعه، با حالِ نیک"
+  },
+  {
+    "field": "copy.footer.2",
+    "group": "فوتر",
+    "label": "راهکارها",
+    "value": "راهکارها"
+  },
+  {
+    "field": "copy.footer.3",
+    "group": "فوتر",
+    "label": "مراقبت از سُم",
+    "value": "مراقبت از سُم"
+  },
+  {
+    "field": "copy.footer.4",
+    "group": "فوتر",
+    "label": "سلامت پستان",
+    "value": "سلامت پستان"
+  },
+  {
+    "field": "copy.footer.5",
+    "group": "فوتر",
+    "label": "ضدعفونی دامداری",
+    "value": "ضدعفونی دامداری"
+  },
+  {
+    "field": "copy.footer.6",
+    "group": "فوتر",
+    "label": "بهداشت دام و اسب",
+    "value": "بهداشت دام و اسب"
+  },
+  {
+    "field": "copy.footer.7",
+    "group": "فوتر",
+    "label": "راهنما",
+    "value": "راهنما"
+  },
+  {
+    "field": "copy.footer.8",
+    "group": "فوتر",
+    "label": "درباره نیکو سلامت",
+    "value": "درباره نیکو سلامت"
+  },
+  {
+    "field": "copy.footer.9",
+    "group": "فوتر",
+    "label": "مجله نیکو سلامت",
+    "value": "مجله نیکو سلامت"
+  },
+  {
+    "field": "copy.footer.10",
+    "group": "فوتر",
+    "label": "پرسش‌های متداول",
+    "value": "پرسش‌های متداول"
+  },
+  {
+    "field": "copy.footer.11",
+    "group": "فوتر",
+    "label": "ثبت و پیگیری سفارش",
+    "value": "ثبت و پیگیری سفارش"
+  },
+  {
+    "field": "copy.footer.12",
+    "group": "فوتر",
+    "label": "ارتباط با ما",
+    "value": "ارتباط با ما"
+  },
+  {
+    "field": "copy.footer.13",
+    "group": "فوتر",
+    "label": "مدیر فروش:",
+    "value": "مدیر فروش:"
+  },
+  {
+    "field": "copy.footer.14",
+    "group": "فوتر",
+    "label": "۰۹۱۲۴۲۸۳۸۳۴",
+    "value": "۰۹۱۲۴۲۸۳۸۳۴"
+  },
+  {
+    "field": "copy.footer.15",
+    "group": "فوتر",
+    "label": "info@nikoosalamat.ir",
+    "value": "info@nikoosalamat.ir"
+  },
+  {
+    "field": "copy.footer.16",
+    "group": "فوتر",
+    "label": "شهر قدس، کوی صنعت، پلاک ۵",
+    "value": "شهر قدس، کوی صنعت، پلاک ۵"
+  },
+  {
+    "field": "copy.footer.17",
+    "group": "فوتر",
+    "label": "© ۱۴۰۵ نیکو سلامت؛ همه حقوق محفوظ است.",
+    "value": "© ۱۴۰۵ نیکو سلامت؛ همه حقوق محفوظ است."
+  },
+  {
+    "field": "copy.footer.18",
+    "group": "فوتر",
+    "label": "با احترام به دام، دامدار و طبیعت",
+    "value": "با احترام به دام، دامدار و طبیعت"
+  },
+  {
+    "field": "copy.aboutpage.0",
+    "group": "درباره ما",
+    "label": "معرفی شرکت",
+    "value": "معرفی شرکت"
+  },
+  {
+    "field": "copy.aboutpage.1",
+    "group": "درباره ما",
+    "label": "راهکارهای نوین برای سلامت و رشد پایدار",
+    "value": "راهکارهای نوین برای سلامت و رشد پایدار"
+  },
+  {
+    "field": "copy.aboutpage.2",
+    "group": "درباره ما",
+    "label": "در شرکت حال نیکو سلامت، هدف ما روشن است: ارتقای بهداشت و سلامت در",
+    "value": "در شرکت حال نیکو سلامت، هدف ما روشن است: ارتقای بهداشت و سلامت در چهار حوزه دامپروری، پرورش اسب، کشاورزی و انسانی. با بیش از سه سال تلاش پیوسته و بهره‌گیری از دانش و تجربه متخصصان این حوزه، موفق به توسعه فرمولاسیون‌های نوین و منطبق با استانداردهای جهانی شده‌ایم."
+  },
+  {
+    "field": "copy.aboutpage.3",
+    "group": "درباره ما",
+    "label": "ما همواره در کنار شما هستیم تا بهترین راهکارها و محصولات تخصصی را",
+    "value": "ما همواره در کنار شما هستیم تا بهترین راهکارها و محصولات تخصصی را متناسب با نیازهای این چهار حوزه در اختیارتان قرار دهیم."
+  },
+  {
+    "field": "copy.aboutpage.4",
+    "group": "درباره ما",
+    "label": "ارتباط با حال نیکو سلامت",
+    "value": "ارتباط با حال نیکو سلامت"
+  },
+  {
+    "field": "copy.aboutpage.5",
+    "group": "درباره ما",
+    "label": "مشاهده محصولات",
+    "value": "مشاهده محصولات"
+  },
+  {
+    "field": "copy.aboutpage.6",
+    "group": "درباره ما",
+    "label": "حوزه‌های فعالیت",
+    "value": "حوزه‌های فعالیت"
+  },
+  {
+    "field": "copy.aboutpage.7",
+    "group": "درباره ما",
+    "label": "چهار مسیر، یک",
+    "value": "چهار مسیر، یک"
+  },
+  {
+    "field": "copy.aboutpage.8",
+    "group": "درباره ما",
+    "label": "تعهد",
+    "value": "تعهد"
+  },
+  {
+    "field": "copy.aboutpage.9",
+    "group": "درباره ما",
+    "label": "گواهینامه ها و افتخارات",
+    "value": "گواهینامه ها و افتخارات"
+  },
+  {
+    "field": "copy.aboutpage.10",
+    "group": "درباره ما",
+    "label": "گواهینامه ها و افتخارات حال نیکو سلامت",
+    "value": "گواهینامه ها و افتخارات حال نیکو سلامت"
+  },
+  {
+    "field": "copy.aboutpage.11",
+    "group": "درباره ما",
+    "label": "برای دریافت اطلاعات گواهینامه‌ها و افتخارات شرکت، با ما در ارتباط",
+    "value": "برای دریافت اطلاعات گواهینامه‌ها و افتخارات شرکت، با ما در ارتباط باشید."
+  },
+  {
+    "field": "copy.aboutpage.12",
+    "group": "درباره ما",
+    "label": "ارتباط با ما",
+    "value": "ارتباط با ما"
+  },
+  {
+    "field": "copy.aboutpage.13",
+    "group": "درباره ما",
+    "label": "+۳ سال",
+    "value": "+۳ سال"
+  },
+  {
+    "field": "copy.aboutpage.14",
+    "group": "درباره ما",
+    "label": "تلاش و توسعه",
+    "value": "تلاش و توسعه"
+  },
+  {
+    "field": "copy.aboutpage.15",
+    "group": "درباره ما",
+    "label": "۴",
+    "value": "۴"
+  },
+  {
+    "field": "copy.aboutpage.16",
+    "group": "درباره ما",
+    "label": "حوزه تخصصی",
+    "value": "حوزه تخصصی"
+  },
+  {
+    "field": "copy.aboutpage.17",
+    "group": "درباره ما",
+    "label": "ایران",
+    "value": "ایران"
+  },
+  {
+    "field": "copy.aboutpage.18",
+    "group": "درباره ما",
+    "label": "تولیدکننده ایرانی",
+    "value": "تولیدکننده ایرانی"
+  },
+  {
+    "field": "copy.aboutpage.19",
+    "group": "درباره ما",
+    "label": "PharmuCare",
+    "value": "PharmuCare"
+  },
+  {
+    "field": "copy.aboutpage.20",
+    "group": "درباره ما",
+    "label": "توزیع‌کننده رسمی",
+    "value": "توزیع‌کننده رسمی"
+  },
+  {
+    "field": "copy.contactdetails.0",
+    "group": "ارتباط با ما",
+    "label": "راه‌های ارتباطی",
+    "value": "راه‌های ارتباطی"
+  },
+  {
+    "field": "copy.contactdetails.1",
+    "group": "ارتباط با ما",
+    "label": "پاسخ‌گوی شما هستیم",
+    "value": "پاسخ‌گوی شما هستیم"
+  },
+  {
+    "field": "copy.contactdetails.2",
+    "group": "ارتباط با ما",
+    "label": "برای مشاوره محصولات، استعلام موجودی یا بررسی شرایط همکاری می‌توان",
+    "value": "برای مشاوره محصولات، استعلام موجودی یا بررسی شرایط همکاری می‌توانید از راه‌های زیر با مجموعه در تماس باشید."
+  },
+  {
+    "field": "copy.contactdetails.3",
+    "group": "ارتباط با ما",
+    "label": "مهندس محمدباقر",
+    "value": "مهندس محمدباقر"
+  },
+  {
+    "field": "copy.contactdetails.4",
+    "group": "ارتباط با ما",
+    "label": "۰۹۱۲۴۲۸۳۸۳۴",
+    "value": "۰۹۱۲۴۲۸۳۸۳۴"
+  },
+  {
+    "field": "copy.contactdetails.5",
+    "group": "ارتباط با ما",
+    "label": "ایمیل",
+    "value": "ایمیل"
+  },
+  {
+    "field": "copy.contactdetails.6",
+    "group": "ارتباط با ما",
+    "label": "info@nikoosalamat.ir",
+    "value": "info@nikoosalamat.ir"
+  },
+  {
+    "field": "copy.contactdetails.7",
+    "group": "ارتباط با ما",
+    "label": "تلگرام",
+    "value": "تلگرام"
+  },
+  {
+    "field": "copy.contactdetails.8",
+    "group": "ارتباط با ما",
+    "label": "@nikoosalamat",
+    "value": "@nikoosalamat"
+  },
+  {
+    "field": "copy.contactdetails.9",
+    "group": "ارتباط با ما",
+    "label": "آدرس",
+    "value": "آدرس"
+  },
+  {
+    "field": "copy.contactdetails.10",
+    "group": "ارتباط با ما",
+    "label": "شهر قدس، بلوار ۴۵ متری انقلاب، کوی صنعت، پلاک ۵",
+    "value": "شهر قدس، بلوار ۴۵ متری انقلاب، کوی صنعت، پلاک ۵"
+  },
+  {
+    "field": "copy.contactdetails.11",
+    "group": "ارتباط با ما",
+    "label": "کد پستی",
+    "value": "کد پستی"
+  },
+  {
+    "field": "copy.contactdetails.12",
+    "group": "ارتباط با ما",
+    "label": "۳۱۱۴۸۱۵۹۵۵",
+    "value": "۳۱۱۴۸۱۵۹۵۵"
+  },
+  {
+    "field": "copy.contactdetails.13",
+    "group": "ارتباط با ما",
+    "label": "برای پاسخ‌گویی دقیق‌تر، نام محصول، تعداد موردنیاز و موضوع درخواست",
+    "value": "برای پاسخ‌گویی دقیق‌تر، نام محصول، تعداد موردنیاز و موضوع درخواست خود را در پیام بنویسید."
+  },
+  {
+    "field": "copy.contactform.1",
+    "group": "فرم تماس",
+    "label": "فرم تماس",
+    "value": "فرم تماس"
+  },
+  {
+    "field": "copy.contactform.2",
+    "group": "فرم تماس",
+    "label": "پیامتان را برای ما بنویسید",
+    "value": "پیامتان را برای ما بنویسید"
+  },
+  {
+    "field": "copy.contactform.3",
+    "group": "فرم تماس",
+    "label": "نام و نام خانوادگی",
+    "value": "نام و نام خانوادگی"
+  },
+  {
+    "field": "copy.contactform.4",
+    "group": "فرم تماس",
+    "label": "شماره موبایل",
+    "value": "شماره موبایل"
+  },
+  {
+    "field": "copy.contactform.5",
+    "group": "فرم تماس",
+    "label": "ایمیل",
+    "value": "ایمیل"
+  },
+  {
+    "field": "copy.contactform.6",
+    "group": "فرم تماس",
+    "label": "(اختیاری)",
+    "value": "(اختیاری)"
+  },
+  {
+    "field": "copy.contactform.7",
+    "group": "فرم تماس",
+    "label": "متن پیام",
+    "value": "متن پیام"
+  },
+  {
+    "field": "copy.contactform.8",
+    "group": "فرم تماس",
+    "label": "اطلاعات شما فقط برای پاسخ‌گویی به همین پیام استفاده می‌شود.",
+    "value": "اطلاعات شما فقط برای پاسخ‌گویی به همین پیام استفاده می‌شود."
+  },
+  {
+    "field": "copy.faqsection.0",
+    "group": "سؤالات متداول",
+    "label": "راهنمای محصولات و سفارش",
+    "value": "راهنمای محصولات و سفارش"
+  },
+  {
+    "field": "copy.faqsection.1",
+    "group": "سؤالات متداول",
+    "label": "سؤالات",
+    "value": "سؤالات"
+  },
+  {
+    "field": "copy.faqsection.2",
+    "group": "سؤالات متداول",
+    "label": "متداول",
+    "value": "متداول"
+  },
+  {
+    "field": "copy.faqsection.3",
+    "group": "سؤالات متداول",
+    "label": "پاسخ پرسش‌های رایج درباره محصولات، نحوه مصرف، سفارش و همکاری",
+    "value": "پاسخ پرسش‌های رایج درباره محصولات، نحوه مصرف، سفارش و همکاری"
+  },
+  {
+    "field": "copy.faqsection.4",
+    "group": "سؤالات متداول",
+    "label": "در حال دریافت سؤالات…",
+    "value": "در حال دریافت سؤالات…"
+  },
+  {
+    "field": "copy.faqsection.6",
+    "group": "سؤالات متداول",
+    "label": "تلاش دوباره",
+    "value": "تلاش دوباره"
+  },
+  {
+    "field": "copy.faqsection.8",
+    "group": "سؤالات متداول",
+    "label": "هنوز سؤالی در این بخش منتشر نشده است؛ از فرم تماس برای ما پیام بف",
+    "value": "هنوز سؤالی در این بخش منتشر نشده است؛ از فرم تماس برای ما پیام بفرستید."
+  },
+  {
+    "field": "copy.storysection.0",
+    "group": "ویدیوی صفحه اصلی",
+    "label": "داستان ما را بخوانید",
+    "value": "داستان ما را بخوانید"
+  },
+  {
+    "field": "page.about.eyebrow",
+    "group": "عنوان صفحات",
+    "label": "about — eyebrow",
+    "value": "درباره شرکت حال نیکو سلامت"
+  },
+  {
+    "field": "page.about.title",
+    "group": "عنوان صفحات",
+    "label": "about — title",
+    "value": "همراه سلامت و بهره‌وری، از علم تا مزرعه"
+  },
+  {
+    "field": "page.about.description",
+    "group": "عنوان صفحات",
+    "label": "about — description",
+    "value": "توسعه راهکارهای تخصصی برای دامپروری، پرورش اسب، کشاورزی و حوزه انسانی با تکیه بر دانش، تجربه و تعهد."
+  },
+  {
+    "field": "page.contact.eyebrow",
+    "group": "عنوان صفحات",
+    "label": "contact — eyebrow",
+    "value": "ارتباط با ما"
+  },
+  {
+    "field": "page.contact.title",
+    "group": "عنوان صفحات",
+    "label": "contact — title",
+    "value": "با حال نیکو سلامت در تماس باشید"
+  },
+  {
+    "field": "page.contact.description",
+    "group": "عنوان صفحات",
+    "label": "contact — description",
+    "value": "برای دریافت اطلاعات محصولات، استعلام قیمت، ثبت سفارش یا همکاری در توزیع با ما ارتباط بگیرید."
+  },
+  {
+    "field": "page.articles.eyebrow",
+    "group": "عنوان صفحات",
+    "label": "articles — eyebrow",
+    "value": "دانش و تجربه، از علم تا مزرعه"
+  },
+  {
+    "field": "page.articles.title",
+    "group": "عنوان صفحات",
+    "label": "articles — title",
+    "value": "مجله نیکو سلامت"
+  },
+  {
+    "field": "page.articles.description",
+    "group": "عنوان صفحات",
+    "label": "articles — description",
+    "value": "نگاه علمی به سلامت، بهداشت، مراقبت و توسعه پایدار"
+  },
+  {
+    "field": "page.products.title",
+    "group": "عنوان صفحات",
+    "label": "products — title",
+    "value": "حال نیکو سلامت"
+  },
+  {
+    "field": "page.products.description",
+    "group": "عنوان صفحات",
+    "label": "products — description",
+    "value": "راهکار های تخصصی به منظور ارتقاء بهره وری دام پروری ، کشاورزی و پرورش اسب"
+  },
+  {
+    "field": "page.solutions.eyebrow",
+    "group": "عنوان صفحات",
+    "label": "solutions — eyebrow",
+    "value": "از علم تا مزرعه"
+  },
+  {
+    "field": "page.solutions.title",
+    "group": "عنوان صفحات",
+    "label": "solutions — title",
+    "value": "راهکارهای مراقبت از سلامت دام"
+  },
+  {
+    "field": "page.solutions.description",
+    "group": "عنوان صفحات",
+    "label": "solutions — description",
+    "value": "موضوع موردنظر را انتخاب کنید تا به معرفی راهکارها و اطلاعات مرتبط برسید."
+  }
+]

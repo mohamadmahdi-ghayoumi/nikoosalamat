@@ -2,6 +2,7 @@ import React from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import { subscribeNewsletter } from '../../../services/api/contact.js'
 import { EditableText } from './HomeTextEditor.jsx'
+import { SiteText } from '../../site/SiteConfig.jsx'
 
 export default function NewsletterSection({ showNotice, onApiOnline }) {
   const handleNewsletterSubmit = async (event) => {
@@ -47,7 +48,8 @@ export default function NewsletterSection({ showNotice, onApiOnline }) {
           pattern="[0-9۰-۹]{10,13}"
         />
         <button className="button primary" type="submit">
-          عضویت در باشگاه <Icon name="arrow" size={18} />
+          <SiteText field="home.newsletter.action">عضویت در باشگاه</SiteText>{' '}
+          <Icon name="arrow" size={18} />
         </button>
       </form>
     </section>

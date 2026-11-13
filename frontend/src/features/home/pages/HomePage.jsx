@@ -9,6 +9,7 @@ import StorySection from '../components/StorySection.jsx'
 import NewsletterSection from '../components/NewsletterSection.jsx'
 import AboutExcerpt from '../components/AboutExcerpt.jsx'
 import HomeTextEditor, { HomeEditingBar } from '../components/HomeTextEditor.jsx'
+import { SiteSections } from '../../site/SiteConfig.jsx'
 
 export default function HomePage({ homeData, navigate, showNotice, onApiOnline }) {
   const products = homeData?.featured_products ?? fallbackProducts
@@ -17,13 +18,19 @@ export default function HomePage({ homeData, navigate, showNotice, onApiOnline }
     <HomeTextEditor showNotice={showNotice}>
       <main id="top">
         <HomeEditingBar />
-        <HeroSlider navigate={navigate} />
-        <BenefitsBar benefits={benefits} />
-        <CategoryGrid navigate={navigate} />
-        <FeaturedProducts products={products} navigate={navigate} />
-        <AboutExcerpt navigate={navigate} />
-        <StorySection navigate={navigate} />
-        <NewsletterSection showNotice={showNotice} onApiOnline={onApiOnline} />
+        <SiteSections
+          page="home"
+          navigate={navigate}
+          builtins={{
+            hero: <HeroSlider navigate={navigate} />,
+            benefits: <BenefitsBar benefits={benefits} />,
+            categories: <CategoryGrid navigate={navigate} />,
+            products: <FeaturedProducts products={products} navigate={navigate} />,
+            about: <AboutExcerpt navigate={navigate} />,
+            story: <StorySection navigate={navigate} />,
+            newsletter: <NewsletterSection showNotice={showNotice} onApiOnline={onApiOnline} />,
+          }}
+        />
       </main>
     </HomeTextEditor>
   )

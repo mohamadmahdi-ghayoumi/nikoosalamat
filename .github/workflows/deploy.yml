@@ -51,6 +51,9 @@ jobs:
           cp .deploy/cpanel-php/app/home-text.php release/app/home-text.php
           cp backend/app/home_text_schema.sql release/app/home-text-schema.sql
           cp backend/app/home_text_fields.json release/app/home-text-fields.json
+          cp .deploy/cpanel-php/app/site-config.php release/app/site-config.php
+          cp backend/app/site_config_schema.sql release/app/site-config-schema.sql
+          cp backend/app/site_config_schema.json release/app/site-config-schema.json
 
       - name: Package release
         run: |

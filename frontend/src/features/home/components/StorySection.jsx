@@ -1,7 +1,9 @@
+import { SiteText, useSiteConfig, siteMediaUrl } from '../../site/SiteConfig.jsx'
 import React, { useEffect, useRef, useState } from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 
 export default function StorySection({ navigate }) {
+  const { config } = useSiteConfig()
   const sectionRef = useRef(null)
   const videoRef = useRef(null)
   const [loadVideo, setLoadVideo] = useState(false)
@@ -38,17 +40,30 @@ export default function StorySection({ navigate }) {
         loop
         playsInline
         preload={loadVideo ? 'metadata' : 'none'}
-        poster={loadVideo ? '/images/slides/hns-introduction-panoramic.webp' : undefined}
+        poster={
+          loadVideo
+            ? siteMediaUrl(
+                config.images?.['story.poster']?.url ??
+                  '/images/slides/hns-introduction-panoramic.webp',
+              )
+            : undefined
+        }
         aria-label="ویدیوی معرفی حال نیکو سلامت"
       >
-        {loadVideo && <source src="/videos/hns-site-cover.mp4" type="video/mp4" />}
+        {loadVideo && (
+          <source
+            src={config.links?.['story.video'] ?? '/videos/hns-site-cover.mp4'}
+            type="video/mp4"
+          />
+        )}
       </video>
       <a
         href="/about"
         onClick={(event) => navigate(event, '/about')}
         className="button story-video-link"
       >
-        داستان ما را بخوانید <Icon name="arrow" size={18} />
+        <SiteText field="copy.storysection.0">داستان ما را بخوانید </SiteText>
+        <Icon name="arrow" size={18} />
       </a>
     </section>
   )

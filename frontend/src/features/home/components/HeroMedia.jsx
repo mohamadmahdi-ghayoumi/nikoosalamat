@@ -5,7 +5,7 @@ export default function HeroMedia({ slide, ready }) {
     <>
       <div
         className={`hero-image-placeholder ${slide.layout === 'poster' ? 'hero-image-placeholder--poster' : ''}`}
-        style={{ backgroundImage: `url("${slide.preview}")` }}
+        style={{ backgroundImage: `url(${JSON.stringify(slide.preview)})` }}
         aria-hidden="true"
       />
       {ready &&
@@ -17,7 +17,12 @@ export default function HeroMedia({ slide, ready }) {
             role="img"
             aria-label={slide.alt}
           >
-            <image href={slide.image} width={slide.scene.width} height={slide.scene.height} />
+            <image
+              href={slide.image}
+              width={slide.scene.width}
+              height={slide.scene.height}
+              preserveAspectRatio={slide.fit === 'contain' ? 'xMidYMid meet' : 'xMidYMid slice'}
+            />
           </svg>
         ) : (
           <img
@@ -27,6 +32,7 @@ export default function HeroMedia({ slide, ready }) {
             width={slide.layout === 'poster' ? 1984 : undefined}
             height={slide.layout === 'poster' ? 793 : undefined}
             decoding="async"
+            style={slide.fit ? { objectFit: slide.fit } : undefined}
           />
         ))}
     </>

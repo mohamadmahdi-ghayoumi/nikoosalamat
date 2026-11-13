@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { request } from '../../../services/api/client.js'
 import { getAdminProfile } from '../../../services/api/admin.js'
+import { SiteText, useSiteConfig } from '../../site/SiteConfig.jsx'
 
 const HomeTextContext = createContext(null)
 
@@ -20,12 +21,14 @@ function textLimit(field) {
 }
 
 export function EditableText({ field, children }) {
+  const site = useSiteConfig()
   const editor = useContext(HomeTextContext)
-  const text = editor?.entries[field]?.text ?? children
-  if (!editor?.editing) return <>{text}</>
+  const text =
+    site.config.texts?.[`home.${field}`]?.text ?? editor?.entries[field]?.text ?? children
+  if (!editor?.editing) return <SiteText field={`home.${field}`}>{text}</SiteText>
   return (
     <span className="home-editable-text">
-      {text}
+      <SiteText field={`home.${field}`}>{text}</SiteText>
       <button
         type="button"
         className="home-edit-pencil"
@@ -52,8 +55,9 @@ export function EditableText({ field, children }) {
 }
 
 export function HomeEditingBar() {
+  const site = useSiteConfig()
   const editor = useContext(HomeTextContext)
-  if (!editor?.admin) return null
+  if (!editor?.admin || site.preview) return null
   return (
     <aside className="home-editing-bar" aria-label="ویرایش صفحه اصلی">
       <span>
@@ -82,6 +86,7 @@ export function HomeEditingBar() {
 }
 
 export default function HomeTextEditor({ children, showNotice }) {
+  const site = useSiteConfig()
   const [entries, setEntries] = useState({})
   const [loaded, setLoaded] = useState(false)
   const [loadError, setLoadError] = useState(false)
@@ -152,7 +157,7 @@ export default function HomeTextEditor({ children, showNotice }) {
     setError('')
     setConflict(false)
     setDraft(text)
-    setTarget({ field, revision: entries[field]?.revision ?? 0 })
+    setTarget({ field, revision: site.revision })
   }
   const save = async (event) => {
     event.preventDefault()
@@ -160,12 +165,7 @@ export default function HomeTextEditor({ children, showNotice }) {
     setBusy(true)
     setError('')
     try {
-      const saved = await request(`/api/admin/home-text/${target.field}`, {
-        method: 'PUT',
-        headers: { Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ text: draft.trim(), revision: target.revision }),
-      })
-      setEntries((previous) => ({ ...previous, [target.field]: saved }))
+      await site.publishText(`home.${target.field}`, draft.trim(), target.revision)
       dialog.current.close()
       setTarget(null)
       opener.current?.focus()
@@ -186,10 +186,17 @@ export default function HomeTextEditor({ children, showNotice }) {
   }
   const fetchLatest = async () => {
     setBusy(true)
-    const data = await reload()
+    let data
+    try {
+      data = await site.refresh()
+    } catch {
+      setError('دریافت نسخه تازه انجام نشد؛ دوباره تلاش کنید.')
+    }
     if (data) {
-      setDraft(data[target.field]?.text ?? draft)
-      setTarget({ ...target, revision: data[target.field]?.revision ?? 0 })
+      setDraft(
+        data.config.texts?.[`home.${target.field}`]?.text ?? entries[target.field]?.text ?? draft,
+      )
+      setTarget({ ...target, revision: data.revision })
       setError('')
       setConflict(false)
     }
@@ -204,7 +211,7 @@ export default function HomeTextEditor({ children, showNotice }) {
         loadError,
         reload,
         dialogOpen: Boolean(target),
-        editing: admin && enabled && loaded,
+        editing: admin && enabled && loaded && site.ready && !site.preview,
         open,
         toggle: () => setEnabled((value) => !value),
       }}

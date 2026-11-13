@@ -1,3 +1,4 @@
+import { SiteText } from '../../site/SiteConfig.jsx'
 import React, { useState } from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import { sendContactMessage } from '../../../services/api/contact.js'
@@ -62,11 +63,15 @@ export default function ContactForm({ showNotice }) {
       }}
     >
       <div className="form-heading">
-        <span>فرم تماس</span>
-        <h2>پیامتان را برای ما بنویسید</h2>
+        <span>
+          <SiteText field="copy.contactform.1">فرم تماس</SiteText>
+        </span>
+        <h2>
+          <SiteText field="copy.contactform.2">پیامتان را برای ما بنویسید</SiteText>
+        </h2>
       </div>
       <label>
-        نام و نام خانوادگی
+        <SiteText field="copy.contactform.3">نام و نام خانوادگی</SiteText>
         <input
           name="name"
           type="text"
@@ -82,7 +87,9 @@ export default function ContactForm({ showNotice }) {
       </label>
       <div className="form-row">
         <label>
-          <span className="contact-field-label">شماره موبایل</span>
+          <span className="contact-field-label">
+            <SiteText field="copy.contactform.4">شماره موبایل</SiteText>
+          </span>
           <input
             name="mobile"
             type="tel"
@@ -105,7 +112,10 @@ export default function ContactForm({ showNotice }) {
         </label>
         <label>
           <span className="contact-field-label">
-            ایمیل <small>(اختیاری)</small>
+            <SiteText field="copy.contactform.5">ایمیل </SiteText>
+            <small>
+              <SiteText field="copy.contactform.6">(اختیاری)</SiteText>
+            </small>
           </span>
           <input
             name="email"
@@ -120,7 +130,7 @@ export default function ContactForm({ showNotice }) {
         </label>
       </div>
       <label>
-        متن پیام
+        <SiteText field="copy.contactform.7">متن پیام</SiteText>
         <textarea
           name="message"
           rows="6"
@@ -141,7 +151,11 @@ export default function ContactForm({ showNotice }) {
           {requestError}
         </p>
       )}
-      <p className="form-privacy">اطلاعات شما فقط برای پاسخ‌گویی به همین پیام استفاده می‌شود.</p>
+      <p className="form-privacy">
+        <SiteText field="copy.contactform.8">
+          اطلاعات شما فقط برای پاسخ‌گویی به همین پیام استفاده می‌شود.
+        </SiteText>
+      </p>
     </form>
   )
 }

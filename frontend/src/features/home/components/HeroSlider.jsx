@@ -5,8 +5,47 @@ import useSlidePlayback from '../hooks/useSlidePlayback.js'
 import useHeroImages from '../hooks/useHeroImages.js'
 import HeroMedia from './HeroMedia.jsx'
 import { EditableText, useHomeTextDialogOpen } from './HomeTextEditor.jsx'
+import { useSiteConfig, siteMediaUrl, SiteText } from '../../site/SiteConfig.jsx'
 
 export default function HeroSlider({ navigate }) {
+  const { config } = useSiteConfig()
+  const custom = config.slides !== undefined
+  const slides = useMemo(() => {
+    if (custom)
+      return config.slides
+        .filter((slide) => slide.enabled !== false)
+        .map((slide) => ({
+          ...slide,
+          image: siteMediaUrl(slide.image),
+          preview: siteMediaUrl(slide.image),
+          scene:
+            slide.layout === 'panoramic'
+              ? { viewBox: '0 0 2400 960', width: 2400, height: 960, align: 'xMidYMid slice' }
+              : undefined,
+        }))
+    return heroSlides.map((slide, index) =>
+      config.images?.[`hero.${index}`]
+        ? {
+            ...slide,
+            image: siteMediaUrl(config.images[`hero.${index}`].url),
+            preview: siteMediaUrl(config.images[`hero.${index}`].url),
+            alt: config.images[`hero.${index}`].alt ?? slide.alt,
+            fit: config.images[`hero.${index}`].fit,
+          }
+        : slide,
+    )
+  }, [config.slides, config.images, custom])
+  return slides.length ? (
+    <HeroPlayback
+      key={JSON.stringify(slides)}
+      heroSlides={slides}
+      custom={custom}
+      navigate={navigate}
+    />
+  ) : null
+}
+
+function HeroPlayback({ navigate, heroSlides, custom }) {
   const editingText = useHomeTextDialogOpen()
   const [paused, setPaused] = useState(
     () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
@@ -76,14 +115,14 @@ export default function HeroSlider({ navigate }) {
           >
             <div className="hero-copy">
               <h1>
-                {slide.layout === 'poster' ? (
+                {custom || slide.layout === 'poster' ? (
                   slide.title
                 ) : (
                   <EditableText field={`hero.${index}.title`}>{slide.title}</EditableText>
                 )}
               </h1>
               <p>
-                {slide.layout === 'poster' ? (
+                {custom || slide.layout === 'poster' ? (
                   slide.text
                 ) : (
                   <EditableText field={`hero.${index}.text`}>{slide.text}</EditableText>
@@ -94,7 +133,11 @@ export default function HeroSlider({ navigate }) {
                 href={slide.path}
                 onClick={(event) => navigate(event, slide.path)}
               >
-                {slide.action}
+                {custom ? (
+                  slide.action
+                ) : (
+                  <SiteText field={`home.hero.${index}.action`}>{slide.action}</SiteText>
+                )}
                 <Icon name="arrow" size={18} />
               </a>
             </div>
@@ -118,7 +161,12 @@ export default function HeroSlider({ navigate }) {
                 href={slide.path}
                 onClick={(event) => navigate(event, slide.path)}
               >
-                درباره ما <Icon name="arrow" size={18} />
+                {custom ? (
+                  slide.action
+                ) : (
+                  <SiteText field={`home.hero.${index}.action`}>درباره ما</SiteText>
+                )}{' '}
+                <Icon name="arrow" size={18} />
               </a>
             )}
           </div>

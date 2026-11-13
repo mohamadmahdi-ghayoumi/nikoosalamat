@@ -47,6 +47,9 @@ def php_site(tmp_path, monkeypatch):
     shutil.copyfile(root / '.deploy/cpanel-php/app/home-text.php', app_dir / 'home-text.php')
     shutil.copyfile(root / 'backend/app/home_text_schema.sql', app_dir / 'home-text-schema.sql')
     shutil.copyfile(root / 'backend/app/home_text_fields.json', app_dir / 'home-text-fields.json')
+    shutil.copyfile(root / '.deploy/cpanel-php/app/site-config.php', app_dir / 'site-config.php')
+    shutil.copyfile(root / 'backend/app/site_config_schema.sql', app_dir / 'site-config-schema.sql')
+    shutil.copyfile(root / 'backend/app/site_config_schema.json', app_dir / 'site-config-schema.json')
     shutil.copyfile(root / "backend/app/support_schema.sql", app_dir / "support-schema.sql")
     secret = "local_php_webhook_secret_" + "a" * 32
     # Test-generated fixture, never copied from private server config.

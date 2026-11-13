@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import CategoryArtwork from './CategoryArtwork.jsx'
 import { EditableText } from './HomeTextEditor.jsx'
+import { SiteText } from '../../site/SiteConfig.jsx'
 import { categoryImages } from '../data/categoryImages.js'
 
 export default function CategoryGrid({ navigate }) {
@@ -72,7 +73,8 @@ export default function CategoryGrid({ navigate }) {
           </h2>
         </div>
         <a className="view-all" href="/products" onClick={(event) => navigate(event, '/products')}>
-          همه دسته‌بندی‌ها <Icon name="arrow" size={18} />
+          <SiteText field="home.categories.action">همه دسته‌بندی‌ها</SiteText>{' '}
+          <Icon name="arrow" size={18} />
         </a>
       </div>
       <div className="category-carousel-viewport">

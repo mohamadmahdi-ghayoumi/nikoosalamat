@@ -9,9 +9,11 @@ import ArticlesManager from '../components/ArticlesManager.jsx'
 import CatalogEditor from '../components/CatalogEditor.jsx'
 import SupportInbox from '../../support/SupportInbox.jsx'
 import FaqManager from '../components/FaqManager.jsx'
+const SiteCustomizer = React.lazy(() => import('../../site/SiteCustomizer.jsx'))
 
 export default function AdminPage({ showNotice }) {
   const manager = useAdminController(showNotice)
+  const [siteDirty, setSiteDirty] = React.useState(false)
   if (manager.checking) return <main className="admin-loading">در حال بررسی دسترسی…</main>
   if (!manager.admin) return <AdminLogin busy={manager.busy} login={manager.login} />
   return (
@@ -21,7 +23,28 @@ export default function AdminPage({ showNotice }) {
         <a href="/">ویرایش متن‌های صفحه اصلی ←</a> — پس از رفتن به صفحه اصلی، مداد کنار هر متن را
         بزنید.
       </p>
-      <AdminTabs activeTab={manager.activeTab} setActiveTab={manager.setActiveTab} />
+      <AdminTabs
+        activeTab={manager.activeTab}
+        setActiveTab={(tab) => {
+          if (
+            !siteDirty ||
+            tab === manager.activeTab ||
+            window.confirm('تغییرات سایت ذخیره نشده‌اند؛ بخش دیگری باز شود؟')
+          ) {
+            manager.setActiveTab(tab)
+            setSiteDirty(false)
+          }
+        }}
+      />
+      {manager.activeTab === 'site' && (
+        <React.Suspense fallback={<p>دریافت مدیریت سایت…</p>}>
+          <SiteCustomizer
+            token={manager.token}
+            showNotice={showNotice}
+            onDirtyChange={setSiteDirty}
+          />
+        </React.Suspense>
+      )}
       {manager.activeTab === 'support' && <SupportInbox token={manager.token} />}
       {manager.activeTab === 'faqs' && <FaqManager token={manager.token} />}
       {manager.activeTab === 'products' && (

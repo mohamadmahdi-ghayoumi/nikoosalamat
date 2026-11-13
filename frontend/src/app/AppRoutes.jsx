@@ -12,6 +12,8 @@ import ContactPage from '../features/contact/pages/ContactPage.jsx'
 import AdminPage from '../features/admin/pages/AdminPage.jsx'
 import NotFoundPage from '../components/ui/NotFoundPage.jsx'
 import { ADMIN_PATH } from './adminRoute.js'
+import { useSiteConfig } from '../features/site/SiteConfig.jsx'
+import CustomSitePage from '../features/site/CustomSitePage.jsx'
 
 export default function AppRoutes({
   currentPath,
@@ -23,6 +25,21 @@ export default function AppRoutes({
   markApiOnline,
   addToCart,
 }) {
+  const { config, ready } = useSiteConfig()
+  if (currentPath.startsWith('/site/')) {
+    if (!ready)
+      return (
+        <main className="inner-page section" role="status">
+          در حال آماده‌سازی صفحه…
+        </main>
+      )
+    const page = config.pages?.[currentPath.slice(6)]
+    return page ? (
+      <CustomSitePage page={page} navigate={navigate} />
+    ) : (
+      <NotFoundPage navigate={navigate} />
+    )
+  }
   if (currentPath === '/')
     return (
       <HomePage
@@ -47,13 +64,14 @@ export default function AppRoutes({
       <SearchPage query={new URLSearchParams(currentSearch).get('q') || ''} navigate={navigate} />
     )
   if (currentPath === '/solutions') return <SolutionsPage navigate={navigate} />
-  if (currentPath === '/mag' || currentPath === '/articles') return <ArticlesPage navigate={navigate} currentSearch={currentSearch} />
+  if (currentPath === '/mag' || currentPath === '/articles')
+    return <ArticlesPage navigate={navigate} currentSearch={currentSearch} />
   if (currentPath.startsWith('/articles/'))
     return <ArticlePage slug={currentPath.slice('/articles/'.length)} navigate={navigate} />
   if (currentPath.startsWith('/pages/'))
     return <ContentPageView slug={currentPath.slice('/pages/'.length)} navigate={navigate} />
   if (currentPath === '/about') return <AboutPage navigate={navigate} />
-  if (currentPath === '/contact') return <ContactPage showNotice={showNotice} />
+  if (currentPath === '/contact') return <ContactPage showNotice={showNotice} navigate={navigate} />
   if (currentPath === ADMIN_PATH) return <AdminPage showNotice={showNotice} />
   return <NotFoundPage navigate={navigate} />
 }

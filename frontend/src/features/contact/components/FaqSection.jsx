@@ -1,3 +1,4 @@
+import { SiteText } from '../../site/SiteConfig.jsx'
 import React, { useEffect, useState } from 'react'
 import { getFaqs } from '../../../services/api/faqs.js'
 
@@ -30,25 +31,40 @@ export default function FaqSection() {
       <div className="section faq-inner">
         <div className="section-heading center-heading">
           <div>
-            <span className="eyebrow">راهنمای محصولات و سفارش</span>
+            <span className="eyebrow">
+              <SiteText field="copy.faqsection.0">راهنمای محصولات و سفارش</SiteText>
+            </span>
             <h2>
-              سؤالات <em>متداول</em>
+              <SiteText field="copy.faqsection.1">سؤالات </SiteText>
+              <em>
+                <SiteText field="copy.faqsection.2">متداول</SiteText>
+              </em>
             </h2>
-            <p>پاسخ پرسش‌های رایج درباره محصولات، نحوه مصرف، سفارش و همکاری</p>
+            <p>
+              <SiteText field="copy.faqsection.3">
+                پاسخ پرسش‌های رایج درباره محصولات، نحوه مصرف، سفارش و همکاری
+              </SiteText>
+            </p>
           </div>
         </div>
         <div className="faq-list" id="faq-list">
           {loading ? (
-            <p role="status">در حال دریافت سؤالات…</p>
+            <p role="status">
+              <SiteText field="copy.faqsection.4">در حال دریافت سؤالات…</SiteText>
+            </p>
           ) : error ? (
             <div role="alert">
               <p>{error}</p>
               <button className="button outline" onClick={() => setRetry((value) => value + 1)}>
-                تلاش دوباره
+                <SiteText field="copy.faqsection.6">تلاش دوباره</SiteText>
               </button>
             </div>
           ) : !items.length ? (
-            <p>هنوز سؤالی در این بخش منتشر نشده است؛ از فرم تماس برای ما پیام بفرستید.</p>
+            <p>
+              <SiteText field="copy.faqsection.8">
+                هنوز سؤالی در این بخش منتشر نشده است؛ از فرم تماس برای ما پیام بفرستید.
+              </SiteText>
+            </p>
           ) : (
             (showAll ? items : items.slice(0, 5)).map(({ id, question, answer }, index) => (
               <details key={id} open={index === 0}>

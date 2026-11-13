@@ -1,0 +1,330 @@
+.site-customizer {
+  margin-block: 24px;
+  background: #fff;
+  border: 1px solid #dce6de;
+  border-radius: 14px;
+  color: #3d3f44;
+}
+.cms-preview-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 14px 24px;
+}
+.cms-preview-actions button,
+.cms-device-preview button {
+  padding: 8px 12px;
+  border: 1px solid #b5d6bf;
+  border-radius: 7px;
+  background: #fff;
+  color: #185b2e;
+}
+.cms-device-preview {
+  margin: 20px;
+  padding: 16px;
+  border: 1px solid #b5d6bf;
+  border-radius: 10px;
+  background: #f3f6f4;
+  min-width: 0;
+}
+.cms-device-preview > div:first-child {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+.cms-device-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+}
+.cms-device-scroll iframe {
+  display: block;
+  border: 1px solid #c5d2c9;
+  height: 720px;
+  margin: auto;
+  max-width: none;
+  background: #fff;
+}
+.cms-intro {
+  padding: 24px 28px 12px;
+}
+.cms-intro h2 {
+  font-size: 24px;
+  margin: 0 0 12px;
+}
+.cms-intro p,
+.cms-hint {
+  font-size: 13px;
+  line-height: 2;
+  color: #637167;
+}
+.cms-toolbar {
+  position: sticky;
+  top: 58px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 24px;
+  background: #eef7f0;
+  border-block: 1px solid #dce6de;
+}
+.cms-toolbar .button {
+  min-height: 40px;
+  padding: 8px 16px;
+  font-size: 13px;
+}
+.cms-toolbar span {
+  font-size: 12px;
+}
+.cms-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 20px 24px 0;
+}
+.cms-tabs button {
+  border: 1px solid #dce6de;
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: #f7faf7;
+  color: #185b2e;
+}
+.cms-tabs .active {
+  background: #23763c;
+  color: #fff;
+}
+.cms-panel {
+  margin: 0;
+  padding: 24px 28px;
+  border: 0;
+  min-width: 0;
+}
+.cms-panel h3 {
+  font-size: 18px;
+  margin: 24px 0 16px;
+}
+.cms-panel p {
+  font-size: 13px;
+  line-height: 2;
+}
+.cms-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  min-width: 0;
+}
+.cms-panel input:not([type='checkbox']):not([type='range']),
+.cms-panel textarea,
+.cms-panel select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 42px;
+  border: 1px solid #cbded1;
+  background: #f7faf7;
+  border-radius: 7px;
+  padding: 10px 12px;
+  color: #243e2d;
+}
+.cms-panel textarea {
+  resize: vertical;
+  line-height: 1.9;
+}
+.cms-panel input[type='color'] {
+  height: 46px;
+  padding: 4px !important;
+  width: 100%;
+}
+.cms-panel input[type='file'] {
+  font-size: 12px;
+}
+.cms-panel input:focus-visible,
+.cms-panel select:focus-visible,
+.cms-panel textarea:focus-visible {
+  outline: 2px solid #3cad55;
+  outline-offset: 2px;
+}
+.cms-fields-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.cms-fields-row > label {
+  flex: 1 1 150px;
+}
+.cms-color-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.cms-panel details {
+  padding: 14px 16px;
+  border: 1px solid #dce6de;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.cms-panel summary {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2;
+}
+.cms-panel details[open] > summary {
+  margin-bottom: 18px;
+}
+.cms-panel button:not(.button):not(.rich-toolbar button) {
+  border: 1px solid #cbded1;
+  border-radius: 7px;
+  background: #fff;
+  padding: 8px 12px;
+  color: #185b2e;
+  font-size: 12px;
+  cursor: pointer;
+}
+.cms-panel button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.cms-menu-item {
+  margin-bottom: 12px;
+  padding: 16px;
+  background: #f7faf7;
+  border: 1px solid #dce6de;
+  border-radius: 10px;
+}
+.cms-menu-level .cms-menu-level {
+  margin-inline-start: 12px;
+}
+.cms-order-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.cms-danger {
+  color: #a12b2b !important;
+}
+.cms-panel .cms-checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.cms-checkbox input {
+  width: 18px;
+  height: 18px;
+}
+.cms-image-control {
+  display: grid;
+  gap: 10px;
+}
+.cms-image-control > img {
+  width: 180px;
+  height: 140px;
+  object-fit: contain;
+  background: #eef3ef;
+  border-radius: 8px;
+}
+.cms-upload {
+  padding: 12px;
+  background: #edf7ef;
+  border-radius: 8px;
+}
+.cms-section-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px;
+  background: #f7faf7;
+  border: 1px solid #dce6de;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.cms-section-row > strong {
+  flex: 1;
+}
+.cms-block-editor {
+  padding: 20px;
+  border: 2px solid #b5d6bf;
+  border-radius: 10px;
+  margin-block: 20px;
+}
+.cms-media-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.cms-media-grid article {
+  min-width: 0;
+  border: 1px solid #dce6de;
+  border-radius: 8px;
+  padding: 10px;
+}
+.cms-media-grid img {
+  width: 100%;
+  height: 130px;
+  object-fit: contain;
+}
+.cms-media-grid strong {
+  display: block;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  margin-block: 10px;
+}
+.cms-error,
+.cms-recovery {
+  margin: 20px;
+  padding: 16px;
+  background: #fff0ef;
+  border: 1px solid #e1aaa5;
+  border-radius: 8px;
+  line-height: 2;
+  font-size: 13px;
+}
+.cms-error button,
+.cms-recovery button {
+  margin-inline: 10px;
+  border: 1px solid #b9d5c2;
+  padding: 6px;
+  border-radius: 5px;
+  background: #fff;
+}
+.cms-recovery {
+  background: #fff9e4;
+  border-color: #dfd095;
+}
+@media (max-width: 760px) {
+  .cms-intro,
+  .cms-panel {
+    padding: 18px;
+  }
+  .cms-tabs {
+    padding: 14px;
+  }
+  .cms-toolbar {
+    padding: 12px;
+    top: 54px;
+  }
+  .cms-color-grid,
+  .cms-media-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cms-menu-item {
+    padding: 10px;
+  }
+  .cms-block-editor {
+    padding: 10px;
+  }
+  .cms-toolbar .button {
+    font-size: 11px;
+    padding: 8px 12px;
+  }
+}

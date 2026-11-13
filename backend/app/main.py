@@ -446,6 +446,12 @@ def sitemap() -> Response:
     root = Element("urlset", xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
     urls = [(path, None) for path in ["/", "/products", "/mag/", "/solutions", "/about", "/contact"]]
     urls.extend((f"/products/{row['id']}", None) for row in fetch_all("SELECT id FROM products ORDER BY id"))
+    try:
+        settings = fetch_one('SELECT published FROM site_config WHERE id=1')
+    except sqlite3.OperationalError:
+        settings = None
+    if settings:
+        urls.extend((f'/site/{slug}', None) for slug in json.loads(settings['published']).get('pages', {}))
     for table, prefix in [("articles", "/articles/"), ("content_pages", "/pages/")]:
         urls.extend((prefix + quote(row["slug"], safe=""), row["updated_at"]) for row in fetch_all(f"SELECT slug, updated_at FROM {table} WHERE published = 1 ORDER BY id"))
     for path, updated in urls:
@@ -471,6 +477,9 @@ install_faqs(app, require_admin)
 from .home_text import install as install_home_text
 
 install_home_text(app, require_admin)
+from .site_config import install as install_site_config
+
+install_site_config(app, require_admin, save_image)
 
 
 @app.get("/{frontend_path:path}", include_in_schema=False)

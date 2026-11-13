@@ -5,6 +5,7 @@ import ArticleCard from '../components/ArticleCard.jsx'
 import PageHero from '../../../components/ui/PageHero.jsx'
 import { magazineCategories, magazineCategoryUrl } from '../data/magazineCategories.js'
 import useNoIndex from '../../../hooks/useNoIndex.js'
+import { SiteImage } from '../../site/SiteConfig.jsx'
 
 function rememberedPage(category) {
   try {
@@ -79,7 +80,13 @@ export default function ArticlesPage({ navigate, currentSearch = '' }) {
           onClick={(event) => navigate(event, '/mag/')}
           aria-label="صفحه اصلی مجله نیکو سلامت"
         >
-          <img src="/images/niko-mag-logo.png" alt="نیکومگ" width="1957" height="784" />
+          <SiteImage
+            field="magazine.logo"
+            src="/images/niko-mag-logo.png"
+            alt="نیکومگ"
+            width="1957"
+            height="784"
+          />
         </a>
         <nav className="magazine-category-nav" aria-label="دسته‌بندی مجله">
           {magazineCategories.map((item) => (

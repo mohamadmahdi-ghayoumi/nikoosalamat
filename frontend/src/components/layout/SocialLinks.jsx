@@ -1,15 +1,18 @@
 import React from 'react'
 import Icon from '../ui/Icon.jsx'
 import { socialChannels } from '../../config/socials.js'
+import { useSiteConfig } from '../../features/site/SiteConfig.jsx'
 
 export default function SocialLinks({ placement }) {
+  const { config } = useSiteConfig()
   return (
     <div
       className={`social-links social-links-${placement}`}
       role="group"
       aria-label="شبکه‌های اجتماعی نیکو سلامت"
     >
-      {socialChannels.map(({ icon, label, href }) => {
+      {socialChannels.map(({ icon, label, href: defaultHref }) => {
+        const href = config.links?.[`social.${icon}`] ?? defaultHref
         const content = (
           <>
             <Icon name={icon} size={23} />

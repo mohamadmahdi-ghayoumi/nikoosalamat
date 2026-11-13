@@ -2,6 +2,7 @@ import React from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import ProductCard from '../../products/components/ProductCard.jsx'
 import { EditableText } from './HomeTextEditor.jsx'
+import { SiteText } from '../../site/SiteConfig.jsx'
 
 export default function FeaturedProducts({ products, navigate }) {
   return (
@@ -28,7 +29,8 @@ export default function FeaturedProducts({ products, navigate }) {
         className="button outline products-cta"
         onClick={(event) => navigate(event, '/products')}
       >
-        دیدن همه محصولات <Icon name="arrow" size={18} />
+        <SiteText field="home.featured.action">دیدن همه محصولات</SiteText>{' '}
+        <Icon name="arrow" size={18} />
       </button>
     </section>
   )

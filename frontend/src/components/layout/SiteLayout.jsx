@@ -9,7 +9,7 @@ import SupportChat from '../../features/support/SupportChat.jsx'
 export default function SiteLayout({ currentPath, navigate, cartCount, notice, children }) {
   const isAdmin = currentPath === ADMIN_PATH
   return (
-    <div className="site-shell">
+    <div className={`site-shell${isAdmin ? '' : ' site-customized'}`}>
       <Header currentPath={currentPath} navigate={navigate} cartCount={cartCount} />
       {children}
       {!isAdmin && <SocialLinks placement="dock" />}

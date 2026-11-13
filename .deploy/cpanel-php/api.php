@@ -178,7 +178,9 @@ $method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
 require_once __DIR__ . '/app/support.php';
 require_once __DIR__ . '/app/faqs.php';
 require_once __DIR__ . '/app/home-text.php';
+require_once __DIR__ . '/app/site-config.php';
 try {
+    siteConfigRoutes($db, $path, $method, $uploadDir);
     homeTextRoutes($db, $path, $method);
     faqRoutes($db, $path, $method);
     supportRoutes($db, $config, $path, $method);
@@ -348,6 +350,10 @@ if (in_array($method, ['GET', 'HEAD'], true) && $path === '/sitemap.xml') {
     $urls = [];
     foreach (['/', '/products', '/mag/', '/solutions', '/about', '/contact'] as $url) { $urls[] = [$url, null]; }
     foreach ($db->query('SELECT id FROM products ORDER BY id')->fetchAll() as $row) { $urls[] = ['/products/' . (int) $row['id'], null]; }
+    if ($db->query("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='site_config'")->fetchColumn()) {
+        $sitePublished=json_decode((string)$db->query('SELECT published FROM site_config WHERE id=1')->fetchColumn(),true) ?: [];
+        foreach (array_keys($sitePublished['pages'] ?? []) as $slug) $urls[]=['/site/'.rawurlencode((string)$slug),null];
+    }
     foreach (['articles' => '/articles/', 'content_pages' => '/pages/'] as $table => $prefix) {
         foreach ($db->query("SELECT slug, updated_at FROM $table WHERE published = 1 ORDER BY id")->fetchAll() as $row) {
             $urls[] = [$prefix . rawurlencode($row['slug']), $row['updated_at']];

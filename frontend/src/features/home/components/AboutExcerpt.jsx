@@ -3,6 +3,7 @@ import Icon from '../../../components/ui/Icon.jsx'
 import PharmucareBrand from '../../../components/ui/PharmucareBrand.jsx'
 import { pharmucareContent } from '../../about/data/pharmucareContent.js'
 import { EditableText } from './HomeTextEditor.jsx'
+import { SiteText } from '../../site/SiteConfig.jsx'
 
 export default function AboutExcerpt({ navigate }) {
   return (
@@ -25,7 +26,8 @@ export default function AboutExcerpt({ navigate }) {
             href="/about#pharmucare"
             onClick={(event) => navigate(event, '/about#pharmucare')}
           >
-            ادامه مطلب درباره فارمیوکِر <Icon name="arrow" size={18} />
+            <SiteText field="home.about.action">ادامه مطلب درباره فارمیوکِر</SiteText>{' '}
+            <Icon name="arrow" size={18} />
           </a>
         </div>
         <PharmucareBrand language="en" editable />
