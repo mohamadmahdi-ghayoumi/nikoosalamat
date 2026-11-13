@@ -38,6 +38,17 @@
   padding-top: 56px;
   padding-bottom: 56px;
 }
+.values-inner > .center-heading {
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.values-inner > .center-heading > div {
+  width: 100%;
+  text-align: center;
+}
 .values-inner .eyebrow,
 .values-inner .section-heading h2 em {
   color: var(--wine);
