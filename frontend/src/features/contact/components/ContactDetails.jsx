@@ -1,6 +1,7 @@
 import { SiteText, useSiteConfig, siteLink } from '../../site/SiteConfig.jsx'
 import React from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
+import { socialUrls } from '../../../config/socials.js'
 
 export default function ContactDetails() {
   const { config } = useSiteConfig()
@@ -46,7 +47,7 @@ export default function ContactDetails() {
           </div>
         </a>
         <a
-          href={siteLink(config, 'contact.telegram', 'https://t.me/nikoosalamat')}
+          href={siteLink(config, 'contact.telegram', socialUrls.telegram)}
           target="_blank"
           rel="noreferrer"
         >
@@ -58,7 +59,7 @@ export default function ContactDetails() {
               <SiteText field="copy.contactdetails.7">تلگرام</SiteText>
             </small>
             <strong dir="ltr">
-              <SiteText field="copy.contactdetails.8">@nikoosalamat</SiteText>
+              <SiteText field="copy.contactdetails.8">@h_nikoosalamat</SiteText>
             </strong>
           </div>
         </a>

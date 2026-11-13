@@ -1,4 +1,5 @@
 import generatedFields from './copyFields.json'
+import { socialUrls } from '../../config/socials.js'
 import { heroSlides } from '../home/data/heroSlides.js'
 import { categoryImages } from '../home/data/categoryImages.js'
 import { fallbackBenefits } from '../home/data/homeContent.js'
@@ -214,9 +215,9 @@ export const themeDefaults = {
 export const linkFields = [
   ['contact.phone', 'لینک شماره تماس', 'tel:+989124283834'],
   ['contact.email', 'لینک ایمیل', 'mailto:info@nikoosalamat.ir'],
-  ['contact.telegram', 'تلگرام تماس', 'https://t.me/nikoosalamat'],
-  ['social.instagram', 'اینستاگرام', ''],
-  ['social.telegram', 'تلگرام نوار کناری', ''],
-  ['social.bale', 'بله', ''],
+  ['contact.telegram', 'تلگرام تماس', socialUrls.telegram],
+  ['social.instagram', 'اینستاگرام', socialUrls.instagram],
+  ['social.telegram', 'تلگرام نوار کناری', socialUrls.telegram],
+  ['social.bale', 'بله', socialUrls.bale],
   ['story.video', 'نشانی فایل ویدیوی معرفی', '/videos/hns-site-cover.mp4'],
 ]
