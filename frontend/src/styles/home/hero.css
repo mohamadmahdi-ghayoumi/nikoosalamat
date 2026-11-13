@@ -44,6 +44,23 @@
   opacity: 1;
   pointer-events: auto;
 }
+.hero-banner-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+.hero-banner-link:focus-visible {
+  outline: 3px solid var(--wine);
+  outline-offset: -4px;
+}
+.hero-copy {
+  pointer-events: none;
+}
+.hero-copy a,
+.hero-copy button {
+  pointer-events: auto;
+}
 .hero-copy {
   position: relative;
   z-index: 2;

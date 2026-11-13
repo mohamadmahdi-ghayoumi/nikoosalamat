@@ -113,6 +113,12 @@ function HeroPlayback({ navigate, heroSlides, custom }) {
             data-image-status={statuses[index]}
             inert={active !== index ? true : undefined}
           >
+            <a
+              className="hero-banner-link"
+              href={slide.path}
+              onClick={(event) => navigate(event, slide.path)}
+              aria-label={slide.title || slide.action || slide.alt || 'مشاهده جزئیات بنر'}
+            />
             <div className="hero-copy">
               <h1>
                 {custom || slide.layout === 'poster' ? (
@@ -142,14 +148,9 @@ function HeroPlayback({ navigate, heroSlides, custom }) {
               </a>
             </div>
             {slide.layout === 'poster' ? (
-              <a
-                className="hero-poster-slide-link"
-                href={slide.path}
-                onClick={(event) => navigate(event, slide.path)}
-                aria-label="درباره حال نیکو سلامت و فارمیوکِر بیشتر بخوانید"
-              >
+              <div className="hero-poster-slide-link">
                 <HeroMedia slide={slide} ready={readySlides[index]} />
-              </a>
+              </div>
             ) : (
               <div className="hero-scene">
                 <HeroMedia slide={slide} ready={readySlides[index]} />

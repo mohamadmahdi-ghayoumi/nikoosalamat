@@ -6,6 +6,7 @@ import {
   FooterLinks,
 } from '../../features/site/SiteConfig.jsx'
 import React from 'react'
+import SocialLinks from './SocialLinks.jsx'
 
 export default function Footer({ navigate }) {
   const { config } = useSiteConfig()
@@ -45,6 +46,7 @@ export default function Footer({ navigate }) {
               <SiteText field="copy.footer.1">از علم تا مزرعه، با حالِ نیک</SiteText>
             </p>
           </div>
+          <SocialLinks placement="footer" />
         </div>
         <div className="footer-group">
           <h3>
