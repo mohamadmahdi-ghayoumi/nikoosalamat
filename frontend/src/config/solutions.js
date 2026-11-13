@@ -1,11 +1,11 @@
 export const solutionTopics = [
   { id: 'hoof-care', label: 'مراقبت از سُم', path: '/pages/hoof-care' },
   { id: 'udder-health', label: 'سلامت پستان', path: '/pages/udder-health' },
-  { id: 'disinfection', label: 'ضدعفونی‌کننده‌ها', path: '/pages/farm-disinfection' },
-  { id: 'fly-control', label: 'مقابله با مگس', path: `/products?category=${encodeURIComponent('مقابله با مگس')}` },
-  { id: 'horse-care', label: 'پرورش اسب', path: '/pages/animal-hygiene' },
-  { id: 'green-fertilizers', label: 'کودهای سبز', path: `/products?category=${encodeURIComponent('کودهای سبز')}` },
   { id: 'foot-and-mouth', label: 'تب برفکی', path: '/pages/foot-and-mouth' },
+  { id: 'disinfection', label: 'ضدعفونی کننده ها', path: '/pages/farm-disinfection' },
+  { id: 'fly-control', label: 'مقابله با مگس', path: `/products?category=${encodeURIComponent('مقابله با مگس')}` },
+  { id: 'horse-care', label: 'بهداشت و سلامت اسب', path: '/pages/animal-hygiene' },
+  { id: 'green-fertilizers', label: 'کودهای سبز', path: `/products?category=${encodeURIComponent('کودهای سبز')}` },
 ].map((item) => ({ ...item, image: `/images/solutions/${item.id}.png` }))
 
 export const solutionItems = [

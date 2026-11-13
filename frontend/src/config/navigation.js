@@ -1,4 +1,4 @@
-import { solutionItems } from './solutions.js'
+import { solutionItems, solutionTopics } from './solutions.js'
 
 export const navigationItems = [
   { label: 'خانه', path: '/' },
@@ -35,7 +35,7 @@ export const navigationItems = [
       '/pages/farm-disinfection',
       '/pages/animal-hygiene',
     ],
-    children: solutionItems,
+    children: solutionTopics.map(({ label, path }) => ({ label, path })),
   },
   {
     label: 'درباره ما',
