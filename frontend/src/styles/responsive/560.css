@@ -166,7 +166,9 @@
     aspect-ratio: 1.22 / 1;
   }
   .story-video-section {
-    min-height: 280px;
+    width: calc(100% - 32px);
+    min-height: 0;
+    border-radius: 12px;
   }
   .story-video-link {
     right: 16px;

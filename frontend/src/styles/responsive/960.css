@@ -382,8 +382,8 @@
     min-height: 320px;
   }
   .story-video-section {
-    min-height: 360px;
-    aspect-ratio: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
   }
   .story-video-section video {
     object-position: center;
