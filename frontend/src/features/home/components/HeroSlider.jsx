@@ -72,7 +72,7 @@ function HeroPlayback({ navigate, heroSlides, custom }) {
   }, [])
   return (
     <section
-      className={`hero-slider ${['panoramic', 'poster'].includes(heroSlides[active].layout) ? 'hero-slider--panoramic' : ''}`}
+      className={`hero-slider ${['panoramic', 'poster'].includes(heroSlides[active].layout) ? 'hero-slider--panoramic' : ''} ${heroSlides[active].layout === 'poster' ? 'hero-slider--poster' : ''}`}
       role="region"
       aria-roledescription="اسلایدر"
       aria-label="معرفی حال نیکو سلامت"
