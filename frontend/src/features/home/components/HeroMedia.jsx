@@ -3,11 +3,13 @@ import React from 'react'
 export default function HeroMedia({ slide, ready }) {
   return (
     <>
-      <div
-        className={`hero-image-placeholder ${slide.layout === 'poster' ? 'hero-image-placeholder--poster' : ''}`}
-        style={{ backgroundImage: `url(${JSON.stringify(slide.preview)})` }}
-        aria-hidden="true"
-      />
+      {(!ready || slide.layout !== 'poster') && (
+        <div
+          className={`hero-image-placeholder ${slide.layout === 'poster' ? 'hero-image-placeholder--poster' : ''}`}
+          style={{ backgroundImage: `url(${JSON.stringify(slide.preview)})` }}
+          aria-hidden="true"
+        />
+      )}
       {ready &&
         (slide.scene ? (
           <svg

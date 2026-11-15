@@ -10,7 +10,9 @@
 }
 .hero-image-placeholder--poster {
   background-position: center;
-  background-size: contain;
+  background-size: cover;
+  filter: none;
+  transform: none;
 }
 .hero-slide-media {
   position: relative;

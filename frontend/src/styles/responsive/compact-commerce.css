@@ -57,18 +57,10 @@
   .hero-slider .hero-slide--poster .hero-copy {
     display: none;
   }
-  .hero-slider.hero-slider--poster .hero-slides {
-    height: auto;
-  }
-  .hero-slider .hero-slide--poster.is-active {
-    position: relative;
-    padding-bottom: 96px;
-  }
   .hero-slider .hero-poster-slide-link {
-    position: relative;
-    inset: auto;
-    height: auto;
-    aspect-ratio: 1984 / 793;
+    position: absolute;
+    inset: 0;
+    height: 100%;
     background: #e9f5ec;
   }
   .hero-slider .hero-poster-slide-link img {
@@ -76,17 +68,11 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
   }
   .hero-slider .hero-poster-cta {
     display: inline-flex;
     bottom: 52px;
-  }
-  .hero-slider.hero-slider--poster .slider-dots span {
-    background: rgba(35, 118, 60, 0.3);
-  }
-  .hero-slider.hero-slider--poster .slider-dots button[aria-pressed='true'] span {
-    background: var(--wine);
   }
   .hero-slider .hero-controls {
     bottom: 8px;

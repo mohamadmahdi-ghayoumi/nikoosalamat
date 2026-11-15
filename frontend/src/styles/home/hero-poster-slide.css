@@ -1,12 +1,14 @@
 .hero-slide--poster {
   display: block;
+  padding: 0;
   background: var(--cream);
 }
 .hero-slide--poster .hero-copy {
   display: none;
 }
 .hero-poster-slide-link {
-  position: relative;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
   display: block;
   width: 100%;
@@ -26,35 +28,10 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
 }
 .hero-poster-slide-link:focus-visible {
   outline: 3px solid var(--wine);
   outline-offset: -4px;
-}
-@media (max-width: 960px) {
-  .hero-slide--poster .hero-poster-cta {
-    display: none;
-  }
-  .hero-slide.hero-slide--poster {
-    display: grid;
-    grid-template-rows: auto 1fr;
-  }
-  .hero-poster-slide-link {
-    grid-row: 1;
-    height: auto;
-    aspect-ratio: 1984 / 793;
-  }
-  .hero-slide--poster .hero-copy {
-    display: flex;
-    background: #163c25;
-    color: white;
-  }
-  .hero-slide--poster .hero-copy h1 {
-    color: white;
-  }
-  .hero-slide--poster .hero-copy p,
-  .hero-slide--poster .hero-copy .eyebrow {
-    color: #f0f6f1;
-  }
 }
