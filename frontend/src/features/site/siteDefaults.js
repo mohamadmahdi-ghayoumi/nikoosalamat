@@ -10,6 +10,7 @@ import { aboutValues } from '../about/data/aboutValues.js'
 const field = (field, group, label, value) => ({ field, group, label, value })
 export const textFields = [
   ...generatedFields,
+  ...categoryImages.map((item, index) => field(`category.caption.${index}`, 'کارت‌های صفحه اصلی', item.label, item.label)),
   ...solutionTopics.map((item) => field(`solution.topic.${item.id}`, 'راهکارها', item.label, item.label)),
   ...Object.entries({
     'home.about.action': 'ادامه مطلب درباره فارمیوکِر',

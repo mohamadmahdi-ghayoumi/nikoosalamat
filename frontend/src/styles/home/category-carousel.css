@@ -22,7 +22,25 @@
   border-radius: 6%;
 }
 .category-carousel .category-artwork {
+  position: relative;
   aspect-ratio: 1;
+}
+.category-carousel .category-card .category-caption {
+  position: absolute;
+  inset-inline: 6%;
+  bottom: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 20%;
+  margin: 0;
+  padding: 0;
+  color: var(--ink);
+  text-align: center;
+  font-size: clamp(12px, 1.5vw, 21px);
+  font-weight: 700;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
 }
 .category-carousel .category-card:focus-visible {
   outline-offset: -4px;
@@ -45,6 +63,11 @@
   transform: rotate(90deg);
 }
 @media (max-width: 560px) {
+  .category-carousel .category-card .category-caption {
+    bottom: 4%;
+    font-size: clamp(10px, 3vw, 13px);
+    line-height: 1.5;
+  }
   .category-carousel-track {
     --category-gap: 12px;
   }

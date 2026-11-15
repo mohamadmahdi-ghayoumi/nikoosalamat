@@ -90,7 +90,7 @@ export default function CategoryGrid({ navigate }) {
               href={category.path}
               onClick={(event) => navigate(event, category.path)}
               className="category-card category-card--image"
-              aria-label={category.alt.split('؛')[0]}
+              aria-labelledby={`category-label-${index}`}
               aria-hidden={index < position || index >= position + visibleCount}
               inert={index < position || index >= position + visibleCount}
               key={`${category.image}-${index}`}
