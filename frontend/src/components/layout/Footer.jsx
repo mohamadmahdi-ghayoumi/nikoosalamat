@@ -38,13 +38,15 @@ export default function Footer({ navigate }) {
                   <image href="/images/hns-logo.png" width="461" height="526" />
                 </svg>
               )}
-              <span className="footer-brand-name">
-                <SiteText field="copy.footer.0">حال نیکو سلامت</SiteText>
+              <span className="footer-brand-copy">
+                <span className="footer-brand-name">
+                  <SiteText field="copy.footer.0">حال نیکو سلامت</SiteText>
+                </span>
+                <span className="footer-tagline">
+                  <SiteText field="copy.footer.1">از علم تا مزرعه، با حالِ نیک</SiteText>
+                </span>
               </span>
             </a>
-            <p className="footer-tagline">
-              <SiteText field="copy.footer.1">از علم تا مزرعه، با حالِ نیک</SiteText>
-            </p>
           </div>
           <SocialLinks placement="footer" />
         </div>

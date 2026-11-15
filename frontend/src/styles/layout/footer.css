@@ -15,6 +15,17 @@
   align-items: center;
   gap: 10px;
 }
+.footer-brand-link > .footer-logo {
+  flex-shrink: 0;
+}
+.footer-brand-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 0;
+  text-align: center;
+}
 .footer .footer-brand-name {
   font-size: 17px;
   font-weight: 750;
@@ -23,6 +34,8 @@
   margin: 0;
   font-size: 12px;
   line-height: 1.9;
+  color: var(--muted);
+  font-weight: 400;
 }
 .footer-main {
   width: min(1240px, calc(100% - 64px));
