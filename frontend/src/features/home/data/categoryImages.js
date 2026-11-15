@@ -37,8 +37,8 @@ export const categoryImages = [
   },
   {
     image: '/images/categories/foot-and-mouth-solution-unlabelled.jpg',
-    label: 'محلول تب برفکی',
-    alt: 'محلول تب برفکی؛ کنترل بیماری و بهبود زخم‌های دهانی',
+    label: 'تب برفکی',
+    alt: 'تب برفکی؛ کنترل بیماری و بهبود زخم‌های دهانی',
     path: `/products?category=${encodeURIComponent('محلول تب برفکی')}`,
   },
 ]
