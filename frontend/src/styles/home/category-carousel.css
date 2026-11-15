@@ -17,27 +17,29 @@
 .category-carousel .category-card.category-card--image {
   flex: 0 0
     calc((100% - (var(--category-visible) - 1) * var(--category-gap)) / var(--category-visible));
-  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: auto;
   border: 0;
-  border-radius: 6%;
+  border-radius: 0;
+  background: transparent !important;
 }
 .category-carousel .category-artwork {
-  position: relative;
+  flex: 0 0 auto;
+  width: 100%;
   aspect-ratio: 1;
+  border-radius: 6%;
 }
 .category-carousel .category-card .category-caption {
-  position: absolute;
-  inset-inline: 6%;
-  bottom: 8%;
+  position: static;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  min-height: 20%;
-  margin: 0;
-  padding: 0;
+  margin: 10px 0 0;
+  padding: 0 4px 8px;
   color: var(--ink);
   text-align: center;
-  font-size: clamp(12px, 1.5vw, 21px);
+  font-size: clamp(12px, 1.3vw, 18px);
   font-weight: 700;
   line-height: 1.65;
   overflow-wrap: anywhere;
@@ -64,7 +66,7 @@
 }
 @media (max-width: 560px) {
   .category-carousel .category-card .category-caption {
-    bottom: 4%;
+    margin-top: 8px;
     font-size: clamp(10px, 3vw, 13px);
     line-height: 1.5;
   }
