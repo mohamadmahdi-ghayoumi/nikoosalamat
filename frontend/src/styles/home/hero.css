@@ -35,9 +35,7 @@
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
-  transition:
-    opacity 0.55s ease,
-    visibility 0.55s;
+  transition: none;
 }
 .hero-slide.is-active {
   visibility: visible;

@@ -16,7 +16,7 @@
 }
 .hero-slide-media {
   position: relative;
-  animation: hero-image-reveal 350ms ease both;
+  animation: none;
 }
 .hero-loading-state {
   position: absolute;
@@ -50,14 +50,6 @@
   border-top-color: var(--wine);
   border-radius: 50%;
   animation: hero-loading-spin 800ms linear infinite;
-}
-@keyframes hero-image-reveal {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 @keyframes hero-loading-spin {
   to {

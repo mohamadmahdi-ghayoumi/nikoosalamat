@@ -56,7 +56,7 @@ function HeroPlayback({ navigate, heroSlides, custom }) {
   const playing = !paused && !hovered && !focused && visible && !editingText
   const { statuses, requestImage } = useHeroImages(heroSlides)
   const readySlides = useMemo(() => statuses.map((status) => status === 'ready'), [statuses])
-  const { active, select, move, progressRef } = useSlidePlayback({
+  const { active, pending, select, move, progressRef } = useSlidePlayback({
     slideCount: heroSlides.length,
     playing,
     readySlides,
@@ -64,7 +64,13 @@ function HeroPlayback({ navigate, heroSlides, custom }) {
   useEffect(() => {
     requestImage(active, false, 'high')
     requestImage((active + 1) % heroSlides.length)
+    requestImage((active + 2) % heroSlides.length)
+    requestImage((active - 1 + heroSlides.length) % heroSlides.length)
   }, [active, requestImage])
+  useEffect(() => {
+    if (pending !== null) requestImage(pending, false, 'high')
+  }, [pending, requestImage])
+  const loadingIndex = pending ?? active
   useEffect(() => {
     const onVisibility = () => setVisible(!document.hidden)
     document.addEventListener('visibilitychange', onVisibility)
@@ -173,12 +179,12 @@ function HeroPlayback({ navigate, heroSlides, custom }) {
           </div>
         ))}
       </div>
-      {!readySlides[active] && (
+      {!readySlides[loadingIndex] && (
         <div className="hero-loading-state" role="status" aria-live="polite">
-          {statuses[active] === 'error' ? (
+          {statuses[loadingIndex] === 'error' ? (
             <>
               <span>تصویر بارگذاری نشد</span>
-              <button type="button" onClick={() => requestImage(active, true, 'high')}>
+              <button type="button" onClick={() => requestImage(loadingIndex, true, 'high')}>
                 تلاش دوباره
               </button>
             </>
