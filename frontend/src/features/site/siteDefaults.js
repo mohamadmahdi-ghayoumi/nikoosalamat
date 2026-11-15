@@ -223,7 +223,7 @@ export const themeDefaults = {
 }
 export const linkFields = [
   ['contact.phone', 'لینک شماره تماس', 'tel:+989124283834'],
-  ['contact.email', 'لینک ایمیل', 'mailto:info@nikoosalamat.ir'],
+  ['contact.email', 'لینک ایمیل', 'mailto:info@nikoosalamat.com'],
   ['contact.telegram', 'تلگرام تماس', socialUrls.telegram],
   ['social.instagram', 'اینستاگرام', socialUrls.instagram],
   ['social.telegram', 'تلگرام نوار کناری', socialUrls.telegram],

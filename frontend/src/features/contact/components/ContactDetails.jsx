@@ -33,7 +33,7 @@ export default function ContactDetails() {
             </strong>
           </div>
         </a>
-        <a href={siteLink(config, 'contact.email', 'mailto:info@nikoosalamat.ir')}>
+        <a href={siteLink(config, 'contact.email', 'mailto:info@nikoosalamat.com')}>
           <span>
             <Icon name="mail" />
           </span>
@@ -42,7 +42,7 @@ export default function ContactDetails() {
               <SiteText field="copy.contactdetails.5">ایمیل</SiteText>
             </small>
             <strong>
-              <SiteText field="copy.contactdetails.6">info@nikoosalamat.ir</SiteText>
+              <SiteText field="copy.contactdetails.6">info@nikoosalamat.com</SiteText>
             </strong>
           </div>
         </a>

@@ -107,8 +107,8 @@ export default function Footer({ navigate }) {
               <SiteText field="copy.footer.14">۰۹۱۲۴۲۸۳۸۳۴</SiteText>
             </bdi>
           </a>
-          <a href={siteLink(config, 'contact.email', 'mailto:info@nikoosalamat.ir')}>
-            <SiteText field="copy.footer.15">info@nikoosalamat.ir</SiteText>
+          <a href={siteLink(config, 'contact.email', 'mailto:info@nikoosalamat.com')}>
+            <SiteText field="copy.footer.15">info@nikoosalamat.com</SiteText>
           </a>
           <span>
             <SiteText field="copy.footer.16">شهر قدس، کوی صنعت، پلاک ۵</SiteText>
