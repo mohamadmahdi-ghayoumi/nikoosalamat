@@ -1,6 +1,25 @@
 .catalog-editor {
   margin-top: 24px;
 }
+.catalog-editor .catalog-description-input {
+  font-weight: 400;
+}
+.admin-image-dimensions {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.admin-image-dimension-list {
+  padding-inline-start: 20px;
+  margin: 0 0 20px;
+  overflow-wrap: anywhere;
+}
+.admin-image-dimension-list li {
+  margin-bottom: 8px;
+}
 .admin-gallery {
   display: flex;
   flex-wrap: wrap;

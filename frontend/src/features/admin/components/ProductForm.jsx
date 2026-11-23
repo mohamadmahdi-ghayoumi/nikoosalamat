@@ -1,15 +1,17 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Icon from '../../../components/ui/Icon.jsx'
 import { productCategories, resolveProductCategory } from '../../products/data/productCategories.js'
 import { resolveMediaUrl } from '../../../services/api/client.js'
+import ImageDimensions from './ImageDimensions.jsx'
 
 export default function ProductForm({ busy, createProduct, product = null, onCancel }) {
   const formRef = useRef(null)
+  const [selectedImage, setSelectedImage] = useState(null)
   useEffect(() => {
     if (product) formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [product?.id])
   return (
-    <form className="admin-product-form" onSubmit={createProduct} ref={formRef}>
+    <form className="admin-product-form" onSubmit={createProduct} onReset={() => setSelectedImage(null)} ref={formRef}>
       <div className="form-heading">
         <span>{product ? 'ویرایش مشخصات محصول' : 'محصول تازه'}</span>
         <h2>{product ? 'ویرایش محصول' : 'افزودن محصول'}</h2>
@@ -80,7 +82,9 @@ export default function ProductForm({ busy, createProduct, product = null, onCan
       )}
       <label className="admin-file">
         {product ? 'جایگزینی تصویر محصول' : 'تصویر محصول'} <small>JPG، PNG یا WebP تا ۳ مگابایت{product && '؛ بدون انتخاب فایل، تصویر قبلی حفظ می‌شود'}</small>
-        <input name="image" type="file" accept="image/jpeg,image/png,image/webp" />
+        <small>اندازه پیشنهادی: ۱۰۰۰ × ۱۰۰۰ پیکسل؛ عکس عمودی یا افقی هم بدون برش نمایش داده می‌شود.</small>
+        <input name="image" type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => setSelectedImage(event.target.files?.[0] || null)} />
+        <ImageDimensions file={selectedImage} src={!selectedImage ? resolveMediaUrl(product?.image_url) : undefined} />
       </label>
       <label className="admin-check">
         <input name="featured" type="checkbox" defaultChecked={product?.featured || false} /> نمایش در محصولات پیشنهادی صفحه اصلی
