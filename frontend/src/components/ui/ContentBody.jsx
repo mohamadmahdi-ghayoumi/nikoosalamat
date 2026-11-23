@@ -1,8 +1,6 @@
 import React from 'react'
+import { articleHTML } from '../../utils/articleContent.js'
 
 export default function ContentBody({ text }) {
-  return String(text || '')
-    .split(/\n{2,}/)
-    .filter(Boolean)
-    .map((paragraph, index) => <p key={`${paragraph.slice(0, 24)}-${index}`}>{paragraph}</p>)
+  return <div className="article-rich-text" dangerouslySetInnerHTML={{ __html: articleHTML(text) }} />
 }

@@ -275,7 +275,8 @@ def update_product_catalog(product_id: int, payload: ProductCatalogUpdate, _: di
     product = fetch_one("SELECT * FROM products WHERE id = ?", (product_id,))
     if not product:
         raise HTTPException(status_code=404, detail="محصول پیدا نشد")
-    old_gallery = json.loads(product.get("catalog") or "{}").get("gallery", [])
+    previous = json.loads(product.get("catalog") or "{}")
+    old_gallery = previous.get("gallery", [])
     if any(url not in old_gallery for url in payload.gallery) or len(payload.gallery) + len(payload.gallery_data) > 5:
         raise HTTPException(status_code=422, detail="حداکثر ۵ تصویر گالری قابل ثبت است")
     uploaded = []
@@ -283,6 +284,9 @@ def update_product_catalog(product_id: int, payload: ProductCatalogUpdate, _: di
         for data in payload.gallery_data:
             uploaded.append(save_image(data))
         catalog = payload.model_dump(exclude={"gallery_data"})
+        for key in ("introduction_title", "features_title", "usage_title"):
+            if key not in payload.model_fields_set:
+                catalog[key] = previous.get(key, "")
         catalog["gallery"] = list(dict.fromkeys(payload.gallery + uploaded))
         execute("UPDATE products SET catalog = ? WHERE id = ?", (json.dumps(catalog, ensure_ascii=False), product_id))
     except Exception:

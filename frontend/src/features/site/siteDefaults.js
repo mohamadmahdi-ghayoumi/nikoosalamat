@@ -189,18 +189,27 @@ export const sectionCatalog = {
   ],
 }
 export const footerMenuDefaults = {
-  solutions: [
-    { label: 'مراقبت از سُم', path: '/pages/hoof-care' },
-    { label: 'سلامت پستان', path: '/pages/udder-health' },
-    { label: 'ضدعفونی دامداری', path: '/pages/farm-disinfection' },
-    { label: 'بهداشت دام و اسب', path: '/pages/animal-hygiene' },
-  ],
+  solutions: solutionTopics.map(({ label, path }) => ({ label, path })),
   guide: [
     { label: 'درباره نیکو سلامت', path: '/about' },
     { label: 'مجله نیکو سلامت', path: '/mag/' },
     { label: 'پرسش‌های متداول', path: '/contact#faq' },
     { label: 'ثبت و پیگیری سفارش', path: '/contact' },
   ],
+}
+
+// Upgrade only the exact old, untouched four-link menu; keep custom menus intact.
+export function footerMenuItems(config, name) {
+  const items = config.footerMenus?.[name]
+  const legacy = [
+    ['مراقبت از سُم', '/pages/hoof-care'],
+    ['سلامت پستان', '/pages/udder-health'],
+    ['ضدعفونی دامداری', '/pages/farm-disinfection'],
+    ['بهداشت دام و اسب', '/pages/animal-hygiene'],
+  ]
+  if (name === 'solutions' && items?.length === 4 && items.every((item, index) =>
+    item.label === legacy[index][0] && item.path === legacy[index][1] && !item.children?.length)) return footerMenuDefaults.solutions
+  return items ?? (name === 'solutions' ? footerMenuDefaults.solutions : undefined)
 }
 export const themeDefaults = {
   primary: '#23763c',

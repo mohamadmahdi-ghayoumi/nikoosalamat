@@ -23,6 +23,9 @@ class ProductCatalog(BaseModel):
     features: list[str] = Field(default_factory=list, max_length=20)
     usage: str = Field(default="", max_length=10000)
     gallery: list[str] = Field(default_factory=list, max_length=5)
+    introduction_title: str = Field(default='', max_length=100)
+    features_title: str = Field(default='', max_length=100)
+    usage_title: str = Field(default='', max_length=100)
 
     @field_validator("features")
     @classmethod
@@ -116,7 +119,7 @@ class ContentPageUpdateIn(BaseModel):
     eyebrow: str = Field(min_length=2, max_length=80)
     title: str = Field(min_length=2, max_length=160)
     summary: str = Field(min_length=2, max_length=500)
-    body: str = Field(min_length=2, max_length=20_000)
+    body: str = Field(min_length=2, max_length=30_000)
     published: bool = True
     image_data: str | None = None
     remove_image: bool = False

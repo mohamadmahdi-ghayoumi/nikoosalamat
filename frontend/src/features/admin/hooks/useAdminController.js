@@ -180,6 +180,9 @@ export default function useAdminController(showNotice) {
         description: String(data.get('description') || '').trim(),
         features,
         usage: String(data.get('usage') || '').trim(),
+        introduction_title: String(data.get('introduction_title') || '').trim(),
+        features_title: String(data.get('features_title') || '').trim(),
+        usage_title: String(data.get('usage_title') || '').trim(),
         gallery: retained,
         gallery_data: await Promise.all(files.map(readImageFile)),
       })
@@ -198,11 +201,14 @@ export default function useAdminController(showNotice) {
     setBusy(true)
     const data = new FormData(event.currentTarget)
     try {
+      const body = articleHTML(String(data.get('body') || '').trim())
+      if (articlePlainText(body).trim().length < 2) throw new Error('متن راهکار را وارد کنید')
+      if (body.length > 30000) throw new Error('متن راهکار با قالب‌بندی حداکثر ۳۰٬۰۰۰ کاراکتر باشد')
       const updated = await updateAdminPage(token, page.id, {
         eyebrow: String(data.get('eyebrow')).trim(),
         title: String(data.get('title')).trim(),
         summary: String(data.get('summary')).trim(),
-        body: String(data.get('body')).trim(),
+        body,
         published: data.get('published') === 'on',
         image_data: await readImageFile(data.get('image')),
         remove_image: data.get('remove_image') === 'on',

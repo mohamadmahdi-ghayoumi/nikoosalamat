@@ -629,9 +629,10 @@ if ($method === 'PUT' && preg_match('#^/api/admin/products/(\d+)/catalog$#', $pa
         if (!is_string($feature) || stringLength($feature) > 1000) { fail('ویژگی محصول معتبر نیست', 422); }
     }
     $catalog = ['gallery' => $gallery, 'features' => array_values($features)];
-    foreach (['summary' => 350, 'description' => 15000, 'usage' => 10000] as $key => $limit) {
+    foreach (['summary' => 350, 'description' => 15000, 'usage' => 10000, 'introduction_title' => 100, 'features_title' => 100, 'usage_title' => 100] as $key => $limit) {
         if (isset($payload[$key]) && !is_string($payload[$key])) { fail('اطلاعات محصول معتبر نیست', 422); }
-        $catalog[$key] = trim($payload[$key] ?? '');
+        $fallback = in_array($key, ['introduction_title', 'features_title', 'usage_title'], true) ? ($previous[$key] ?? '') : '';
+        $catalog[$key] = trim($payload[$key] ?? $fallback);
         if (stringLength($catalog[$key]) > $limit) { fail('متن محصول بیش از حد طولانی است', 422); }
     }
     $totalImageBytes = 0;
@@ -676,7 +677,7 @@ if ($method === 'PUT' && preg_match('#^/api/admin/pages/(\d+)$#', $path, $matche
     if (stringLength($eyebrow) < 2 || stringLength($eyebrow) > 80
         || stringLength($title) < 2 || stringLength($title) > 160
         || stringLength($summary) < 2 || stringLength($summary) > 500
-        || stringLength($pageBody) < 2 || stringLength($pageBody) > 20000) {
+        || stringLength($pageBody) < 2 || stringLength($pageBody) > 30000) {
         fail('اطلاعات صفحه معتبر نیست', 422);
     }
     $newImage = saveImage(isset($payload['image_data']) ? (string) $payload['image_data'] : null, $uploadDir);

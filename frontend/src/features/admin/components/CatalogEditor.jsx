@@ -25,6 +25,17 @@ export default function CatalogEditor({ product, busy, onSave, onCancel }) {
         کاربرد کوتاه روی کارت محصول
         <textarea name="summary" rows="2" maxLength="350" defaultValue={catalog.summary || ''} />
       </label>
+      <fieldset>
+        <legend>عنوان بخش‌های صفحهٔ محصول</legend>
+        <p>این عنوان‌ها هم در نوار پیوندها و هم بالای بخش مربوط نمایش داده می‌شوند. خالی بگذارید تا عنوان پیش‌فرض استفاده شود.</p>
+        {[
+          ['introduction_title', 'معرفی محصول'],
+          ['features_title', 'ویژگی‌ها و مشخصات'],
+          ['usage_title', 'روش مصرف'],
+        ].map(([name, title]) => (
+          <label key={name}>{title}<input name={name} maxLength={100} defaultValue={catalog[name] || ''} placeholder={title} /></label>
+        ))}
+      </fieldset>
       <label>
         معرفی کامل
         <textarea

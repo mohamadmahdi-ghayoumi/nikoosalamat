@@ -131,7 +131,7 @@ export default function useNavigation() {
   const navigate = useCallback(
     (event, target) => {
       if (event && (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)) return
-      const targetUrl = new URL(target, window.location.origin)
+      const targetUrl = new URL(target, window.location.href)
       if (targetUrl.origin !== window.location.origin) return
       event?.preventDefault()
       savePosition()

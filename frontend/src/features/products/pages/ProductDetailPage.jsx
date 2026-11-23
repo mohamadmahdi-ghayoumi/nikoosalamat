@@ -68,7 +68,7 @@ export default function ProductDetailPage({ id, navigate, onAddToCart }) {
 
           <ProductOverview product={product} navigate={navigate} onAddToCart={onAddToCart} />
         </section>
-        <ProductEditorial product={product} />
+        <ProductEditorial product={product} navigate={navigate} />
         <a className="view-all" href="/products" onClick={(event) => navigate(event, '/products')}>
           بازگشت به همه محصولات
           <Icon name="arrow" size={18} />

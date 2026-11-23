@@ -8,7 +8,7 @@ import { articleFonts, articleFontSizes } from '../../utils/articleFormatting.js
 import { ArticleImage } from './ArticleImage.js'
 import ArticleMediaTools from './ArticleMediaTools.jsx'
 
-export default function RichArticleEditor({ initialValue = '', disabled = false, token, onPending = () => {}, onContentChange }) {
+export default function RichArticleEditor({ initialValue = '', disabled = false, token, onPending = () => {}, onContentChange, label = 'متن کامل مقاله', maxLength = 30000 }) {
   const fieldRef = useRef(null)
   const [uploading, setUploading] = useState(false)
   const [value, setValue] = useState(() => articleHTML(initialValue))
@@ -22,7 +22,7 @@ export default function RichArticleEditor({ initialValue = '', disabled = false,
     content: value,
     shouldRerenderOnTransaction: true,
     editorProps: {
-      attributes: { role: 'textbox', 'aria-label': 'متن کامل مقاله', 'aria-multiline': 'true', dir: 'rtl', class: 'article-rich-text' },
+      attributes: { role: 'textbox', 'aria-label': label, 'aria-multiline': 'true', dir: 'rtl', class: 'article-rich-text' },
       transformPastedHTML: (html) => articleHTML(html),
       handlePaste: (_view, event) => {
         const clipboard = event.clipboardData
@@ -54,8 +54,8 @@ export default function RichArticleEditor({ initialValue = '', disabled = false,
   ]
   return (
     <div className="rich-article-field" ref={fieldRef}>
-      <span id="article-body-label">متن کامل مقاله</span>
-      <p className="rich-editor-help">متن را بنویسید یا از Word کپی کنید. برای تغییر اندازهٔ عکس، روی آن کلیک کنید و یکی از گوشه‌هایش را بکشید. عنوان اصلی مقاله خودکار H1 است.</p>
+      <span id="article-body-label">{label}</span>
+      <p className="rich-editor-help">متن را مستقیماً از Word کپی کنید تا بولد، تیتر و فهرست‌ها حفظ شوند. برای عکس میان متن، ابتدا در محل دلخواه کلیک کنید و «افزودن عکس میان متن» را بزنید. اندازهٔ عکس با کشیدن گوشه‌هایش تغییر می‌کند. عنوان اصلی صفحه خودکار H1 است.</p>
       <div className={`rich-article-editor ${disabled ? 'is-disabled' : ''}`}>
         <div className="rich-editor-toolbar" role="toolbar" aria-label="قالب‌بندی متن مقاله">
           <label>نوع متن<select aria-label="نوع تیتر" disabled={!editor || disabled || uploading} value={editor?.isActive('heading') ? String(editor.getAttributes('heading').level) : 'p'} onChange={(event) => {
@@ -83,7 +83,7 @@ export default function RichArticleEditor({ initialValue = '', disabled = false,
         <EditorContent editor={editor} />
       </div>
       <input type="hidden" name="body" value={value} />
-      <small className={value.length > 30000 ? 'rich-editor-limit' : ''}>{new Intl.NumberFormat('fa-IR').format(value.length)} از ۳۰٬۰۰۰ کاراکتر (با قالب‌بندی)</small>
+      <small className={value.length > maxLength ? 'rich-editor-limit' : ''}>{new Intl.NumberFormat('fa-IR').format(value.length)} از {new Intl.NumberFormat('fa-IR').format(maxLength)} کاراکتر (با قالب‌بندی)</small>
       <p className="rich-editor-help">تیتر بخش‌ها را با «نوع متن» مشخص کنید؛ تغییر اندازهٔ فونت جای تیتر را نمی‌گیرد.</p>
     </div>
   )

@@ -54,29 +54,7 @@ export default function Footer({ navigate }) {
           <h3>
             <SiteText field="copy.footer.2">راهکارها</SiteText>
           </h3>
-          <FooterLinks name="solutions" navigate={navigate}>
-            <a href="/pages/hoof-care" onClick={(event) => navigate(event, '/pages/hoof-care')}>
-              <SiteText field="copy.footer.3">مراقبت از سُم</SiteText>
-            </a>
-            <a
-              href="/pages/udder-health"
-              onClick={(event) => navigate(event, '/pages/udder-health')}
-            >
-              <SiteText field="copy.footer.4">سلامت پستان</SiteText>
-            </a>
-            <a
-              href="/pages/farm-disinfection"
-              onClick={(event) => navigate(event, '/pages/farm-disinfection')}
-            >
-              <SiteText field="copy.footer.5">ضدعفونی دامداری</SiteText>
-            </a>
-            <a
-              href="/pages/animal-hygiene"
-              onClick={(event) => navigate(event, '/pages/animal-hygiene')}
-            >
-              <SiteText field="copy.footer.6">بهداشت دام و اسب</SiteText>
-            </a>
-          </FooterLinks>
+          <FooterLinks name="solutions" navigate={navigate} />
         </div>
         <div className="footer-group">
           <h3>

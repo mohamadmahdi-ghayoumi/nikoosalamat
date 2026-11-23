@@ -14,6 +14,7 @@ const SiteCustomizer = React.lazy(() => import('../../site/SiteCustomizer.jsx'))
 export default function AdminPage({ showNotice }) {
   const manager = useAdminController(showNotice)
   const [siteDirty, setSiteDirty] = React.useState(false)
+  const [siteInitialTab, setSiteInitialTab] = React.useState('content')
   if (manager.checking) return <main className="admin-loading">در حال بررسی دسترسی…</main>
   if (!manager.admin) return <AdminLogin busy={manager.busy} login={manager.login} />
   return (
@@ -39,6 +40,7 @@ export default function AdminPage({ showNotice }) {
       {manager.activeTab === 'site' && (
         <React.Suspense fallback={<p>دریافت مدیریت سایت…</p>}>
           <SiteCustomizer
+            initialTab={siteInitialTab}
             token={manager.token}
             showNotice={showNotice}
             onDirtyChange={setSiteDirty}
@@ -67,7 +69,7 @@ export default function AdminPage({ showNotice }) {
         />
       )}
       {manager.activeTab === 'pages' && (
-        <PagesManager pages={manager.pages} busy={manager.busy} savePage={manager.savePage} />
+        <PagesManager pages={manager.pages} busy={manager.busy} savePage={manager.savePage} token={manager.token} editFooter={() => { setSiteInitialTab('menus'); manager.setActiveTab('site') }} />
       )}
       {manager.activeTab === 'articles' && (
         <ArticlesManager

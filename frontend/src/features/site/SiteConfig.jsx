@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState } from '
 import { request, resolveMediaUrl } from '../../services/api/client.js'
 import { articleHTML } from '../../utils/articleContent.js'
 import { ADMIN_PATH } from '../../app/adminRoute.js'
+import { footerMenuItems } from './siteDefaults.js'
 
 const Context = createContext({ config: {}, revision: 0, ready: false, preview: false })
 export const useSiteConfig = () => useContext(Context)
@@ -256,7 +257,7 @@ export function SiteSections({ page, builtins = {}, navigate, sections }) {
 
 export function FooterLinks({ name, navigate, children }) {
   const { config } = useSiteConfig()
-  const items = config.footerMenus?.[name]
+  const items = footerMenuItems(config, name)
   const render = (nodes) =>
     nodes.map((item, index) => (
       <React.Fragment key={`${item.label}-${index}`}>

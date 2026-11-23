@@ -6,6 +6,7 @@ import {
   sectionCatalog,
   themeDefaults,
   footerMenuDefaults,
+  footerMenuItems,
   linkFields,
 } from './siteDefaults.js'
 import { navigationItems } from '../../config/navigation.js'
@@ -212,7 +213,7 @@ function ImageControl({
   )
 }
 
-export default function SiteCustomizer({ token, showNotice, onDirtyChange }) {
+export default function SiteCustomizer({ token, showNotice, onDirtyChange, initialTab = 'content' }) {
   const site = useSiteConfig()
   const [server, setServer] = useState(null),
     [draft, setDraft] = useState({}),
@@ -222,7 +223,7 @@ export default function SiteCustomizer({ token, showNotice, onDirtyChange }) {
     [pending, setPending] = useState({}),
     [dirty, setDirty] = useState(false)
   const [error, setError] = useState(''),
-    [tab, setTab] = useState('content'),
+    [tab, setTab] = useState(initialTab),
     [search, setSearch] = useState(''),
     [group, setGroup] = useState(''),
     [field, setField] = useState('')
@@ -1111,10 +1112,10 @@ export default function SiteCustomizer({ token, showNotice, onDirtyChange }) {
                   بازگرداندن منوی پیش‌فرض
                 </button>
                 {Object.entries(footerMenuDefaults).map(([key, items]) => (
-                  <details key={key}>
+                  <details key={key} open={key === 'solutions' ? true : undefined}>
                     <summary>منوی فوتر — {key === 'solutions' ? 'راهکارها' : 'راهنما'}</summary>
                     <MenuEditor
-                      items={draft.footerMenus?.[key] ?? items}
+                      items={footerMenuItems(draft, key) ?? items}
                       onChange={(items) => setMap('footerMenus', key, items)}
                     />
                   </details>

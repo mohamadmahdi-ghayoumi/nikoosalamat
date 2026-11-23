@@ -18,11 +18,13 @@ export default function ArticleMediaTools({ editor, token, disabled, onPending }
     form?.addEventListener('reset', reset)
     return () => form?.removeEventListener('reset', reset)
   }, [])
-  const open = (type) => {
+  const open = (type, insertNew = false) => {
     const { from, to } = editor.state.selection
-    setSelection({ from, to, image: editor.isActive('image') })
+    // A new picture must not replace a selected picture or selected text.
+    const existingImage = !insertNew && editor.isActive('image')
+    setSelection({ from: insertNew ? to : from, to, image: existingImage })
     setError(''); setFile(null)
-    setImage({ src: '', alt: '', width: '100%', alignment: 'center', ...(editor.isActive('image') ? editor.getAttributes('image') : {}) })
+    setImage({ src: '', alt: '', width: '100%', alignment: 'center', ...(existingImage ? editor.getAttributes('image') : {}) })
     setLink(editor.getAttributes('link').href || '')
     setPanel(type)
   }
@@ -49,7 +51,11 @@ export default function ArticleMediaTools({ editor, token, disabled, onPending }
       const attrs = { src, alt: image.alt.trim().slice(0, 300), width: imageWidth(image.width), alignment: image.alignment }
       const chain = editor.chain().focus()
       if (selection.image) chain.setNodeSelection(selection.from).updateAttributes('image', attrs).run()
-      else chain.setTextSelection({ from: selection.from, to: selection.to }).setImage(attrs).run()
+      else {
+        chain.setTextSelection({ from: selection.from, to: selection.to }).setImage(attrs).run()
+        // Leave a text position after the picture so writing can continue naturally.
+        editor.chain().focus().createParagraphNear().run()
+      }
       setPanel(null)
     } catch (cause) { setError(cause.message || 'بارگذاری تصویر انجام نشد') }
     finally { setUploading(false); onPending(false) }
@@ -58,7 +64,8 @@ export default function ArticleMediaTools({ editor, token, disabled, onPending }
     <div className="article-media-tools" ref={toolsRef}>
       <div className="article-media-buttons">
         <button type="button" disabled={!editor || disabled || uploading} onMouseDown={(event) => event.preventDefault()} onClick={() => open('link')}>درج / ویرایش لینک</button>
-        <button type="button" disabled={!editor || disabled || uploading} onMouseDown={(event) => event.preventDefault()} onClick={() => open('image')}>درج / تنظیم تصویر</button>
+        <button type="button" disabled={!editor || disabled || uploading} onMouseDown={(event) => event.preventDefault()} onClick={() => open('image', true)}>افزودن عکس میان متن</button>
+        {editor?.isActive('image') && <button type="button" disabled={disabled || uploading} onMouseDown={(event) => event.preventDefault()} onClick={() => open('image')}>تنظیم تصویر انتخاب‌شده</button>}
         {editor?.isActive('image') && <button type="button" disabled={disabled || uploading} onClick={() => editor.chain().focus().deleteSelection().run()}>حذف تصویر از متن</button>}
       </div>
       {panel && <fieldset className="article-media-panel" disabled={uploading || disabled} onKeyDown={(event) => {
